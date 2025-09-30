@@ -6,7 +6,6 @@
     ./fish
       ./nvim
       ./stylix.nix
-      ./rice.nix
   ];
   home.packages = with pkgs; [
     lf
@@ -14,5 +13,6 @@
       yazi
       lazygit
       vesktop
+    fastfetch
   ];
 }
