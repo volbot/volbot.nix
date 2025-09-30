@@ -1,128 +1,105 @@
 # Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
+# your system. Help is available in the configuration.nix(5) man page, on
+# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, pkgs, ... }:
+# NixOS-WSL specific options are documented on the NixOS-WSL repository:
+# https://github.com/nix-community/NixOS-WSL
+
+{ config, lib, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-    ../../modules/general
-    ../../modules/graphical
-    ];
+	imports = [
+# include NixOS-WSL modules
+#	<nixos-wsl/modules>
+	];
 
-  nix = {
-    package = pkgs.nixVersions.stable;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-      '';
-  };
+	wsl = {
+		enable = true;
+		defaultUser = "alli";
+		useWindowsDriver = true;
+		interop.register = true;
+	};
 
-  security.polkit.enable = true;
+	system.stateVersion = "25.05";
 
-  programs.dconf.enable = true;
+	environment.systemPackages = with pkgs; [
+		git
+			wget
+			neovim
+			fish
+			cifs-utils
+			keyutils
+	];
 
-# Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+	programs.fish.enable = true;
 
-  networking.hostName = "allomyrina"; # Define your hostname.
-# networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+	users.users.alli = {
+		isNormalUser = true;
+		description = "allomyrina volbot";
+		extraGroups = [ "networkmanager" "wheel" ];
+		packages = with pkgs; [];
+		shell = pkgs.fish;
+	};
 
-# Configure network proxy if necessary
-# networking.proxy.default = "http://user:password@proxy:port/";
-# networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+	services.openssh = {
+		enable = true;
+	};
 
-# Enable networking
-    networking.networkmanager.enable = true;
+	programs.ssh.startAgent = false;
 
-# Set your time zone.
-  time.timeZone = "America/Detroit";
+	environment.variables = {
+		LD_LIBRARY_PATH = "/usr/lib/wsl/lib:$LD_LIBRARY_PATH";
+		SSH_AUTH_SOCK = "/mnt/wsl/ssh-agent.sock";
+	};
 
-# Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
+	systemd.user.services.ssh-agent-proxy = {
+		description = "Windows SSH agent proxy";
+		path = [ pkgs.wslu pkgs.coreutils pkgs.bash ];
+		serviceConfig = {
+			ExecStartPre = [
+				"${pkgs.coreutils}/bin/mkdir -p /mnt/wsl"
+					"${pkgs.coreutils}/bin/rm -f /mnt/wsl/ssh-agent.sock"
+			];
+			ExecStart = "${pkgs.writeShellScript "ssh-agent-proxy" ''
+				set -x  # Enable debug output
 
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_US.UTF-8";
-    LC_IDENTIFICATION = "en_US.UTF-8";
-    LC_MEASUREMENT = "en_US.UTF-8";
-    LC_MONETARY = "en_US.UTF-8";
-    LC_NAME = "en_US.UTF-8";
-    LC_NUMERIC = "en_US.UTF-8";
-    LC_PAPER = "en_US.UTF-8";
-    LC_TELEPHONE = "en_US.UTF-8";
-    LC_TIME = "en_US.UTF-8";
-  };
+# Get Windows username using wslvar
+				WIN_USER="$("${pkgs.wslu}/bin/wslvar" USERNAME 2>/dev/null || echo $USER)"
 
-# Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
+# Check common npiperelay locations
+				NPIPE_PATHS=(
+						"/mnt/c/Users/$WIN_USER/AppData/Local/Microsoft/WinGet/Links/npiperelay.exe"
+						"/mnt/c/ProgramData/chocolatey/bin/npiperelay.exe"
+					    )
 
-# Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.alli = {
-    isNormalUser = true;
-    description = "allomyrina volbot";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [];
-    shell = pkgs.fish;
-  };
+				NPIPE_PATH=""
+				for path in "''${NPIPE_PATHS[@]}"; do
+					echo "Checking npiperelay at: $path"
+						if [ -f "$path" ]; then
+							NPIPE_PATH="$path"
+								break
+								fi
+								done
 
-# Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+								if [ -z "$NPIPE_PATH" ]; then
+									echo "npiperelay.exe not found in expected locations!"
+										exit 1
+										fi
 
-# List packages installed in system profile. To search, run:
-# $ nix search wget
-  environment.systemPackages = with pkgs; [
-#  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-#  wget
-    git
-      wget
-      dconf
-      fish
-      neovim
-  ];
+										echo "Using npiperelay from: $NPIPE_PATH"
 
-  programs.fish.enable = true;
+										exec ${pkgs.socat}/bin/socat -d UNIX-LISTEN:/mnt/wsl/ssh-agent.sock,fork,mode=600 \
+										EXEC:"$NPIPE_PATH -ei -s //./pipe/openssh-ssh-agent",nofork
+										''}";
+		Type = "simple";
+		Restart = "always";
+		RestartSec = "5";
+		StandardOutput = "journal";
+		StandardError = "journal";
+		};
+		wantedBy = [ "default.target" ];
+	};
 
-  services.openssh = {
-    enable = true;
-    settings = {
-      X11Forwarding = true;
-      PermitRootLogin = "no";
-      PasswordAuthentication = false;
-    };
-    openFirewall = true;
-  };
-
-
-# Some programs need SUID wrappers, can be configured further or are
-# started in user sessions.
-# programs.mtr.enable = true;
-# programs.gnupg.agent = {
-#   enable = true;
-#   enableSSHSupport = true;
-# };
-
-# List services that you want to enable:
-
-# Enable the OpenSSH daemon.
-# services.openssh.enable = true;
-
-# Open ports in the firewall.
-# networking.firewall.allowedTCPPorts = [ ... ];
-# networking.firewall.allowedUDPPorts = [ ... ];
-# Or disable the firewall altogether.
-# networking.firewall.enable = false;
-
-# This value determines the NixOS release from which the default
-# settings for stateful data, like file locations and database versions
-# on your system were taken. It‘s perfectly fine and recommended to leave
-# this value at the release version of the first install of this system.
-# Before changing this value read the documentation for this option
-# (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "25.05"; # Did you read the comment?
+	systemd.user.services.ssh-agent-proxy.serviceConfig.RuntimeDirectory = "ssh-agent";
 
 }
