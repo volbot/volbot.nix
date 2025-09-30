@@ -19,11 +19,17 @@
 
       gnome-tweaks
 
+      gnome-font-viewer
+
       noto-fonts
       noto-fonts-color-emoji
+
+      liberation_ttf
+      aileron
+      montserrat
+
       nerd-fonts.mononoki
       nerd-fonts.fantasque-sans-mono
 
-      gnome-font-viewer
     ] else [];
 }

@@ -29,7 +29,7 @@ in {
     miku-cursor-linux
   ];
 
-  stylix =  {
+  stylix = {
     enable = true;
     image = animegirl_wallpaper;
     cursor = {
@@ -45,11 +45,20 @@ in {
       applications = 0.85;
     };
     fonts = {
+      sansSerif = {
+        package = pkgs.aileron;
+        name = "Aileron";
+      };
+      serif = config.stylix.fonts.sansSerif;
       monospace = {
         #package = inputs.font-flake.packages.x86_64-linux.greybeard;
         #name = "Greybeard 22px";
         package = pkgs.nerd-fonts.mononoki;
         name = "Mononoki Nerd Font Mono";
+      };
+      emoji = {
+        package = pkgs.noto-fonts-emoji;
+        name = "Noto Color Emoji";
       };
       sizes = {
         terminal = 13;
