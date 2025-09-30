@@ -1,0 +1,98 @@
+{
+  description = "nixos flake :3";
+
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    home-manager.url = "github:nix-community/home-manager";
+
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    niri.url = "github:sodiboo/niri-flake";
+
+    nixCats.url = "github:BirdeeHub/nixCats-nvim";
+
+    firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+
+    "plugins-voltrix-nvim" = {
+      url = "github:volbot/voltrix.nvim";
+      flake = false;
+    };
+
+    miku-cursor = {
+      url = "github:supermariofps/hatsune-miku-windows-linux-cursors";
+      flake = false;
+    };
+
+    voltrix = {
+      url = "github:volbot/voltrix";
+      flake = false;
+    };
+
+    fish-ssh-agent = {
+      url = "gitlab:kyb/fish_ssh_agent";
+      flake = false;
+    };
+
+    font-flake.url = "path:./fonts";
+  };
+
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    home-manager,
+    ...
+  }: let
+    hosts = [
+      {
+        hostname = "allomyrina";
+        usernames = ["alli"];
+        system = "x86_64-linux";
+      }
+      {
+        hostname = "ariadne";
+        usernames = ["alli"];
+        system = "x86_64-linux";
+      }
+    ];
+
+    mapListToAttrs = list: f: builtins.listToAttrs (map f list);
+  in {
+    nixosConfigurations = mapListToAttrs hosts (
+      settings @ {
+        hostname,
+        usernames,
+        system,
+      }: let
+        lib = nixpkgs.lib.extend (_: _: {
+          mine =
+            import ./lib {
+              inherit (nixpkgs) lib;
+              inherit inputs system;
+            }
+            // {inherit mapListToAttrs;};
+        });
+        specialArgs = {inherit inputs settings;};
+      in
+        lib.nameValuePair hostname (lib.nixosSystem {
+          inherit specialArgs system;
+          modules = [
+            ./system/hosts/${hostname}
+            #import ./overlays
+            home-manager.nixosModules.default
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                extraSpecialArgs = specialArgs;
+                users = mapListToAttrs usernames (uname: lib.nameValuePair uname (import ./home/users/${uname}));
+              };
+            }
+          ];
+        })
+    );
+  };
+}
