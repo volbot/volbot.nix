@@ -14,5 +14,8 @@
       lazygit
       vesktop
     fastfetch
+
+      pnpm
+      nodejs
   ];
 }

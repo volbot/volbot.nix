@@ -11,8 +11,16 @@
 	imports = [
 # include NixOS-WSL modules
 #	<nixos-wsl/modules>
-inputs.nixos-wsl.nixosModules.wsl
+		inputs.nixos-wsl.nixosModules.wsl
 	];
+
+
+	nix = {
+		package = pkgs.nixVersions.stable;
+		extraOptions = ''
+			experimental-features = nix-command flakes
+			'';
+	};
 
 	wsl = {
 		enable = true;

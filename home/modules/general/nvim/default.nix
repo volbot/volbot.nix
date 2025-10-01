@@ -36,16 +36,13 @@ in {
           cs = with pkgs; [
             omnisharp
           ];
-          js = with pkgs; [
-            typescript-language-server
-              prettierd
-          ];
           ts = with pkgs; [
-            typescript-language-server
+          vtsls
               prettierd
           ];
           svelte = with pkgs; [
-            typescript-language-server
+          svelte-language-server
+          vtsls
               prettierd
           ];
           go = with pkgs; [
