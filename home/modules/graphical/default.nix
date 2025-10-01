@@ -10,7 +10,9 @@
           ./floorp.nix
           ./multimedia.nix
       ]
-    else [];
+    else [
+      ./floorp.nix
+    ];
 
   home.packages = if settings.hostname == "allomyrina"
     then with pkgs; [
