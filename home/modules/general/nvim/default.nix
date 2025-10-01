@@ -14,7 +14,7 @@ in {
       ];
       packageNames = [ "volvim" ];
 
-      luaPath = ./.;
+      luaPath = "${./.}";
 
       categoryDefinitions.replace = ({ pkgs, settings, categories, extra, name, mkPlugin, ... }@packageDef: {
           lspsAndRuntimeDeps = {
