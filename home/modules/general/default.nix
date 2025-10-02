@@ -10,7 +10,6 @@
   ] else [
   ./fish
     ./nvim
-    ./volbot_dot_org_node2nix_test
 #     ./stylix.nix
   ];
   home.packages = with pkgs; [
