@@ -67,6 +67,5 @@ in {
         terminal = 13;
       };
     };
-    targets.neovim.transparentBackground.main = true;
   };
 }

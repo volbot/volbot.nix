@@ -5,7 +5,7 @@
   inputs,
   ...
 }: let
-  animegirl_wallpaper = ./animegirl_wallpaper_blue.jpg;
+  animegirl_wallpaper = ../../../home/modules/general/animegirl_wallpaper_blue.jpg;
   miku-cursor-linux = pkgs.stdenv.mkDerivation {
     pname = "miku-cursor-derivation";
     version = "master";
@@ -24,7 +24,7 @@ in {
     inputs.stylix.nixosModules.stylix
   ];
 
-  environment.packages = with pkgs; [
+  environment.systemPackages = with pkgs; [
     miku-cursor-linux
   ];
 
@@ -66,6 +66,5 @@ in {
         terminal = 13;
       };
     };
-    targets.neovim.transparentBackground.main = true;
   };
 }

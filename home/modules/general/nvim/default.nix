@@ -6,6 +6,7 @@ in {
     inputs.nixCats.homeModule
   ];
   config = {
+    stylix.targets.neovim.transparentBackground.main = true;
     home.sessionVariables = {EDITOR="volvim";};
     nixCats = {
       enable = true;
