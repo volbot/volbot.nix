@@ -2,10 +2,14 @@
   pkgs, 
     ...
 }: {
-  imports = [
+  imports = if system.hostname == "allomyrina" [
     ./fish
       ./nvim
       ./stylix.nix
+  ] else [
+  ./fish
+    ./nvim
+#     ./stylix.nix
   ];
   home.packages = with pkgs; [
     lf
@@ -13,7 +17,7 @@
       yazi
       lazygit
       vesktop
-    fastfetch
+      fastfetch
 
       pnpm
       nodejs
