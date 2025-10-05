@@ -21,7 +21,8 @@
       fastfetch
 
       pnpm
-      nodejs
-      node2nix
+      nodejs_24
+#      pkgs.nodejs_14
+#      nodePackages.node2nix
   ];
 }
