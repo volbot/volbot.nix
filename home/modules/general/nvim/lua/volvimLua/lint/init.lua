@@ -10,11 +10,11 @@ require("lze").load({
         -- markdown = {'vale',},
         -- javascript = { 'eslint' },
         -- typescript = { 'eslint' },
-        go = nixCats('go') and { 'golangcilint' } or nil,
-        c = nixCats('c') or nil,
-        svelte = nixCats('svelte') or nil,
-        ts = nixCats('ts') or nil,
-        js = nixCats('ts') or nil,
+        go = { 'golangcilint' },
+        html = {"htmlhint"},
+        lua = {"luacheck"},
+        javascript = {"eslint"},
+        typescript = {"eslint"},
       }
 
       vim.api.nvim_create_autocmd({ "BufWritePost" }, {
