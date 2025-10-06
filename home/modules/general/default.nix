@@ -10,7 +10,7 @@
   ] else [
   ./fish
     ./nvim
-#     ./stylix.nix
+    ./stylix.nix
   ];
   home.packages = with pkgs; [
     lf
@@ -22,7 +22,5 @@
 
       pnpm
       nodejs_24
-#      pkgs.nodejs_14
-#      nodePackages.node2nix
   ];
 }

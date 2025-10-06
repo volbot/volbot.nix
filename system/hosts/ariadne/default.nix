@@ -25,10 +25,13 @@
     git
     wget
     neovim
+    dconf
     fish
     cifs-utils
     keyutils
   ];
+  
+  programs.dconf.enable = true;
 
   programs.fish.enable = true;
 
