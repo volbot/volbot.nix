@@ -102,7 +102,6 @@ require("lze").load({
 			},
 		},
 	},
-	{ "svelte", lsp = {} },
 	{ "pyright", lsp = {} },
 	{ "jsonls", lsp = {} },
 	{ "yamlls", lsp = {} },
