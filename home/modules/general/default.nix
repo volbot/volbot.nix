@@ -7,10 +7,12 @@
     ./fish
       ./nvim
       ./stylix.nix
+      ./starship.nix
   ] else [
   ./fish
     ./nvim
     ./stylix.nix
+      ./starship.nix
   ];
   home.packages = with pkgs; [
     lf
