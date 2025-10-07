@@ -42,22 +42,22 @@ format = '[[($all_status$ahead_behind )](fg:black bg:magenta)]($style)'
 [nodejs]
 symbol = ""
 style = "bg:blue"
-format = '[[ $symbol ($version) ](fg:red bg:blue)]($style)'
+format = '[[ $symbol ($version) ](fg:black bg:blue)]($style)'
 
 [rust]
 symbol = ""
 style = "bg:blue"
-format = '[[ $symbol ($version) ](fg:red bg:blue)]($style)'
+format = '[[ $symbol ($version) ](fg:black bg:blue)]($style)'
 
 [golang]
 symbol = ""
 style = "bg:blue"
-format = '[[ $symbol ($version) ](fg:red bg:blue)]($style)'
+format = '[[ $symbol ($version) ](fg:black bg:blue)]($style)'
 
 [php]
 symbol = ""
 style = "bg:blue"
-format = '[[ $symbol ($version) ](fg:red bg:blue)]($style)'
+format = '[[ $symbol ($version) ](fg:black bg:blue)]($style)'
 
 [time]
 disabled = false
@@ -67,19 +67,15 @@ format = '[[  $time ](fg:lgray bg:dgray)]($style)'
 
 [character]
 success_symbol = """
-[૮\\(](bold white)\
-[󰉊 ](bold magenta)\
-[◡](bold white)\
-[‿](bold white)\
-[◡](bold white)\
-[\\)づ](bold white)\
-[ ](bold green)"""
+ [⊂\\(](bold white)\
+[󰉊 ](bold green)\
+[^w^](bold white)\
+[\\)つ](bold white)\
+ """
 
 error_symbol = """
-[╭\\(](bold white)\
-[\ue34a ](bold cyan)\
-[ò](bold white)\
-[_](bold white)\
-[ó](bold white)\
-[\\)ง\\]](bold white)\
-[ \uff61\u00b0\u25cb](bold red)"""
+ [╭\\(](bold white)\
+[󰉊 ](bold red)\
+[╥﹏╥](bold white)\
+[\\)╮](bold white)\
+ """
