@@ -47,5 +47,7 @@
     enable = true;
   };
 
+  time.timeZone = "America/Detroit";
+
   system.stateVersion = "25.05";
 }
