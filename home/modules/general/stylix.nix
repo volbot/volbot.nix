@@ -54,7 +54,7 @@ in {
         #package = inputs.font-flake.packages.x86_64-linux.greybeard;
         #name = "Greybeard 22px";
         package = pkgs.nerd-fonts.mononoki;
-        name = "Mononoki Nerd Font Mono";
+        name = "Mononoki Nerd Font";
       };
       emoji = {
         package = pkgs.noto-fonts-emoji;
