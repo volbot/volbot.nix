@@ -21,6 +21,7 @@
       lazygit
       vesktop
       fastfetch
+      libsixel
 
       pnpm
       nodejs_24

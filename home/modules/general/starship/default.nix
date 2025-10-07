@@ -12,8 +12,9 @@
 
   programs.starship = {
     enable = true;
-    enableFishIntegration = true;
     enableInteractive = true;
+    enableTransience = true;
+    enableFishIntegration = true;
     settings =
       let
         readTOML = fn: builtins.fromTOML (builtins.readFile fn);
@@ -30,8 +31,6 @@
         (readTOML ./voltrix.toml)
         { palette = "voltrix"; }
         (readTOML ./tokyo-night.toml)
-        #(mkPreset "pastel-powerline")
-        #(mkPreset "tokyo-night")
         { opa.format = "'(via [$symbol($version )]($style))'"; } # fix a typo in no-empty-icons
       ];
   };
