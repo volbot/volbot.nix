@@ -8,7 +8,9 @@ $directory\
 [](fg:red bg:magenta)\
 $git_branch\
 $git_status\
-[](fg:magenta bg:blue)\
+[](fg:magenta bg:yellow)\
+$nix_shell\
+[](fg:yellow bg:blue)\
 $nodejs\
 $rust\
 $golang\
@@ -64,6 +66,11 @@ disabled = false
 time_format = "%R" # Hour:Minute Format
 style = "bg:dgray"
 format = '[[  $time ](fg:lgray bg:dgray)]($style)'
+
+[nix_shell]
+disabled = false
+style = "bg:yellow"
+format = '[[  $state(\($name\)) ](fg:black bg:yellow)]($style)'
 
 [character]
 success_symbol = """

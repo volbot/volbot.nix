@@ -34,10 +34,6 @@
       yazi
       ripdrag
 
-      flex
-      bison
-      doxygen
-
       pnpm
       nodejs_24
     ];
