@@ -22,11 +22,6 @@
   };
 
   environment.systemPackages = with pkgs; [
-    git
-    wget
-    neovim
-    dconf
-    fish
     cifs-utils
     keyutils
   ];
