@@ -16,7 +16,7 @@ lib.mapAttrsRecursive (name: value:
 fileContents = readDirRecursive ./fish_files;
 attrs = [
   (builtins.readFile "${inputs.fish-ssh-agent}/functions/fish_ssh_agent.fish")
-  fileContents.functions."voltrix.fish"
+  (builtins.readFile "${inputs.voltrix}/build/fish/voltrix.fish")
   fileContents.functions."fish_right_prompt.fish"
   fileContents.functions."fish_mode_prompt.fish"
   #fileContents.functions."fish_prompt.fish"
