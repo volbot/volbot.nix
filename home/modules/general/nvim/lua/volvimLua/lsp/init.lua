@@ -111,7 +111,17 @@ require("lze").load({
 	{ "svelte", lsp = {} },
 	{ "ts_ls", lsp = {} },
 	{ "taplo", lsp = {} },
-	{ "clangd", lsp = {
-		filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto", "hpp" },
-	} },
+	{
+		"clangd",
+		lsp = {
+			cmd = {
+				"clangd",
+				"--background-index",
+				"--clang-tidy",
+				"--completion-style=detailed",
+			},
+			root_markers = { ".clangd", ".clang-tidy", ".clang-format", "compile_commands.json" },
+			filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto", "hpp", "y", "l" },
+		},
+	},
 })

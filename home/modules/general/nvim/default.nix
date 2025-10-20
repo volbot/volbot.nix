@@ -57,7 +57,6 @@ in
               nix-doc
             ];
             c = with pkgs; [
-              clang
               clang-tools
             ];
             cs = with pkgs; [
