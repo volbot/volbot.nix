@@ -12,27 +12,32 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/5b55daa5-fee9-4424-8853-c89be60db701";
-      fsType = "ext4";
-    };
+  { device = "/dev/disk/by-uuid/7b48ae56-21cc-4fa2-8a45-b26f945453b3";
+    fsType = "ext4";
+  };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/A96B-0DCF";
-      fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
-    };
+  { device = "/dev/disk/by-uuid/5BFE-6EFC";
+    fsType = "vfat";
+    options = [ "fmask=0077" "dmask=0077" ];
+  };
+
+  fileSystems."/neptune" = 
+  { device = "/dev/disk/by-uuid/887458A47458973287458A474589732";
+    fsType = "ntfs";
+    options = ["nofail" "remount,ro"];
+  };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/5e6d9da5-04b7-48f2-8675-dff2f4c70d54"; }
+    [ { device = "/dev/disk/by-uuid/9de3a981-268a-44b6-b8b2-71456ff0f825"; }
     ];
 
-  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
-  # (the default) this is the recommended approach. When using systemd-networkd it's
-  # still possible to use this option, but it's recommended to use it in conjunction
-  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-  networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp0s3.useDHCP = lib.mkDefault true;
+# Enables DHCP on each ethernet and wireless interface. In case of scripted networking
+# (the default) this is the recommended approach. When using systemd-networkd it's
+# still possible to use this option, but it's recommended to use it in conjunction
+# with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
+    networking.useDHCP = lib.mkDefault true;
+# networking.interfaces.enp0s3.useDHCP = lib.mkDefault true;
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  virtualisation.virtualbox.guest.enable = true;
+    nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }

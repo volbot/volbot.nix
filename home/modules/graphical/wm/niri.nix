@@ -51,14 +51,6 @@
         }
       ];
       outputs = {
-        "Virtual-1" = {
-          mode.width = 1920;
-          mode.height = 1080;
-          mode.refresh = 60.0;
-          position.x = 0;
-          position.y = 0;
-        };
-        /*
         "HDMI-A-1" = {
         mode.width = 1920;
         mode.height = 1080;
@@ -89,11 +81,10 @@
         position.x = 5760;
         position.y = 0;
         };
-        */
       };
       input = {
-        mod-key = "Alt";
-        mod-key-nested = "Super";
+        mod-key = "Super";
+        mod-key-nested = "Alt";
       };
       binds = {
         "Mod+Shift+Slash".action.show-hotkey-overlay = {};

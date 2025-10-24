@@ -56,12 +56,12 @@
   hosts = [
   {
     hostname = "allomyrina";
-    usernames = ["alli"];
+    usernames = ["allie"];
     system = "x86_64-linux";
   }
   {
     hostname = "ariadne";
-    usernames = ["alli"];
+    usernames = ["allie"];
     system = "x86_64-linux";
   }
   ];

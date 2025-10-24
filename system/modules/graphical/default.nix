@@ -7,6 +7,7 @@
       then [
       ./greetd.nix
         ./pipewire.nix
+        ./nvidia.nix
           ./games.nix
       ]
     else [];
