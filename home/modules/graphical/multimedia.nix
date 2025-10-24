@@ -5,8 +5,10 @@
       #imagemagick
       #pandoc
 
-      #gimp3
+    gimp3
       #krita
-      #vlc
+    vlc
+
+    libreoffice
   ];
 }

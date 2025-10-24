@@ -77,6 +77,7 @@ in {
       "bluetooth"
       "bluetooth#battery"
       "battery"
+      "tray"
       #"custom/swaync"
     ];
 
@@ -87,6 +88,12 @@ in {
       format-icons = icons.battery.levels;
       states.warning = 30;
       states.critical = 15;
+    };
+
+    tray = {
+      icon-size = 18;
+      rotate = 0;
+      spacing = 5;
     };
 
     clock = {

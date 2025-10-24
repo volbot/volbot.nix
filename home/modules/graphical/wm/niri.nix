@@ -4,7 +4,8 @@
   lib,
   inputs,
   ...
-}: {
+}:
+{
   imports = [
     inputs.niri.homeModules.niri
     inputs.niri.homeModules.stylix
@@ -19,8 +20,8 @@
     waybar
     swaylock
     xwayland-satellite
-      wl-clipboard
-      wayland-utils
+    wl-clipboard
+    wayland-utils
   ];
 
   programs.fuzzel.enable = true;
@@ -29,65 +30,78 @@
     enable = true;
     settings = {
       prefer-no-csd = true;
-      spawn-at-startup = let
-        get = pkg: lib.getExe pkgs.${pkg};
-      in [
-        {command = ["${get "xwayland-satellite"}"];}
-        {command = ["${get "waybar"}"];}
-        {command = ["${get "swaybg"}" "-m" "fill" "-i" "${config.stylix.image}"];}
-      ];
+      spawn-at-startup =
+        let
+          get = pkg: lib.getExe pkgs.${pkg};
+        in
+        [
+          { command = [ "${get "xwayland-satellite"}" ]; }
+          { command = [ "${get "waybar"}" ]; }
+          {
+            command = [
+              "${get "swaybg"}"
+              "-m"
+              "fill"
+              "-i"
+              "${config.stylix.image}"
+            ];
+          }
+        ];
       cursor.hide-when-typing = true;
       window-rules = [
         {
-          geometry-corner-radius = let
-            r = 8.0;
-          in {
-            top-left = r;
-            top-right = r;
-            bottom-left = r;
-            bottom-right = r;
-          };
+          geometry-corner-radius =
+            let
+              r = 8.0;
+            in
+            {
+              top-left = r;
+              top-right = r;
+              bottom-left = r;
+              bottom-right = r;
+            };
           clip-to-geometry = true;
         }
       ];
-      outputs = {
-        "HDMI-A-1" = {
-        mode.width = 1920;
-        mode.height = 1080;
-        mode.refresh = 60.0;
-        position.x = 0;
-        position.y = 0;
-        };
-        "DP-3" = {
-        mode.width = 1920;
-        mode.height = 1080;
-        mode.refresh = 144.001;
-        focus-at-startup = true;
-        variable-refresh-rate = "on-demand";
-        position.x = 1920;
-        position.y = 0;
-        };
-        "DP-1" = {
-        mode.width = 1920;
-        mode.height = 1080;
-        mode.refresh = 60.0;
-        position.x = 3840;
-        position.y = 0;
-        };
-        "DP-2" = {
-        mode.width = 1280;
-        mode.height = 720;
-        mode.refresh = 60.0;
-        position.x = 5760;
-        position.y = 0;
-        };
-      };
       input = {
         mod-key = "Super";
         mod-key-nested = "Alt";
+        keyboard.xkb.options = "compose:paus";
+      };
+      outputs = {
+        "HDMI-A-1" = {
+          mode.width = 1920;
+          mode.height = 1080;
+          mode.refresh = 60.0;
+          position.x = 0;
+          position.y = 0;
+        };
+        "DP-3" = {
+          mode.width = 1920;
+          mode.height = 1080;
+          mode.refresh = 144.001;
+          focus-at-startup = true;
+          variable-refresh-rate = "on-demand";
+          position.x = 1920;
+          position.y = 0;
+        };
+        "DP-1" = {
+          mode.width = 1920;
+          mode.height = 1080;
+          mode.refresh = 60.0;
+          position.x = 3840;
+          position.y = 0;
+        };
+        "DP-2" = {
+          mode.width = 1280;
+          mode.height = 720;
+          mode.refresh = 60.0;
+          position.x = 5760;
+          position.y = 0;
+        };
       };
       binds = {
-        "Mod+Shift+Slash".action.show-hotkey-overlay = {};
+        "Mod+Shift+Slash".action.show-hotkey-overlay = { };
 
         "Mod+T".action.spawn = "foot";
         "Mod+D".action.spawn = "fuzzel";
@@ -95,40 +109,60 @@
 
         "XF86AudioRaiseVolume" = {
           allow-when-locked = true;
-          action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"];
+          action.spawn = [
+            "wpctl"
+            "set-volume"
+            "@DEFAULT_AUDIO_SINK@"
+            "0.1+"
+          ];
         };
         "XF86AudioLowerVolume" = {
           allow-when-locked = true;
-          action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"];
+          action.spawn = [
+            "wpctl"
+            "set-volume"
+            "@DEFAULT_AUDIO_SINK@"
+            "0.1-"
+          ];
         };
         "XF86AudioMute" = {
           allow-when-locked = true;
-          action.spawn = ["wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"];
+          action.spawn = [
+            "wpctl"
+            "set-mute"
+            "@DEFAULT_AUDIO_SINK@"
+            "toggle"
+          ];
         };
         "XF86AudioMicMute" = {
           allow-when-locked = true;
-          action.spawn = ["wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"];
+          action.spawn = [
+            "wpctl"
+            "set-mute"
+            "@DEFAULT_AUDIO_SOURCE@"
+            "toggle"
+          ];
         };
 
-        "Mod+Q".action.close-window = {};
+        "Mod+Q".action.close-window = { };
 
-        "Mod+Left".action.focus-column-left = {};
-        "Mod+Down".action.focus-window-down = {};
-        "Mod+Up".action.focus-window-up = {};
-        "Mod+Right".action.focus-column-right = {};
-        "Mod+H".action.focus-column-left = {};
-        "Mod+J".action.focus-window-down = {};
-        "Mod+K".action.focus-window-up = {};
-        "Mod+L".action.focus-column-right = {};
+        "Mod+Left".action.focus-column-left = { };
+        "Mod+Down".action.focus-window-down = { };
+        "Mod+Up".action.focus-window-up = { };
+        "Mod+Right".action.focus-column-right = { };
+        "Mod+H".action.focus-column-left = { };
+        "Mod+J".action.focus-window-down = { };
+        "Mod+K".action.focus-window-up = { };
+        "Mod+L".action.focus-column-right = { };
 
-        "Mod+Ctrl+Left".action.move-column-left = {};
-        "Mod+Ctrl+Down".action.move-window-down = {};
-        "Mod+Ctrl+Up".action.move-window-up = {};
-        "Mod+Ctrl+Right".action.move-column-right = {};
-        "Mod+Ctrl+H".action.move-column-left = {};
-        "Mod+Ctrl+J".action.move-window-down = {};
-        "Mod+Ctrl+K".action.move-window-up = {};
-        "Mod+Ctrl+L".action.move-column-right = {};
+        "Mod+Ctrl+Left".action.move-column-left = { };
+        "Mod+Ctrl+Down".action.move-window-down = { };
+        "Mod+Ctrl+Up".action.move-window-up = { };
+        "Mod+Ctrl+Right".action.move-column-right = { };
+        "Mod+Ctrl+H".action.move-column-left = { };
+        "Mod+Ctrl+J".action.move-window-down = { };
+        "Mod+Ctrl+K".action.move-window-up = { };
+        "Mod+Ctrl+L".action.move-column-right = { };
 
         # Alternative commands that move across workspaces when reaching
         # the first or last window in a column.
@@ -137,28 +171,28 @@
         # Mod+Ctrl+J     { move-window-down-or-to-workspace-down; }
         # Mod+Ctrl+K     { move-window-up-or-to-workspace-up; }
 
-        "Mod+Home".action.focus-column-first = {};
-        "Mod+End".action.focus-column-last = {};
-        "Mod+Ctrl+Home".action.move-column-to-first = {};
-        "Mod+Ctrl+End".action.move-column-to-last = {};
+        "Mod+Home".action.focus-column-first = { };
+        "Mod+End".action.focus-column-last = { };
+        "Mod+Ctrl+Home".action.move-column-to-first = { };
+        "Mod+Ctrl+End".action.move-column-to-last = { };
 
-        "Mod+Shift+Left".action.focus-monitor-left = {};
-        "Mod+Shift+Down".action.focus-monitor-down = {};
-        "Mod+Shift+Up".action.focus-monitor-up = {};
-        "Mod+Shift+Right".action.focus-monitor-right = {};
-        "Mod+Shift+H".action.focus-monitor-left = {};
-        "Mod+Shift+J".action.focus-monitor-down = {};
-        "Mod+Shift+K".action.focus-monitor-up = {};
-        "Mod+Shift+L".action.focus-monitor-right = {};
+        "Mod+Shift+Left".action.focus-monitor-left = { };
+        "Mod+Shift+Down".action.focus-monitor-down = { };
+        "Mod+Shift+Up".action.focus-monitor-up = { };
+        "Mod+Shift+Right".action.focus-monitor-right = { };
+        "Mod+Shift+H".action.focus-monitor-left = { };
+        "Mod+Shift+J".action.focus-monitor-down = { };
+        "Mod+Shift+K".action.focus-monitor-up = { };
+        "Mod+Shift+L".action.focus-monitor-right = { };
 
-        "Mod+Shift+Ctrl+Left".action.move-column-to-monitor-left = {};
-        "Mod+Shift+Ctrl+Down".action.move-column-to-monitor-down = {};
-        "Mod+Shift+Ctrl+Up".action.move-column-to-monitor-up = {};
-        "Mod+Shift+Ctrl+Right".action.move-column-to-monitor-right = {};
-        "Mod+Shift+Ctrl+H".action.move-column-to-monitor-left = {};
-        "Mod+Shift+Ctrl+J".action.move-column-to-monitor-down = {};
-        "Mod+Shift+Ctrl+K".action.move-column-to-monitor-up = {};
-        "Mod+Shift+Ctrl+L".action.move-column-to-monitor-right = {};
+        "Mod+Shift+Ctrl+Left".action.move-column-to-monitor-left = { };
+        "Mod+Shift+Ctrl+Down".action.move-column-to-monitor-down = { };
+        "Mod+Shift+Ctrl+Up".action.move-column-to-monitor-up = { };
+        "Mod+Shift+Ctrl+Right".action.move-column-to-monitor-right = { };
+        "Mod+Shift+Ctrl+H".action.move-column-to-monitor-left = { };
+        "Mod+Shift+Ctrl+J".action.move-column-to-monitor-down = { };
+        "Mod+Shift+Ctrl+K".action.move-column-to-monitor-up = { };
+        "Mod+Shift+Ctrl+L".action.move-column-to-monitor-right = { };
 
         # Alternatively, there are commands to move just a single window:
         # Mod+Shift+Ctrl+Left  { move-window-to-monitor-left; }
@@ -168,23 +202,23 @@
         # Mod+Shift+Ctrl+Left  { move-workspace-to-monitor-left; }
         # ...
 
-        "Mod+Page_Down".action.focus-workspace-down = {};
-        "Mod+Page_Up".action.focus-workspace-up = {};
-        "Mod+U".action.focus-workspace-down = {};
-        "Mod+I".action.focus-workspace-up = {};
-        "Mod+Ctrl+Page_Down".action.move-column-to-workspace-down = {};
-        "Mod+Ctrl+Page_Up".action.move-column-to-workspace-up = {};
-        "Mod+Ctrl+U".action.move-column-to-workspace-down = {};
-        "Mod+Ctrl+I".action.move-column-to-workspace-up = {};
+        "Mod+Page_Down".action.focus-workspace-down = { };
+        "Mod+Page_Up".action.focus-workspace-up = { };
+        "Mod+U".action.focus-workspace-down = { };
+        "Mod+I".action.focus-workspace-up = { };
+        "Mod+Ctrl+Page_Down".action.move-column-to-workspace-down = { };
+        "Mod+Ctrl+Page_Up".action.move-column-to-workspace-up = { };
+        "Mod+Ctrl+U".action.move-column-to-workspace-down = { };
+        "Mod+Ctrl+I".action.move-column-to-workspace-up = { };
 
         # Alternatively, there are commands to move just a single window:
         # Mod+Ctrl+Page_Down { move-window-to-workspace-down; }
         # ...
 
-        "Mod+Shift+Page_Down".action.move-workspace-down = {};
-        "Mod+Shift+Page_Up".action.move-workspace-up = {};
-        "Mod+Shift+U".action.move-workspace-down = {};
-        "Mod+Shift+I".action.move-workspace-up = {};
+        "Mod+Shift+Page_Down".action.move-workspace-down = { };
+        "Mod+Shift+Page_Up".action.move-workspace-up = { };
+        "Mod+Shift+U".action.move-workspace-down = { };
+        "Mod+Shift+I".action.move-workspace-up = { };
 
         # You can bind mouse wheel scroll ticks using the following syntax.
         # These binds will change direction based on the natural-scroll setting.
@@ -194,32 +228,32 @@
         # You can set a cooldown on any bind, but it's most useful for the wheel.
         "Mod+WheelScrollDown" = {
           cooldown-ms = 150;
-          action.focus-workspace-down = {};
+          action.focus-workspace-down = { };
         };
         "Mod+WheelScrollUp" = {
           cooldown-ms = 150;
-          action.focus-workspace-up = {};
+          action.focus-workspace-up = { };
         };
         "Mod+Ctrl+WheelScrollDown" = {
           cooldown-ms = 150;
-          action.move-column-to-workspace-down = {};
+          action.move-column-to-workspace-down = { };
         };
         "Mod+Ctrl+WheelScrollUp" = {
           cooldown-ms = 150;
-          action.move-column-to-workspace-up = {};
+          action.move-column-to-workspace-up = { };
         };
 
-        "Mod+WheelScrollRight".action.focus-column-right = {};
-        "Mod+WheelScrollLeft".action.focus-column-left = {};
-        "Mod+Ctrl+WheelScrollRight".action.move-column-right = {};
-        "Mod+Ctrl+WheelScrollLeft".action.move-column-left = {};
+        "Mod+WheelScrollRight".action.focus-column-right = { };
+        "Mod+WheelScrollLeft".action.focus-column-left = { };
+        "Mod+Ctrl+WheelScrollRight".action.move-column-right = { };
+        "Mod+Ctrl+WheelScrollLeft".action.move-column-left = { };
 
         # Usually scrolling up and down with Shift in applications results in
         # horizontal scrolling; these binds replicate that.
-        "Mod+Shift+WheelScrollDown".action.focus-column-right = {};
-        "Mod+Shift+WheelScrollUp".action.focus-column-left = {};
-        "Mod+Ctrl+Shift+WheelScrollDown".action.move-column-right = {};
-        "Mod+Ctrl+Shift+WheelScrollUp".action.move-column-left = {};
+        "Mod+Shift+WheelScrollDown".action.focus-column-right = { };
+        "Mod+Shift+WheelScrollUp".action.focus-column-left = { };
+        "Mod+Ctrl+Shift+WheelScrollDown".action.move-column-right = { };
+        "Mod+Ctrl+Shift+WheelScrollUp".action.move-column-left = { };
 
         # Similarly, you can bind touchpad scroll "ticks".
         # Touchpad scrolling is continuous, so for these binds it is split into
@@ -263,18 +297,18 @@
         # Switches focus between the current and the previous workspace.
         # Mod+Tab { focus-workspace-previous; }
 
-        "Mod+Comma".action.consume-window-into-column = {};
-        "Mod+Period".action.expel-window-from-column = {};
+        "Mod+Comma".action.consume-window-into-column = { };
+        "Mod+Period".action.expel-window-from-column = { };
 
         # There are also commands that consume or expel a single window to the side.
         # Mod+BracketLeft  { consume-or-expel-window-left; }
         # Mod+BracketRight { consume-or-expel-window-right; }
 
-        "Mod+R".action.switch-preset-column-width = {};
-        "Mod+Shift+R".action.reset-window-height = {};
-        "Mod+F".action.maximize-column = {};
-        "Mod+Shift+F".action.fullscreen-window = {};
-        "Mod+C".action.center-column = {};
+        "Mod+R".action.switch-preset-column-width = { };
+        "Mod+Shift+R".action.reset-window-height = { };
+        "Mod+F".action.maximize-column = { };
+        "Mod+Shift+F".action.fullscreen-window = { };
+        "Mod+C".action.center-column = { };
 
         # Finer width adjustments.
         # This command can also:
@@ -299,16 +333,16 @@
         # Mod+Space       { switch-layout "next"; }
         # Mod+Shift+Space { switch-layout "prev"; }
 
-        "Print".action.screenshot = {};
-        "Ctrl+Print".action.screenshot-screen = {};
-        "Alt+Print".action.screenshot-window = {};
+        "Print".action.screenshot = { };
+        "Ctrl+Print".action.screenshot-screen = { };
+        "Alt+Print".action.screenshot-window = { };
 
         # The quit action will show a confirmation dialog to avoid accidental exits.
-        "Mod+Shift+E".action.quit = {};
+        "Mod+Shift+E".action.quit = { };
 
         # Powers off the monitors. To turn them back on, do any input like
         # moving the mouse or pressing any other key.
-        "Mod+Shift+P".action.power-off-monitors = {};
+        "Mod+Shift+P".action.power-off-monitors = { };
       };
     };
   };
