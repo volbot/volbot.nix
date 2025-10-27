@@ -1,37 +1,54 @@
 {
   settings,
-    pkgs,
-    ...
-}: {
+  pkgs,
+  ...
+}:
+{
   imports =
-    if settings.hostname == "allomyrina"
-      then [
+    if settings.hostname == "allomyrina" then
+      [
         ./wm/niri.nix
-          ./floorp.nix
-          ./multimedia.nix
+        ./floorp.nix
+        ./multimedia.nix
       ]
-    else [
-      ./floorp.nix
-    ];
+    else
+      [
+        ./floorp.nix
+      ];
 
-  home.packages = if settings.hostname == "allomyrina"
-    then with pkgs; [
-    kitty
-      spotify
+  home.packages =
+    if settings.hostname == "allomyrina" then
+      with pkgs;
+      [
+        spotify
 
-      gnome-tweaks
+        #TODO: integrate the next 3 lines into a single pipewire module
+        qpwgraph
+        helvum
+        pavucontrol
 
-      gnome-font-viewer
+        chromium
 
-      noto-fonts
-      noto-fonts-color-emoji
+        gnome-tweaks
 
-      liberation_ttf
-      aileron
-      montserrat
+        gnome-font-viewer
 
-      nerd-fonts.mononoki
-      nerd-fonts.fantasque-sans-mono
+        noto-fonts
+        noto-fonts-color-emoji
 
-    ] else [];
+        liberation_ttf
+        aileron
+        montserrat
+
+        nerd-fonts.mononoki
+        nerd-fonts.fantasque-sans-mono
+
+      ]
+    else
+      [ ];
+
+  xdg = {
+    mime.enable = true;
+    mimeApps.enable = true;
+  };
 }

@@ -1,10 +1,5 @@
 { pkgs, ... }:
 {
-  # home.packages = with pkgs; [
-  #  qpwgraph
-  #    helvum
-  #];
-
   security.rtkit.enable = true;
 
   services.pipewire = {
