@@ -30,7 +30,7 @@
 
   programs.fish.enable = true;
 
-  users.users.alli = {
+  users.users.allie = {
     isNormalUser = true;
     description = "allomyrina volbot";
     extraGroups = ["networkmanager" "wheel"];
