@@ -31,6 +31,8 @@
       fastfetch
       libsixel
 
+      gof5
+
       yazi
       ripdrag
 
