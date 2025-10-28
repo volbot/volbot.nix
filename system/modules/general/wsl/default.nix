@@ -9,7 +9,7 @@
 
   wsl = {
     enable = true;
-    defaultUser = "alli";
+    defaultUser = "allie";
     useWindowsDriver = true;
     interop.register = true;
   };
