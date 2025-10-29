@@ -27,6 +27,8 @@
         helvum
         pavucontrol
 
+        zoom-us
+
         chromium
 
         gnome-tweaks
