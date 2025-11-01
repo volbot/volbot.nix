@@ -9,6 +9,9 @@
       #krita
     vlc
 
+    blender
+    unityhub
+
     libreoffice
   ];
 }

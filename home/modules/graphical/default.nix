@@ -29,6 +29,7 @@
 
         zoom-us
 
+        firefox
         chromium
 
         gnome-tweaks

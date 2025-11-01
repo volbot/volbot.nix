@@ -32,6 +32,7 @@
       libsixel
 
       gof5
+      wireguard-tools
 
       yazi
       ripdrag
