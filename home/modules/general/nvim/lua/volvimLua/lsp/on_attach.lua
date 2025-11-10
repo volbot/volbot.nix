@@ -1,6 +1,4 @@
-
-
-local function lsp_on_attach(_, bufnr)
+return function(_, bufnr)
   -- we create a function that lets us more easily define mappings specific
   -- for LSP related items. It sets the mode, buffer and description for us each time.
 
@@ -41,6 +39,5 @@ local function lsp_on_attach(_, bufnr)
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
     vim.lsp.buf.format()
   end, { desc = 'Format current buffer with LSP' })
-
 end
 

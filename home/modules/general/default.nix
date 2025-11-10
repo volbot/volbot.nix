@@ -31,6 +31,8 @@
       fastfetch
       libsixel
 
+      speedtest-cli
+
       gof5
       wireguard-tools
 

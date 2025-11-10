@@ -6,7 +6,7 @@
 {
   imports =
     if settings.hostname == "allomyrina" then
-      [ 
+      [
       ]
     else
       [
@@ -24,6 +24,11 @@
     pkgs.man-pages
     gnumake
     gcc
+  ];
+
+  environment.pathsToLink = [
+    "/share/applications"
+    "/share/xdg-desktop-portal"
   ];
 
   programs.fish.enable = true;

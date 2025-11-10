@@ -6,7 +6,11 @@
       #pandoc
 
     gimp3
-      #krita
+    inkscape
+    krita
+    aseprite
+    #libresprite
+
     vlc
 
     blender
