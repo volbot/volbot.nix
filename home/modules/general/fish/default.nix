@@ -44,5 +44,4 @@ in
       };
     */
   };
-  programs.zoxide.enableFishIntegration = true;
 }

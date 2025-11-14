@@ -45,4 +45,8 @@
       nodejs_24
     ];
   };
+  programs.zoxide = {
+    enable = true;
+    enableFishIntegration = true;
+  };
 }
