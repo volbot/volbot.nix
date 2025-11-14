@@ -31,6 +31,8 @@
       fastfetch
       libsixel
 
+      zoxide
+
       speedtest-cli
 
       gof5
