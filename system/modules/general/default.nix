@@ -16,7 +16,6 @@
       ];
 
   environment.systemPackages = with pkgs; [
-    git
     wget
     neovim
     dconf
@@ -34,4 +33,9 @@
   programs.fish.enable = true;
 
   documentation.dev.enable = true;
+
+  programs.git = {
+    enable = true;
+    lfs.enable = true;
+  };
 }
