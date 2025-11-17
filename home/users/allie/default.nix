@@ -23,9 +23,12 @@
 
   programs.foot.enable = true;
 
-  programs.git.settings.user = {
-    name = "allomyrina volbot";
-    email = "volbot.tech@gmail.com";
+  programs.git.settings = {
+    user = {
+      name = "allomyrina volbot";
+      email = "volbot.tech@gmail.com";
+    };
+    init.defaultBranch = "main";
   };
 
   xdg = {

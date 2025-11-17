@@ -20,6 +20,7 @@
             ublock-origin
             sidebery
             vimium
+            tabliss
           ];
         };
 

@@ -1,9 +1,9 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    #ffmpeg-full
-      #imagemagick
-      #pandoc
+    ffmpeg-full
+    imagemagick
+    pandoc
 
     gimp3
     inkscape
