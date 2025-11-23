@@ -21,7 +21,7 @@ let
     (builtins.readFile "${inputs.voltrix}/build/fish/voltrix.fish")
     fileContents.functions."fish_right_prompt.fish"
     fileContents.functions."fish_mode_prompt.fish"
-    #fileContents.functions."fish_prompt.fish"
+    fileContents.functions."fish_prompt.fish"
     fileContents.functions."fish_greeting.fish"
     fileContents."config.fish"
   ];

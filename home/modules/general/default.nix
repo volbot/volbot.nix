@@ -43,6 +43,9 @@
 
       pnpm
       nodejs_24
+
+pastel
+jq
     ];
   };
   programs.zoxide = {

@@ -1,4 +1,5 @@
 function fish_prompt
+    voltrix
     ##############
     ## ENV DEFS ##
     ##############

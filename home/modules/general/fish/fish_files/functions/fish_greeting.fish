@@ -1,4 +1,5 @@
 function fish_greeting
+    voltrix
     ###############
     ## FUNCTIONS ##
     ###############

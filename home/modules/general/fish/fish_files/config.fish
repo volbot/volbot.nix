@@ -1,5 +1,5 @@
 if status is-interactive
-    voltrix 
+    #    voltrix 
 
     # set options for manpage reading
     export MANPAGER="less -R --use-color -Dd+r -Du+b"
