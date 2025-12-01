@@ -33,6 +33,7 @@ require("lze").load({
           svelte = { "prettierd" },
           python = { "isort", "black" },
           yaml = { "yamlfmt" },
+          rust = {"rustfmt"},
         },
       })
 
