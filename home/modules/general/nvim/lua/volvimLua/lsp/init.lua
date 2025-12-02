@@ -7,7 +7,7 @@ require("lze").register_handlers(require("lzextras").lsp)
 -- also replace the fallback filetype list retrieval function with a slightly faster one
 require("lze").h.lsp.set_ft_fallback(function(name)
 	return dofile(nixCats.pawsible({ "allPlugins", "opt", "nvim-lspconfig" }) .. "/lsp/" .. name .. ".lua").filetypes
-		or {}
+	or {}
 end)
 require("lze").load({
 	{
@@ -130,5 +130,40 @@ require("lze").load({
 	  lsp = {
 	    filetypes = { "scheme", "scm", "ss", "rkt" },
 	  },
+		"rust-analyzer",
+		lsp = {
+			enabled = nixCats("rust") or false,
+			filetypes = { "rust" },
+			settings = {
+				["rust-analyzer"] = {
+					check = {
+						command = "clippy",
+						extraArgs = { "--no-deps" },
+					},
+					cargo = {
+						allTargets = false,
+					},
+					diagnostics = {
+						experimental = {
+							enable = true,
+						},
+					},
+					cachePriming = {
+						enable = false,
+					},
+				},
+			},
+			capabilities = {
+				experimental = {
+					serverStatusNotification = true,
+				},
+			},
+			before_init = function(init_params, config)
+				if config.settings and config.settings["rust-analyzer"] then
+					init_params.initializationOptions = config.settings["rust-analyzer"]
+				end
+			end,
+			root_markers = { "Cargo.toml" },
+		},
 	},
 })

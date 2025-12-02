@@ -68,6 +68,27 @@
         "type": "github"
       }
     },
+    "fenix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-analyzer-src": "rust-analyzer-src"
+      },
+      "locked": {
+        "lastModified": 1764485195,
+        "narHash": "sha256-VPbuGvsS3rN+CR75xTIG6kk5v1SSQ62DDtz/WImdtfo=",
+        "owner": "nix-community",
+        "repo": "fenix",
+        "rev": "2e31077af24c47ea9057fcb152fa0386444e582a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "fenix",
+        "type": "github"
+      }
+    },
     "firefox-addons": {
       "inputs": {
         "nixpkgs": "nixpkgs"
@@ -507,6 +528,22 @@
         "type": "github"
       }
     },
+    "plugins-rustaceanvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1764542305,
+        "narHash": "sha256-t7xAQ9sczLyA1zODmD+nEuWuLnhrfSOoPu/4G/YTGdU=",
+        "owner": "mrcjkb",
+        "repo": "rustaceanvim",
+        "rev": "6c3785d6a230bec63f70c98bf8e2842bed924245",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mrcjkb",
+        "repo": "rustaceanvim",
+        "type": "github"
+      }
+    },
     "plugins-voltrix-nvim": {
       "flake": false,
       "locked": {
@@ -525,6 +562,7 @@
     },
     "root": {
       "inputs": {
+        "fenix": "fenix",
         "firefox-addons": "firefox-addons",
         "fish-ssh-agent": "fish-ssh-agent",
         "font-flake": "font-flake",
@@ -535,9 +573,27 @@
         "nixCats": "nixCats",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_6",
+        "plugins-rustaceanvim": "plugins-rustaceanvim",
         "plugins-voltrix-nvim": "plugins-voltrix-nvim",
         "stylix": "stylix",
         "voltrix": "voltrix"
+      }
+    },
+    "rust-analyzer-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1764443484,
+        "narHash": "sha256-0ogtpJuadSpl/Y04GsxtUYHD4GW4ZNV8StJTS2MVvEE=",
+        "owner": "rust-lang",
+        "repo": "rust-analyzer",
+        "rev": "66c11a2880f6a929e3ba811aa6102c4d9fe2f77a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rust-lang",
+        "ref": "nightly",
+        "repo": "rust-analyzer",
+        "type": "github"
       }
     },
     "stylix": {

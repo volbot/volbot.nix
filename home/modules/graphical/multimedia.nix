@@ -12,6 +12,8 @@
     #libresprite
 
     vlc
+    audacity
+    reaper
 
     blender
     unityhub
