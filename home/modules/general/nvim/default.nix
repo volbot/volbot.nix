@@ -101,6 +101,13 @@ in
               go
             ];
             json = with pkgs; [ nodePackages_latest.vscode-json-languageserver ];
+            scheme = with pkgs; [
+              #mitscheme
+              chez
+              scheme-manpages
+              akkuPackages.akku
+              akkuPackages.scheme-langserver
+            ];
           };
 
           startupPlugins = {
@@ -209,6 +216,8 @@ in
               ui = true;
               git = true;
               lint = true;
+
+              scheme = true;
             };
             extra = {
               nixExtras.nixpkgs = ''import ${pkgs.path} {}'';

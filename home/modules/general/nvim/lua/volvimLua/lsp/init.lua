@@ -124,4 +124,11 @@ require("lze").load({
 			filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto", "hpp", "y", "l" },
 		},
 	},
+	{
+	  "scheme_langserver",
+	  enabled = nixCats("scheme") or false,
+	  lsp = {
+	    filetypes = { "scheme", "scm", "ss", "rkt" },
+	  },
+	},
 })

@@ -3,7 +3,7 @@
   home.packages = with pkgs; [
     ffmpeg-full
     imagemagick
-    pandoc
+#    pandoc
 
     gimp3
     inkscape
