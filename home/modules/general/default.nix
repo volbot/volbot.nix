@@ -25,6 +25,7 @@
     shell.enableFishIntegration = true;
     packages = with pkgs; [
       lf
+      zip
       unzip
       lazygit
       vesktop

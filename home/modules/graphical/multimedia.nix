@@ -11,6 +11,15 @@
     aseprite
     #libresprite
 
+    (pkgs.wrapOBS {
+      plugins = with pkgs.obs-studio-plugins; [
+        wlrobs
+        obs-pipewire-audio-capture
+        obs-gstreamer
+        obs-vkcapture
+      ];
+    })
+
     vlc
     audacity
     reaper
