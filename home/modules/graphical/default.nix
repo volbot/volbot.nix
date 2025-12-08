@@ -10,6 +10,7 @@
         ./wm/niri.nix
         ./floorp.nix
         ./multimedia.nix
+        ./wireshark.nix
       ]
     else
       [
