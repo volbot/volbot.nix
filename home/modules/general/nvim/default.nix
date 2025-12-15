@@ -99,22 +99,15 @@ in
               go-tools
               gotestsum
               go
-            ];
+          ];
           rust = with pkgs; [
             inputs.fenix.packages.${stdenv.hostPlatform.system}.latest.toolchain
               rustup
               llvmPackages.bintools
               lldb
           ];
-            json = with pkgs; [ nodePackages_latest.vscode-json-languageserver ];
-            scheme = with pkgs; [
-              #mitscheme
-              chez
-              scheme-manpages
-              akkuPackages.akku
-              akkuPackages.scheme-langserver
-            ];
-          };
+          json = with pkgs; [ nodePackages_latest.vscode-json-languageserver ];
+        };
 
         startupPlugins = {
           general = with pkgs.vimPlugins; [

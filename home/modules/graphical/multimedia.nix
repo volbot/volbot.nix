@@ -5,6 +5,8 @@
     imagemagick
 #    pandoc
 
+gpick
+
     gimp3
     inkscape
     krita
