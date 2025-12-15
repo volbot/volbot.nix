@@ -10,7 +10,7 @@
         ./wm/niri.nix
         ./floorp.nix
         ./multimedia.nix
-        ./wireshark.nix
+        ./games.nix
       ]
     else
       [
@@ -27,6 +27,13 @@
         qpwgraph
         helvum
         pavucontrol
+
+        slurp
+        grim
+
+        sublime
+
+        ladybird
 
         zoom-us
 

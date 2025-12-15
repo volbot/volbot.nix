@@ -33,6 +33,7 @@
       libsixel
 
       zoxide
+      file
 
       speedtest-cli
 

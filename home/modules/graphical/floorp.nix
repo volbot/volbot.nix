@@ -111,7 +111,7 @@
 
   xdg.mimeApps = {
     defaultApplications = {
-      "text/html" = "floorp.desktopp";
+      "text/html" = "floorp.desktop";
       "application/pdf" = "floorp.desktop";
       "x-scheme-handler/http" = "floorp.desktop";
       "x-scheme-handler/https" = "floorp.desktop";

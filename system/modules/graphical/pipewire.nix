@@ -12,13 +12,15 @@
 
   # boot.blacklistedKernelModules = [ "snd_aloop" ];
 
+  # disable automatic headphone switch
   services.pipewire.wireplumber.extraConfig."51-mitigate-annoying-profile-switch" = {
     "wireplumber.settings" = {
       "bluetooth.autoswitch-to-headset-profile" = false;
     };
   };
 
-  services.pipewire.wireplumber.extraConfig."51-stop-restoring-shit-you-cunt" = {
+  # stops applications from automatically restoring profile configuration, so that everything can be defined declaratively
+  services.pipewire.wireplumber.extraConfig."51-disable-auto-configure" = {
     "wireplumber.settings" = {
       "device.restore-profile" = false;
       "device.restore-routes" = false;
@@ -28,18 +30,44 @@
     };
   };
 
-  services.pipewire.extraConfig.pipewire-pulse."51-STOP-FUCKING-WITH-MY-SHIT" = {
+  # stop discord from changing microphone volumes
+  services.pipewire.extraConfig.pipewire-pulse."51-discord-stop-resetting-audio" = {
     "pulse.rules" = [
-    {
-      "match" = [
-      { "application.process.binary" = "vesktop"; }
-      ];
-      "actions" = {
-        "quirks" = [ "block-source-volume" ];
-      };
-    }
+      {
+        "match" = [
+          { "application.process.binary" = "vesktop"; }
+        ];
+        "actions" = {
+          "quirks" = [ "block-source-volume" ];
+        };
+      }
+    ];
+  };
+
+  # configure defaults
+  services.pipewire.wireplumber.extraConfig."99-set-defaults" = {
+    "monitor.alsa.rules" = [
+      {
+        matches = [
+          {
+            # this one matches my mobo audio
+            "node.nick" = "ALC1220 Analog";
+            "media.class" = "Audio/Sink";
+          }
+          {
+            # this one matches my microphone source
+            "node.nick" = "Samson Q2U Microphone";
+            "media.class" = "Audio/Source";
+          }
+        ];
+        actions = {
+          update-props = {
+            "priority.driver" = 3000;
+            "priority.session" = 3000;
+          };
+        };
+      }
     ];
   };
 
 }
-

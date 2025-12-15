@@ -29,4 +29,12 @@
 
     libreoffice
   ];
+
+  xdg.mimeApps = {
+    defaultApplications = {
+      "image/png" = "gimp.desktop";
+      "image/jpeg" = "gimp.desktop";
+      "image/webp" = "gimp.desktop";
+    };
+  };
 }
