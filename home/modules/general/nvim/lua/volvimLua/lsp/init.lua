@@ -125,6 +125,11 @@ require("lze").load({
 		},
 	},
 	{
+	  "scheme_langserver",
+	  enabled = nixCats("scheme") or false,
+	  lsp = {
+	    filetypes = { "scheme", "scm", "ss", "rkt" },
+	  },
 		"rust-analyzer",
 		lsp = {
 			enabled = nixCats("rust") or false,

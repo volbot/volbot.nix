@@ -46,6 +46,8 @@
       pnpm
       nodejs_24
 
+      pandoc
+
 pastel
 jq
     ];

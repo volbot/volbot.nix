@@ -14,7 +14,7 @@
       ]
     else
       [
-        ./floorp.nix
+#        ./floorp.nix
       ];
 
   home.packages =
