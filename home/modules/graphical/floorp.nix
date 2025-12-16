@@ -5,6 +5,15 @@
 }:
 {
 
+/*
+  imports = [ inputs.textfox.homeManagerModules.default ];
+
+  textfox = {
+    enable = true;
+    profile = "allomyrina";
+  };
+  */
+
   programs.floorp = {
 
     enable = true;

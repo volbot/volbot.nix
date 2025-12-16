@@ -52,6 +52,8 @@
       flake = false;
     };
 
+    textfox.url = "github:adriankarlen/textfox";
+
     font-flake.url = "path:./fonts";
   };
 
