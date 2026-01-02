@@ -7,6 +7,7 @@
   imports =
     if settings.hostname == "allomyrina" then
       [
+        ./mangohud
         ./wm/niri.nix
         ./floorp.nix
         ./multimedia.nix
