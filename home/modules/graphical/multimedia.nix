@@ -10,7 +10,7 @@ gpick
     gimp3
     inkscape
     krita
-    aseprite
+    #aseprite
     #libresprite
 
     (pkgs.wrapOBS {
@@ -21,6 +21,9 @@ gpick
         obs-vkcapture
       ];
     })
+
+mesa-demos
+vulkan-tools
 
     vlc
     audacity

@@ -75,6 +75,7 @@
     extraGroups = [
       "networkmanager"
       "wheel"
+      "gamemode"
     ];
     packages = with pkgs; [ ];
     shell = pkgs.fish;

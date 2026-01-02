@@ -79,7 +79,7 @@
         "DP-3" = {
           mode.width = 1920;
           mode.height = 1080;
-          mode.refresh = 144.001;
+          mode.refresh = 60.0;
           focus-at-startup = true;
           variable-refresh-rate = "on-demand";
           position.x = 1920;
