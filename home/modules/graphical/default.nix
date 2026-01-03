@@ -45,6 +45,9 @@
 
         gnome-font-viewer
 
+        cooper
+        besley
+
         noto-fonts
         noto-fonts-color-emoji
 
