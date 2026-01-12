@@ -98,6 +98,12 @@ in
               gotestsum
               go
             ];
+            java = with pkgs; [
+              jdt-language-server
+              lombok
+              vscode-extensions.vscjava.vscode-java-debug
+              vscode-extensions.vscjava.vscode-java-test
+            ];
             rust = with pkgs; [
               inputs.fenix.packages.${stdenv.hostPlatform.system}.latest.toolchain
               rustup
@@ -144,6 +150,8 @@ in
               nvim-dap
               nvim-dap-ui
               nvim-dap-virtual-text
+
+              nvim-jdtls
             ];
           };
 
@@ -210,6 +218,7 @@ in
               nix = true;
               go = true;
               rust = true;
+              java = true;
 
               debug = true;
               editor = true;
@@ -219,6 +228,11 @@ in
               lint = true;
             };
             extra = {
+              jdtls = "${pkgs.jdt-language-server}/share/java/jdtls";
+              lombok = "${pkgs.lombok}/share/java/lombok.jar";
+              java_debug_adapter = "${pkgs.vscode-extensions.vscjava.vscode-java-debug}/share/vscode/extensions/vscjava.vscode-java-debug";
+              java_test = "${pkgs.vscode-extensions.vscjava.vscode-java-test}/share/vscode/extensions/vscjava.vscode-java-test";
+
               nixExtras.nixpkgs = ''import ${pkgs.path} {}'';
               base16colors = {
                 name = "stylix";

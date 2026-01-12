@@ -229,4 +229,69 @@ require("lze").load({
 			},
 		},
 	},
+	{
+		"nvim-jdtls",
+		enabled = nixCats("java") or false,
+	},
+})
+local jdtls = require("jdtls")
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "java",
+	callback = function()
+		local config = {
+			cmd = {
+				"jdtls",
+				"--jvm-arg=-javaagent:" ..  nixCats.extra("lombok"),
+			},
+			root_dir = vim.fs.root(0, { "gradlew", ".git", "mvnw", "pom.xml" }),
+			settings = {
+				java = {
+					contentProvider = { preferred = "cfr" },
+					sources = {
+						organizeImports = {
+							starThreshold = 9999,
+							staticStarThreshold = 9999,
+						},
+					},
+					import = {
+						maven = {
+							enabled = true,
+						},
+						gradle = {
+							enabled = true,
+							wrapper = {
+								enabled = true,
+							},
+						},
+					},
+					--[[
+					configuration = {
+						runtimes = {
+							{
+								name = "JavaSE-1.8",
+								path = nixCats.extra["jdk8-path"],
+							},
+							{
+								name = "JavaSE-21",
+								path = "/run/current-system/sw/lib/openjdk",
+							},
+						},
+					},
+					]]
+				},
+			},
+			init_options = {
+				--[[
+				bundles = {
+					"/home/indi/Development/Java/vscode-java-decompiler/server/dg.jdt.ls.decompiler.cfr-0.0.3.jar",
+					"/home/indi/Development/Java/vscode-java-decompiler/server/dg.jdt.ls.decompiler.common-0.0.3.jar",
+					"/home/indi/Development/Java/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-0.53.2.jar",
+				},
+				]]
+				extendedClientCapabilities = jdtls.extendedClientCapabilities,
+			},
+			on_attach = require("volvimLua.lsp.on_attach"),
+		}
+		jdtls.start_or_attach(config)
+	end,
 })

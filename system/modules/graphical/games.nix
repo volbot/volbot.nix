@@ -6,6 +6,7 @@
   environment.systemPackages = with pkgs; [
     protonup-qt
     gamescope-wsi
+    protontricks
   ];
 
   programs.steam = {
