@@ -2,18 +2,32 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ modulesPath, config, lib, pkgs, inputs, stateVersion, users, hostname, ... }: let
-in {
+{
+  modulesPath,
+  config,
+  lib,
+  pkgs,
+  inputs,
+  stateVersion,
+  users,
+  hostname,
+  ...
+}:
+let
+in
+{
   imports = with inputs.self.nixosModules; [
-    i3
-    birdeevim
-    bash
-    zsh
-    inputs.self.wrappedModules.tmux.nixosModule
-    fish
-    lightdm
-    i3MonMemory
-    LD
+    volvim
+    /*
+      i3
+      bash
+      zsh
+      inputs.self.wrappedModules.tmux.nixosModule
+      fish
+      lightdm
+      i3MonMemory
+      LD
+    */
   ];
 
   nix.settings = {
@@ -21,7 +35,10 @@ in {
     extra-trusted-substituters = [
       "https://nix-community.cachix.org"
     ];
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     show-trace = true;
     auto-optimise-store = true;
     flake-registry = "";
@@ -30,9 +47,11 @@ in {
     ];
     trusted-users = [ "@wheel" ];
   };
-  nix.extraOptions = ''
-    !include /home/birdee/.secrets/gitoke
-  '';
+  /*
+    nix.extraOptions = ''
+      !include /home/birdee/.secrets/gitoke
+    '';
+  */
   # nix.extraOptions = ''
   #   plugin-files = ${pkgs.nix-plugins}/lib/nix/plugins
   # '';
@@ -48,13 +67,13 @@ in {
       packageNames = [ "volvim" ];
     };
     /*
-    i3.enable = true;
-    zsh.enable = true;
-    bash.enable = true;
-    fish.enable = true;
-    i3MonMemory.enable = true;
-    lightdm.enable = true;
-    LD.enable = true;
+      i3.enable = true;
+      zsh.enable = true;
+      bash.enable = true;
+      fish.enable = true;
+      i3MonMemory.enable = true;
+      lightdm.enable = true;
+      LD.enable = true;
     */
   };
 
@@ -62,23 +81,22 @@ in {
 
   virtualisation.libvirtd.enable = true;
 
-/*
-  services.clamav.daemon.enable = true;
-  services.clamav.updater.enable = true;
-  services.clamav.updater.interval = "weekly";
+  /*
+    services.clamav.daemon.enable = true;
+    services.clamav.updater.enable = true;
+    services.clamav.updater.interval = "weekly";
   */
 
   environment.variables = {
   };
-  environment.interactiveShellInit = ''
-  '';
+  environment.interactiveShellInit = '''';
   /*
-  environment.shellAliases = {
-    lsnc = "lsd --color=never";
-    la = "lsd -a";
-    ll = "lsd -lh";
-    l  = "lsd -alh";
-  };
+    environment.shellAliases = {
+      lsnc = "lsd --color=never";
+      la = "lsd -a";
+      ll = "lsd -lh";
+      l  = "lsd -alh";
+    };
   */
 
   # Bootloader.
@@ -135,7 +153,11 @@ in {
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-  services.printing.drivers = with pkgs; [ gutenprint hplip splix ];
+  services.printing.drivers = with pkgs; [
+    gutenprint
+    hplip
+    splix
+  ];
   services.printing.webInterface = false;
 
   # Enable sound with pipewire.
@@ -171,10 +193,23 @@ in {
   fonts.fontconfig = {
     enable = true;
     defaultFonts = {
-      serif = [ "GoMono Nerd Font Mono" "FiraCode" ];
-      sansSerif = [ "FiraCode Nerd Font Mono" "FiraCode" ];
-      monospace = [ "FiraCode Nerd Font Mono"  "FiraCode" ];
-      emoji = [ "OpenMoji Color" "OpenMoji" "Noto Color Emoji" ];
+      serif = [
+        "GoMono Nerd Font Mono"
+        "FiraCode"
+      ];
+      sansSerif = [
+        "FiraCode Nerd Font Mono"
+        "FiraCode"
+      ];
+      monospace = [
+        "FiraCode Nerd Font Mono"
+        "FiraCode"
+      ];
+      emoji = [
+        "OpenMoji Color"
+        "OpenMoji"
+        "Noto Color Emoji"
+      ];
     };
   };
   fonts.fontDir.enable = true;
@@ -182,57 +217,58 @@ in {
 
   virtualisation.docker.enable = true;
 
-  users.defaultUserShell = pkgs.zsh;
+  programs.fish.enable = true;
+  users.defaultUserShell = pkgs.fish;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = (let
-  in
-  with pkgs; [
-    # vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wezterm
-    git_with_config
-    hplip
-    qemu
-    tmux
-    fuse
-    fuse3
-    parted
-    gparted
-    sshfs-fuse
-    socat
-    nix-output-monitor
-    screen
-    tcpdump
-    sdparm
-    hdparm
-    smartmontools # for diagnosing hard disks
-    nix-info
-    pciutils
-    lm_sensors
-    xplr
-    usbutils
-    nvme-cli
-    unzip
-    zip
-    vagrant
-    exfat
-    exfatprogs
-    lshw
-    lsd
-    bat
-    wget
-    tree
-    zip
-    _7zz
-    unzip
-    xclip
-    xsel
-    ntfs3g
-    # dislocker
-    man-pages
-    man-pages-posix
-  ]);
+  environment.systemPackages = (
+    with pkgs;
+    [
+      # vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+      wezterm
+      hplip
+      qemu
+      tmux
+      fuse
+      fuse3
+      parted
+      gparted
+      sshfs-fuse
+      socat
+      nix-output-monitor
+      screen
+      tcpdump
+      sdparm
+      hdparm
+      smartmontools # for diagnosing hard disks
+      nix-info
+      pciutils
+      lm_sensors
+      xplr
+      usbutils
+      nvme-cli
+      unzip
+      zip
+      vagrant
+      exfat
+      exfatprogs
+      lshw
+      lsd
+      bat
+      wget
+      tree
+      zip
+      _7zz
+      unzip
+      xclip
+      xsel
+      ntfs3g
+      # dislocker
+      man-pages
+      man-pages-posix
+    ]
+  );
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

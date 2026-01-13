@@ -19,8 +19,6 @@
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  programs.fish.enable = true;
-
   services.openssh = {
     enable = true;
     settings = {
