@@ -5,15 +5,12 @@
 }:
 {
   imports =
-    if settings.hostname == "allomyrina" then
       [
         ./greetd.nix
         ./pipewire.nix
         ./nvidia.nix
         ./games.nix
-      ]
-    else
-      [ ];
+      ];
   services.blueman.enable = true;
   hardware.bluetooth = {
     enable = true;

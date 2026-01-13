@@ -1,5 +1,5 @@
 {
-  description = "nixos flake :3";
+  description = "my nix system :3";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -11,6 +11,9 @@
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    flake-utils.url = "github:numtide/flake-utils";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    nix-appimage.url = "github:ralismark/nix-appimage";
 
     fenix = {
       url = "github:nix-community/fenix";
@@ -55,79 +58,8 @@
     textfox.url = "github:adriankarlen/textfox";
 
     font-flake.url = "path:./fonts";
+    volvim.url = "path:./nixcats";
   };
 
-  outputs =
-    inputs@{
-      self,
-      nixpkgs,
-      home-manager,
-      nix-ld,
-      ...
-    }:
-    let
-      hosts = [
-        {
-          hostname = "allomyrina";
-          usernames = [ "allie" ];
-          system = "x86_64-linux";
-        }
-        {
-          hostname = "ariadne";
-          usernames = [ "allie" ];
-          system = "x86_64-linux";
-        }
-      ];
-
-      mapListToAttrs = list: f: builtins.listToAttrs (map f list);
-    in
-    {
-      nixosConfigurations = mapListToAttrs hosts (
-        settings@{
-          hostname,
-          usernames,
-          system,
-        }:
-        let
-          lib = nixpkgs.lib.extend (
-            _: _: {
-              mine =
-                import ./lib {
-                  inherit (nixpkgs) lib;
-                  inherit inputs system;
-                }
-                // {
-                  inherit mapListToAttrs;
-                };
-            }
-          );
-          specialArgs = { inherit inputs settings; };
-        in
-        lib.nameValuePair hostname (
-          lib.nixosSystem {
-            inherit specialArgs system;
-            modules = [
-              ./system/hosts/${hostname}
-              #import ./overlays
-              home-manager.nixosModules.default
-
-              nix-ld.nixosModules.nix-ld
-
-              # The module in this repository defines a new module under (programs.nix-ld.dev) instead of (programs.nix-ld)
-              # to not collide with the nixpkgs version.
-              { programs.nix-ld.dev.enable = true; }
-
-              {
-                home-manager = {
-                  useGlobalPkgs = true;
-                  useUserPackages = true;
-                  extraSpecialArgs = specialArgs;
-                  users = mapListToAttrs usernames (uname: lib.nameValuePair uname (import ./home/users/${uname}));
-                };
-              }
-            ];
-          }
-        )
-      );
-    };
+  outputs = inputs: import ./. inputs;
 }

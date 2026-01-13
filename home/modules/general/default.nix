@@ -5,15 +5,6 @@
 }:
 {
   imports =
-    if settings.hostname == "allomyrina" then
-      [
-        ./fish
-        ./nvim
-        ./stylix.nix
-        ./yazi.nix
-        ./starship
-      ]
-    else
       [
         ./fish
         ./nvim
