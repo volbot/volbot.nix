@@ -39,6 +39,7 @@
     ];
   };
 
+/*
   fileSystems."/neptune" = {
     device = "/dev/disk/by-uuid/887458A47458973287458A474589732";
     fsType = "ntfs";
@@ -47,6 +48,7 @@
       "remount,ro"
     ];
   };
+  */
 
   swapDevices = [
     { device = "/dev/disk/by-uuid/9de3a981-268a-44b6-b8b2-71456ff0f825"; }
