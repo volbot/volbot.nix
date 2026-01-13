@@ -77,8 +77,8 @@ in
 
   # populates $LUA_PATH and $LUA_CPATH
   extraLuaPackages = {
-    fennel = [ (lp: with lp; [ fennel ]) ];
-    # other = [ (lp: with lp; [ tomlua ]) ];
+    #fennel = [ (lp: with lp; [ fennel ]) ];
+     other = [ (lp: with lp; [ tomlua ]) ];
   };
 
   lspsAndRuntimeDeps = with pkgs; {
@@ -202,7 +202,7 @@ in
     ];
     other = [
       tomlua
-      pkgs.neovimPlugins.shelua
+      #pkgs.neovimPlugins.shelua
       # (pkgs.neovimUtils.grammarToPlugin (pkgs.tree-sitter-grammars.tree-sitter-nu.overrideAttrs (p: { installQueries = true; })))
     ];
     lua = [
@@ -289,5 +289,33 @@ in
         mini-base16
       ];
     };
+    /*
+    general = with pkgs.vimPlugins; [
+        luasnip
+        cmp-cmdline
+        blink-cmp
+        blink-compat
+        colorful-menu-nvim
+
+        pkgs.neovimPlugins.nvim-treesitter-textobjects
+        pkgs.neovimPlugins.nvim-treesitter.withAllGrammars
+        vim-rhubarb
+        vim-fugitive
+        pkgs.neovimPlugins.nvim-lspconfig
+        lualine-lsp-progress
+        lualine-nvim
+        gitsigns-nvim
+        grapple-nvim
+        # marks-nvim
+        nvim-lint
+        conform-nvim
+        undotree
+        nvim-surround
+        treesj
+        dial-nvim
+        vim-sleuth
+        mini-base16
+    ];
+    */
   };
 }

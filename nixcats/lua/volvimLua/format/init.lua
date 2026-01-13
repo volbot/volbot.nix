@@ -1,4 +1,4 @@
-require("lze").load({
+return {
   {
     "conform.nvim",
     --enabled = nixCats("general") or false,
@@ -46,4 +46,4 @@ require("lze").load({
       end, { desc = "[F]ormat [F]ile" })
     end,
   },
-})
+}

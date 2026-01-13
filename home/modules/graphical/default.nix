@@ -1,5 +1,4 @@
 {
-  settings,
   pkgs,
   ...
 }:
@@ -14,7 +13,6 @@
       ];
 
   home.packages =
-    if settings.hostname == "allomyrina" then
       with pkgs;
       [
         spotify
@@ -53,9 +51,7 @@
         nerd-fonts.mononoki
         nerd-fonts.fantasque-sans-mono
 
-      ]
-    else
-      [ ];
+      ];
 
   xdg = {
     mime.enable = true;

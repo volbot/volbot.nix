@@ -57,6 +57,11 @@
       url = "github:mrcjkb/rustaceanvim";
       flake = false;
     };
+
+    "plugins-visual-whitespace" = {
+      url = "github:mcauley-penney/visual-whitespace.nvim";
+      flake = false;
+    };
   };
 
   # see :help nixCats.flake.outputs

@@ -1,4 +1,4 @@
-require("lze").load({
+return {
   {
     "nvim-lint",
     enabled = nixCats('general') or false,
@@ -24,4 +24,4 @@ require("lze").load({
       })
     end,
   },
-})
+}

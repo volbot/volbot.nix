@@ -63,7 +63,7 @@ in
   nix.registry = {
     nixpkgs.flake = inputs.nixpkgs;
     nixCats.flake = inputs.volvim.inputs.nixCats;
-    wrappers.flake = inputs.wrappers;
+    #wrappers.flake = inputs.wrappers;
     home-manager.flake = inputs.home-manager;
     #birdeeSystems.flake = inputs.self;
     gomod2nix.to = {

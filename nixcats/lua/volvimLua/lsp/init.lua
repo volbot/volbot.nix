@@ -1,15 +1,4 @@
--- NOTE: Register a handler from lzextras. This one makes it so that
--- you can set up lsps within lze specs,
--- and trigger vim.lsp.enable and the rtp config collection only on the correct filetypes
--- it adds the lsp field used below
--- (and must be registered before any load calls that use it!)
-require("lze").register_handlers(require("lzextras").lsp)
--- also replace the fallback filetype list retrieval function with a slightly faster one
-require("lze").h.lsp.set_ft_fallback(function(name)
-	return dofile(nixCats.pawsible({ "allPlugins", "opt", "nvim-lspconfig" }) .. "/lsp/" .. name .. ".lua").filetypes
-		or {}
-end)
-require("lze").load({
+return {
 	{
 		"nvim-lspconfig",
 		enabled = nixCats("general") or false,
@@ -233,8 +222,9 @@ require("lze").load({
 		"nvim-jdtls",
 		enabled = nixCats("java") or false,
 	},
-})
+}
 
+--[[
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "java",
 	callback = function()
@@ -316,7 +306,7 @@ vim.api.nvim_create_autocmd("FileType", {
 							},
 						},
 					},
-					]]
+					]] --[[
 				},
 			},
 			init_options = {
@@ -326,7 +316,7 @@ vim.api.nvim_create_autocmd("FileType", {
 					"/home/indi/Development/Java/vscode-java-decompiler/server/dg.jdt.ls.decompiler.common-0.0.3.jar",
 					"/home/indi/Development/Java/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-0.53.2.jar",
 				},
-				]]
+				]] --[[
 				extendedClientCapabilities = jdtls.extendedClientCapabilities,
 			},
 			on_attach = require("volvimLua.lsp.on_attach"),
@@ -334,3 +324,4 @@ vim.api.nvim_create_autocmd("FileType", {
 		jdtls.start_or_attach(config)
 	end,
 })
+]]

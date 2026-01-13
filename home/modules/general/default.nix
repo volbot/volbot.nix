@@ -1,13 +1,11 @@
 {
   pkgs,
-  settings,
   ...
 }:
 {
   imports =
       [
         ./fish
-        ./nvim
         ./stylix.nix
         ./yazi.nix
         ./starship

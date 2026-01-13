@@ -1,4 +1,4 @@
-require("lze").load({
+return {
   {
     "nvim-dap",
     enabled = nixCats('general') or false,
@@ -123,4 +123,4 @@ require("lze").load({
       })
     end,
   },
-})
+}

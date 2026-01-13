@@ -90,6 +90,8 @@ let
       ui = true;
       git = true;
       lint = true;
+
+other = true;
     };
   volvim_extra =
     { pkgs, ... }@misc:
@@ -103,6 +105,8 @@ let
         java-test = "${pkgs.vscode-extensions.vscjava.vscode-java-test}/share/vscode/extensions/vscjava.vscode-java-test";
         gradle-ls = pkgs.vscode-extensions.vscjava.vscode-gradle;
       };
+
+      nixExtras.nixpkgs = ''import ${pkgs.path} {}'';
       nixdExtras = {
         nixpkgs = "import ${builtins.path { path = pkgs.path; }} {}";
         get_configs = utils.n2l.types.function-unsafe.mk {
@@ -149,6 +153,7 @@ in
       ];
     };
     categories = volvim_categories args // {
+    general = true;
     };
     extra = volvim_extra args // {
     };
