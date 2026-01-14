@@ -1,3 +1,4 @@
+
 local _theme
 local _trans
 
@@ -5,7 +6,6 @@ _theme = nixCats.extra("base16colors.base16")
 _trans = nixCats.extra("base16colors.translucent")
 
 --require('base16-colorscheme').setup(_theme)
-
 vim.cmd.packadd("mini.base16")
 require("mini.base16").setup({
   palette = _theme,
@@ -23,3 +23,5 @@ require("mini.base16").setup({
     auto = true
   })
 --end
+
+return {}

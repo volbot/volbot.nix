@@ -6,6 +6,7 @@
 {
   imports =
       [
+      #./stylix.nix
       ];
 
   environment.systemPackages = with pkgs; [

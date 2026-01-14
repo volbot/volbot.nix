@@ -10,6 +10,7 @@
         ./pipewire.nix
         ./nvidia.nix
         ./games.nix
+        #./wm/niri.nix
       ];
   services.blueman.enable = true;
   hardware.bluetooth = {

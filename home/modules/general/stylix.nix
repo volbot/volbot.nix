@@ -5,7 +5,8 @@
   inputs,
   home,
   ...
-}: let
+}:
+let
   animegirl_wallpaper = ./animegirl_wallpaper_blue.jpg;
   miku-cursor-linux = pkgs.stdenv.mkDerivation {
     pname = "miku-cursor-derivation";
@@ -20,14 +21,28 @@
       mv ./* $out/share/icons/miku-cursor-linux
     '';
   };
-in {
+in
+{
   imports = [
     inputs.stylix.homeModules.stylix
+    #inputs.stylix.nixosModules.stylix
   ];
 
   home.packages = with pkgs; [
     miku-cursor-linux
   ];
+
+  stylix.targets = {
+    floorp = {
+      enable = true;
+      colorTheme.enable = true;
+      profileNames = [ "allomyrina" ];
+    };
+
+    starship.enable = false;
+
+  waybar.enable = true;
+  };
 
   stylix = {
     enable = true;

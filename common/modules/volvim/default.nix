@@ -1,40 +1,66 @@
-{ moduleNamespace, inputs, homeManager, ... }:
-{ config, pkgs, lib, ... }: let
+{
+  moduleNamespace,
+  inputs,
+  homeManager,
+  ...
+}:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+let
   cfg = config.${moduleNamespace}.volvim;
   inherit (config.volvim) utils;
-in {
+in
+{
   _file = ./default.nix;
-  imports = if homeManager then [inputs.volvim.homeModule] else [inputs.volvim.nixosModule];
+  imports = if homeManager then [ inputs.volvim.homeModule ] else [ inputs.volvim.nixosModule ];
   options = {
     ${moduleNamespace}.volvim = with lib.types; {
       enable = lib.mkEnableOption "birdee's nvim config";
       packageNames = lib.mkOption {
-        default = [];
+        default = [ ];
         type = listOf str;
+      };
+      base16colors = lib.mkOption {
+        default = { };
+        type = attrs;
       };
     };
   };
   config = lib.mkIf cfg.enable ({
-    volvim = let
-      replacements = builtins.mapAttrs (n: _: { pkgs, ... }: {
-        settings = {
-          moduleNamespace = [ moduleNamespace n ];
-        };
-        extra = {
-          nixdExtras = {
-            # flake-path = ''${inputs.self.outPath}'';
-          };
-        };
-        categories = lib.mkIf (n == "volvim") {
-          kotlin = true;
-        };
-      }) inputs.volvim.packages.${pkgs.stdenv.hostPlatform.system}.default.packageDefinitions;
-    in {
-      inherit (cfg) enable packageNames;
-      packageDefinitions.replace = replacements;
-      # packageDefinitions.merge = merges;
-      # dontInstall = true;
-    };
+    volvim =
+      let
+        replacements = builtins.mapAttrs (
+          n: _:
+          { pkgs, ... }:
+          {
+            settings = {
+              moduleNamespace = [
+                moduleNamespace
+                n
+              ];
+            };
+            extra = {
+              base16colors = cfg.base16colors;
+              nixdExtras = {
+                # flake-path = ''${inputs.self.outPath}'';
+              };
+            };
+            categories = lib.mkIf (n == "volvim") {
+              kotlin = true;
+            };
+          }
+        ) inputs.volvim.packages.${pkgs.stdenv.hostPlatform.system}.default.packageDefinitions;
+      in
+      {
+        inherit (cfg) enable packageNames;
+        packageDefinitions.replace = replacements;
+        # packageDefinitions.merge = merges;
+        # dontInstall = true;
+      };
   });
   # // (let
   #   finalpkgs = lib.pipe (config.volvim.out.packages or {}) [

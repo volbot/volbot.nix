@@ -23,6 +23,13 @@ in
     volvim = {
       enable = true;
       packageNames = [ "volvim" ];
+      base16colors = {
+        name = "stylix";
+        translucent = config.stylix.targets.neovim.transparentBackground.main;
+        base16 = pkgs.lib.filterAttrs (
+          k: v: builtins.match "base0[0-9A-F]" k != null
+        ) config.lib.stylix.colors.withHashtag;
+      };
     };
   };
   home.sessionVariables =
@@ -76,13 +83,13 @@ in
   programs.foot.enable = true;
 
   programs.git = {
-  settings = {
-    user = {
-      name = "allomyrina volbot";
-      email = "volbot.tech@gmail.com";
+    settings = {
+      user = {
+        name = "allomyrina volbot";
+        email = "volbot.tech@gmail.com";
+      };
+      init.defaultBranch = "main";
     };
-    init.defaultBranch = "main";
-  };
   };
 
   xdg.enable = true;

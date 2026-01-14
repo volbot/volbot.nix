@@ -110,14 +110,6 @@
     };
   };
 
-  stylix.targets = {
-    floorp = {
-      enable = true;
-      colorTheme.enable = true;
-      profileNames = [ "allomyrina" ];
-    };
-  };
-
   xdg.mimeApps = {
     defaultApplications = {
       "text/html" = "floorp.desktop";

@@ -207,6 +207,7 @@ in
     ];
     lua = [
       luvit-meta
+      lazydev-nvim
     ];
     rust = [
       pkgs.neovimPlugins.rustaceanvim
@@ -287,6 +288,7 @@ in
         dial-nvim
         vim-sleuth
         mini-base16
+        transparent-nvim
       ];
     };
     /*

@@ -8,8 +8,6 @@
     starship
   ];
 
-  stylix.targets.starship.enable = false;
-
   programs.starship = {
     enable = true;
     enableInteractive = true;

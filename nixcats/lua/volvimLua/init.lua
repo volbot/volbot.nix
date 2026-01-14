@@ -9,7 +9,7 @@ require("volvimLua.opts_and_keys")
 
 require("lze").load {
 	{ import = "volvimLua.plugins" },
-	-- { import = "volvimLua.plugins.colorscheme" },
+	{ import = "volvimLua.plugins.colorscheme" },
 	{ import = "volvimLua.lsp" },
 	{ import = "volvimLua.lint" },
 	{ import = "volvimLua.format" },
