@@ -99,9 +99,9 @@ other = true;
       colorscheme = "moonfly";
       javaExtras = {
 
-        #jdtls = "${pkgs.jdt-language-server}/share/java/jdtls";
-        #lombok = "${pkgs.lombok}/share/java/lombok.jar";
-        java-debug_adapter = "${pkgs.vscode-extensions.vscjava.vscode-java-debug}/share/vscode/extensions/vscjava.vscode-java-debug";
+        jdtls = "${pkgs.jdt-language-server}";
+        lombok = "${pkgs.lombok}/share/java/lombok.jar";
+        java-debug-adapter = "${pkgs.vscode-extensions.vscjava.vscode-java-debug}/share/vscode/extensions/vscjava.vscode-java-debug";
         java-test = "${pkgs.vscode-extensions.vscjava.vscode-java-test}/share/vscode/extensions/vscjava.vscode-java-test";
         gradle-ls = pkgs.vscode-extensions.vscjava.vscode-gradle;
       };

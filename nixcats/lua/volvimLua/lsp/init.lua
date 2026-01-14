@@ -219,8 +219,11 @@ return {
 		},
 	},
 	{
-		"nvim-jdtls",
+		"jdtls",
 		enabled = nixCats("java") or false,
+                lsp = {
+                        filetypes = { 'java', },
+                }
 	},
 }
 
