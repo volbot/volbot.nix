@@ -6,8 +6,8 @@
   imports =
       [
         ./mangohud
-        ./wm/niri.nix
-        ./floorp.nix
+        #./wm/niri.nix
+        #./floorp.nix
         ./multimedia.nix
         ./games.nix
       ];

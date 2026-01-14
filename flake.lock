@@ -996,7 +996,8 @@
         "stylix": "stylix",
         "textfox": "textfox",
         "voltrix": "voltrix",
-        "volvim": "volvim"
+        "volvim": "volvim",
+        "wrappers": "wrappers"
       }
     },
     "rust-analyzer-src": {
@@ -1289,6 +1290,26 @@
         "type": "path"
       },
       "parent": []
+    },
+    "wrappers": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1768356238,
+        "narHash": "sha256-qaHXXRKYOZjYLSjqe9NbTKsT8tYK0FJ9k8MCPeMUKb8=",
+        "owner": "BirdeeHub",
+        "repo": "nix-wrapper-modules",
+        "rev": "1be338a29d3f19b90e0f9ce2163d5c9d8efeee26",
+        "type": "github"
+      },
+      "original": {
+        "owner": "BirdeeHub",
+        "repo": "nix-wrapper-modules",
+        "type": "github"
+      }
     },
     "xwayland-satellite-stable": {
       "flake": false,

@@ -3,7 +3,8 @@
   pkgs,
   config,
   ...
-}: let
+}:
+let
   icons = rec {
     calendar = "󰃭 ";
     clock = " ";
@@ -56,12 +57,11 @@
     notification.bell-outline = "󰂜";
     notification.bell-outline-badge = "󰅸";
   };
-in {
-  programs.waybar = {
-    enable = true;
-    systemd.enable = true;
-  };
-  programs.waybar.settings.mainBar = {
+in
+{
+  enable = true;
+  systemd.enable = true;
+  settings.mainBar = {
     layer = "top";
     modules-left = [
       "wireplumber"
@@ -163,107 +163,107 @@ in {
     };
 
     /*
-          "custom/swaync" = {
-            tooltip = false;
-            format = "{icon}";
-            format-icons = {
-              notification = "<span foreground='red'><sup></sup></span>";
-              none = icons.notification.bell-outline;
-              none-cc-open = icons.notification.bell;
-              dnd-notification = "<span foreground='red'><sup></sup></span>";
-              dnd-none = "";
-              inhibited-notification = "<span foreground='red'><sup></sup></span>";
-              inhibited-none = "";
-              dnd-inhibited-notification = "<span foreground='red'><sup></sup></span>";
-              dnd-inhibited-none = "";
+            "custom/swaync" = {
+              tooltip = false;
+              format = "{icon}";
+              format-icons = {
+                notification = "<span foreground='red'><sup></sup></span>";
+                none = icons.notification.bell-outline;
+                none-cc-open = icons.notification.bell;
+                dnd-notification = "<span foreground='red'><sup></sup></span>";
+                dnd-none = "";
+                inhibited-notification = "<span foreground='red'><sup></sup></span>";
+                inhibited-none = "";
+                dnd-inhibited-notification = "<span foreground='red'><sup></sup></span>";
+                dnd-inhibited-none = "";
+              };
+              return-type = "json";
+              exec-if = "which swaync-client";
+              exec = "swaync-client -swb";
+      # exec = ''swaync-client -swb | jq -c 'if .class | .[]? // . | contains("cc-open") then .alt += "-cc-open" else . end' '';
+              on-click = "swaync-client -t -sw";
+              on-click-right = "swaync-client -d -sw";
+              escape = true;
             };
-            return-type = "json";
-            exec-if = "which swaync-client";
-            exec = "swaync-client -swb";
-    # exec = ''swaync-client -swb | jq -c 'if .class | .[]? // . | contains("cc-open") then .alt += "-cc-open" else . end' '';
-            on-click = "swaync-client -t -sw";
-            on-click-right = "swaync-client -d -sw";
-            escape = true;
-          };
     */
   };
   /*
-      programs.waybar.style =
-        let
-        colors = config.lib.stylix.colors;
-      modules = s: "${s ".modules-left"}, ${s ".modules-center"}, ${s ".modules-right"}";
-      module = s: modules (m: "${m} > ${s} > *");
-      in
-        ''
-        * {
-  border: none;
-          font-family: ${config.stylix.fonts.sansSerif.name};
-          font-size: ${toString config.stylix.fonts.sizes.desktop}px;
-  color: #${colors.base07};
+        programs.waybar.style =
+          let
+          colors = config.lib.stylix.colors;
+        modules = s: "${s ".modules-left"}, ${s ".modules-center"}, ${s ".modules-right"}";
+        module = s: modules (m: "${m} > ${s} > *");
+        in
+          ''
+          * {
+    border: none;
+            font-family: ${config.stylix.fonts.sansSerif.name};
+            font-size: ${toString config.stylix.fonts.sizes.desktop}px;
+    color: #${colors.base07};
+          }
+
+        window#waybar {
+    background: transparent;
+                font-size: 2em;
         }
 
-      window#waybar {
-  background: transparent;
-              font-size: 2em;
-      }
+        ${modules lib.id} {
+    background: transparent;
+    margin: 3px 10px;
+        }
 
-      ${modules lib.id} {
-  background: transparent;
-  margin: 3px 10px;
-      }
+        ${module "*"} {
+    margin: 3px 1px;
+    padding: 5px 7px;
+    background: #${colors.base00};
+        }
+        ${module ":first-child"} {
+          padding-left: 10px;
+          border-top-left-radius: 20px;
+          border-bottom-left-radius: 20px;
+        }
 
-      ${module "*"} {
-  margin: 3px 1px;
-  padding: 5px 7px;
-  background: #${colors.base00};
-      }
-      ${module ":first-child"} {
-        padding-left: 10px;
-        border-top-left-radius: 20px;
-        border-bottom-left-radius: 20px;
-      }
+        ${module ":last-child"} {
+          padding-right: 10px;
+          border-top-right-radius: 20px;
+          border-bottom-right-radius: 20px;
+        }
 
-      ${module ":last-child"} {
-        padding-right: 10px;
-        border-top-right-radius: 20px;
-        border-bottom-right-radius: 20px;
-      }
+        ${module ":not(:first-child)"} {
+          border-top-left-radius: 3px;
+          border-bottom-left-radius: 3px;
+        }
 
-      ${module ":not(:first-child)"} {
-        border-top-left-radius: 3px;
-        border-bottom-left-radius: 3px;
-      }
+        ${module ":not(last-child)"} {
+          border-top-right-radius: 3px;
+          border-bottom-right-radius: 3px;
+        }
 
-      ${module ":not(last-child)"} {
-        border-top-right-radius: 3px;
-        border-bottom-right-radius: 3px;
-      }
-
-  #wireplumber:not(.source).muted {
-  color: #${colors.yellow};
-  }
-
-  #idle_inhibitor.activated {
-  color: #${colors.yellow};
-  }
-
-  #battery.charging {
-  color: #${colors.green};
-  }
-
-  #battery.warning:not(.charging) {
-  color: #${colors.yellow};
-  }
-
-  #battery.critical:not(.charging) {
-  animation: critical-blink steps(8) 1s infinite alternate;
-  }
-
-  @keyframes critical-blink {
-    to {
-  color: #${colors.red};
+    #wireplumber:not(.source).muted {
+    color: #${colors.yellow};
     }
-  }
-  '';
+
+    #idle_inhibitor.activated {
+    color: #${colors.yellow};
+    }
+
+    #battery.charging {
+    color: #${colors.green};
+    }
+
+    #battery.warning:not(.charging) {
+    color: #${colors.yellow};
+    }
+
+    #battery.critical:not(.charging) {
+    animation: critical-blink steps(8) 1s infinite alternate;
+    }
+
+    @keyframes critical-blink {
+      to {
+    color: #${colors.red};
+      }
+    }
+    '';
   */
 }

@@ -19,7 +19,8 @@ let
     {
       volvim = import ./volvim args;
       #LD = import (systemOnly ./LD) args;
-      #firefox = import (homeOnly ./firefox) args;
+      floorp = import (homeOnly ./floorp) args;
+      niri = import ./niri args;
       #i3 = import ./i3 args;
       #i3MonMemory = import ./i3MonMemory args;
       #lightdm = import (systemOnly ./lightdm) args;

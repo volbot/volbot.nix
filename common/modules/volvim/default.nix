@@ -19,7 +19,7 @@ in
   imports = if homeManager then [ inputs.volvim.homeModule ] else [ inputs.volvim.nixosModule ];
   options = {
     ${moduleNamespace}.volvim = with lib.types; {
-      enable = lib.mkEnableOption "birdee's nvim config";
+      enable = lib.mkEnableOption "allie's nvim config";
       packageNames = lib.mkOption {
         default = [ ];
         type = listOf str;

@@ -59,6 +59,9 @@
 
     font-flake.url = "path:./fonts";
     volvim.url = "path:./nixcats";
+
+    wrappers.url = "github:BirdeeHub/nix-wrapper-modules";
+    wrappers.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs: import ./. inputs;

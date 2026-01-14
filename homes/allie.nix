@@ -18,8 +18,12 @@ in
     ../home/modules/general
     ../home/modules/graphical
     volvim
+    floorp
+    niri
   ];
   volbotMods = {
+    floorp.enable = true;
+    niri.enable = true;
     volvim = {
       enable = true;
       packageNames = [ "volvim" ];
@@ -67,6 +71,7 @@ in
     dates = "weekly";
     options = "-d";
   };
+
   nix.registry = {
     nixpkgs.flake = inputs.nixpkgs;
     nixCats.flake = inputs.volvim.inputs.nixCats;
