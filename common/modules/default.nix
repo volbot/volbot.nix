@@ -21,6 +21,8 @@ let
       #LD = import (systemOnly ./LD) args;
       floorp = import (homeOnly ./floorp) args;
       niri = import ./niri args;
+      gaming = import ./gaming args;
+      theme = import (homeOnly ./theme) args;
       #i3 = import ./i3 args;
       #i3MonMemory = import ./i3MonMemory args;
       #lightdm = import (systemOnly ./lightdm) args;

@@ -1,19 +1,24 @@
 {
-  config,
+  cfg,
   lib,
   pkgs,
   ...
 }:
 {
   prefer-no-csd = true;
-  spawn-at-startup =
-    let
-      get = pkg: lib.getExe pkgs.${pkg};
-    in
-    [
-      { command = [ "${get "xwayland-satellite"}" ]; }
-      { command = [ "${get "waybar"}" ]; }
-    ];
+  spawn-at-startup = [
+    { command = [ "${"${pkgs.xwayland-satellite}/bin/xwayland-satellite"}" ]; }
+    { command = [ "${"${pkgs.waybar}/bin/waybar"}" ]; }
+    {
+      command = [
+        "${"${pkgs.swaybg}/bin/swaybg"}"
+        "-m"
+        "fill"
+        "-i"
+        "${cfg.background}"
+      ];
+    }
+  ];
   cursor.hide-when-typing = true;
   window-rules = [
     {

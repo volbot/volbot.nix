@@ -14,16 +14,22 @@ let
   cfg = config.${moduleNamespace}.niri;
 in
 {
-  imports = [
-    (if homeManager then inputs.niri.homeModules.niri else inputs.niri.nixosModules.niri)
-    (if homeManager then inputs.niri.homeModules.stylix else inputs.niri.nixosModules.stylix)
-  ];
-
+  imports = (
+    if homeManager then
+      [
+        inputs.niri.homeModules.niri
+        inputs.niri.homeModules.stylix
+      ]
+    else
+      [
+        inputs.niri.nixosModules.niri
+      ]
+  );
   options = {
     ${moduleNamespace}.niri = with lib.types; {
       enable = lib.mkEnableOption "niri configuration";
       background = lib.mkOption {
-        default = ./misc/animegirl_wallpaper_blue.jpg;
+        default = ../theme/animegirl_wallpaper_blue.jpg;
         type = nullOr path;
       };
     };
@@ -35,16 +41,14 @@ in
     let
 
       niriSettings = import ./settings.nix {
-        inherit pkgs lib config;
+        inherit pkgs lib cfg;
       };
 
-      waybarSettings = import ./waybar.nix {
-        inherit pkgs lib config;
-      };
+      waybarSettings = import ./waybar.nix { };
 
       niriPackages = with pkgs; [
-        alacritty
         fuzzel
+        alacritty
         mako
         swaybg
         swaylock
@@ -57,20 +61,31 @@ in
     (
       if homeManager then
         {
+          programs.fuzzel.enable = true;
+
           programs.niri.enable = true;
           programs.niri.settings = niriSettings;
           programs.waybar = waybarSettings;
 
           home.packages = niriPackages;
         }
-      else
+      else {}
+      # TODO: implement this
+      # more: https://github.com/sodiboo/niri-flake/issues/278
+      /*
+        let
+          niri-config =
+            inputs.niri.lib.internal.validated-config-for pkgs config.programs.niri.package
+              niriSettings.config.programs.niri.finalConfig;
+        in
         {
           programs.niri.enable = true;
-          programs.niri.settings = niriSettings;
+          programs.niri.config = niri-config;
           programs.waybar = waybarSettings;
 
           environment.systemPackages = niriPackages;
         }
+        */
     )
   );
 }

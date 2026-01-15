@@ -16,14 +16,20 @@ in
 {
   imports = with inputs.self.homeModules; [
     ../home/modules/general
-    ../home/modules/graphical
     volvim
     floorp
     niri
+    theme
+    gaming
   ];
   volbotMods = {
     floorp.enable = true;
-    niri.enable = true;
+    niri = {
+      enable = true;
+      background = config.stylix.image;
+    };
+    gaming.enable = true;
+    theme.enable = true;
     volvim = {
       enable = true;
       packageNames = [ "volvim" ];
@@ -87,6 +93,25 @@ in
 
   programs.foot.enable = true;
 
+  programs.yazi = {
+    enable = true;
+    keymap = {
+      mgr.prepend_keymap = [
+        # ripdrag (drag-n-drop) capabilities
+        {
+          on = [ "<C-o>" ];
+          run = "shell -- ripdrag --no-click --and-exit --icon-size 64 --target --all \"$@\" | while read filepath; do cp -nR \"$filepath\" .; done";
+          #desc = "drag-n-drop files to and from Yazi";
+        }
+        {
+          on = [ "<C-O>" ];
+          run = "shell -- ripdrag --no-click --and-exit --icon-size 64 --target --all \"$@\" | while read filepath; do cp -fR \"$filepath\" .; done";
+          #desc = "drag-n-drop files to and from Yazi (with clobber)";
+        }
+      ];
+    };
+  };
+
   programs.git = {
     settings = {
       user = {
@@ -95,6 +120,11 @@ in
       };
       init.defaultBranch = "main";
     };
+  };
+
+  programs.zoxide = {
+    enable = true;
+    enableFishIntegration = true;
   };
 
   xdg.enable = true;
@@ -113,12 +143,14 @@ in
     };
   };
   xdg.mimeApps.defaultApplications = {
-    "inode/directory" = [ "xplr.desktop" ];
+    #"inode/directory" = [ "xplr.desktop" ];
     "application/pdf" = [
-      "firefox.desktop"
-      "draw.desktop"
+      "floorp.desktop"
       "gimp.desktop"
     ];
+    "image/png" = "gimp.desktop";
+    "image/jpeg" = "gimp.desktop";
+    "image/webp" = "gimp.desktop";
   };
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -129,6 +161,8 @@ in
   # release notes.
   home.stateVersion = stateVersion; # Please read the comment before changing.
 
+  home.shell.enableFishIntegration = true;
+
   home.packages = with pkgs; [
     lf
     zip
@@ -137,8 +171,6 @@ in
     vesktop
     fastfetch
     libsixel
-
-    zoxide
     file
 
     speedtest-cli
@@ -152,10 +184,46 @@ in
     pnpm
     nodejs_24
 
-    pandoc
-
-    pastel
     jq
+
+    #GAMING PACKAGES
+    prismlauncher
+    minecraft-server
+
+    #MULTIMEDIA PACKAGES
+    ffmpeg-full
+    imagemagick
+    pandoc
+    pastel
+
+    gpick
+
+    gimp3
+    inkscape
+    krita
+    #aseprite
+    #libresprite
+
+    (pkgs.wrapOBS {
+      plugins = with pkgs.obs-studio-plugins; [
+        wlrobs
+        obs-pipewire-audio-capture
+        obs-gstreamer
+        obs-vkcapture
+      ];
+    })
+
+    mesa-demos
+    vulkan-tools
+
+    vlc
+    audacity
+    reaper
+
+    blender
+    unityhub
+
+    libreoffice
   ];
 
   programs.home-manager.enable = true;

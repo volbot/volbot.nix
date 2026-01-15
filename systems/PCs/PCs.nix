@@ -18,17 +18,25 @@ in
 {
   imports = with inputs.self.nixosModules; [
     volvim
-    /*
-      i3
-      bash
-      zsh
-      inputs.self.wrappedModules.tmux.nixosModule
-      fish
-      lightdm
-      i3MonMemory
-      LD
-    */
   ];
+
+  volbotMods = {
+    volvim = {
+      enable = true;
+      packageNames = [ "volvim" ];
+    };
+  };
+
+
+  environment.pathsToLink = [
+    "/share/applications"
+    "/share/xdg-desktop-portal"
+  ];
+
+  programs.git = {
+    enable = true;
+    lfs.enable = true;
+  };
 
   nix.settings = {
     # bash-prompt-prefix = "✓";
@@ -61,22 +69,6 @@ in
   nixpkgs.config.allowUnfree = true;
 
   users.users = users;
-  volbotMods = {
-    volvim = {
-      enable = true;
-      packageNames = [ "volvim" ];
-    };
-    /*
-      i3.enable = true;
-      zsh.enable = true;
-      bash.enable = true;
-      fish.enable = true;
-      i3MonMemory.enable = true;
-      lightdm.enable = true;
-      LD.enable = true;
-    */
-  };
-
   #services.flatpak.enable = true;
 
   virtualisation.libvirtd.enable = true;
@@ -89,7 +81,7 @@ in
 
   environment.variables = {
   };
-  environment.interactiveShellInit = '''';
+  environment.interactiveShellInit = "";
   /*
     environment.shellAliases = {
       lsnc = "lsd --color=never";
@@ -267,6 +259,11 @@ in
       # dislocker
       man-pages
       man-pages-posix
+
+      gnumake
+      gcc
+
+      dconf
     ]
   );
 
