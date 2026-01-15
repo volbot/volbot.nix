@@ -130,7 +130,7 @@ in
 
   xdg.enable = true;
   xdg.mime.enable = true;
-  xdg.mime.mimeApps.enable = true;
+  xdg.mimeApps.enable = true;
 
   xdg.userDirs = {
     enable = true;
@@ -147,7 +147,7 @@ in
     };
   };
   xdg.mimeApps.defaultApplications = {
-    #"inode/directory" = [ "xplr.desktop" ];
+    "inode/directory" = [ "yazi.desktop" ];
     "application/pdf" = [
       "floorp.desktop"
       "gimp.desktop"

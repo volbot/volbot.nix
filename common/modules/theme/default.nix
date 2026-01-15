@@ -20,6 +20,10 @@ in
   options = {
     ${moduleNamespace}.theme = with lib.types; {
       enable = lib.mkEnableOption "theming configurations";
+      image = lib.mkOption {
+        default = ./animegirl_wallpaper_blue.jpg;
+        type = nullOr path;
+      };
     };
   };
   config = lib.mkIf cfg.enable (

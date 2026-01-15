@@ -6,6 +6,10 @@
 }:
 {
   prefer-no-csd = true;
+  environment = {
+    TERMINAL = "${pkgs.foot}/bin/foot";
+    EDITOR = "volvim";
+  };
   spawn-at-startup = [
     { command = [ "${"${pkgs.xwayland-satellite}/bin/xwayland-satellite"}" ]; }
     { command = [ "${"${pkgs.waybar}/bin/waybar"}" ]; }

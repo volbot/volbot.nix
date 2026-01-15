@@ -240,7 +240,7 @@ in
       nix-info
       pciutils
       lm_sensors
-      xplr
+      yazi
       usbutils
       nvme-cli
       unzip
