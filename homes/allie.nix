@@ -165,6 +165,8 @@ in
   home.shell.enableFishIntegration = true;
 
   home.packages = with pkgs; [
+    inputs.font-flake.packages.x86_64-linux.greybeard
+
     lf
     zip
     unzip
@@ -184,6 +186,8 @@ in
 
     pnpm
     nodejs_24
+
+    font-manager
 
     jq
 

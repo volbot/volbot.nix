@@ -33,6 +33,7 @@
           };
           installPhase = ''
             mkdir -p $out/share/fonts
+            ls $src
             cp -R $src $out/share/fonts/truetype/
           '';
           meta.description = "A Greybeard (UW ttyp0) derivation.";
