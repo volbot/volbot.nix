@@ -189,6 +189,8 @@ in
     slurp
     grim
 
+thunar
+
     #GAMING PACKAGES
     prismlauncher
     minecraft-server
