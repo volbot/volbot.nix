@@ -18,21 +18,14 @@ let
     in
     {
       volvim = import ./volvim args;
-      #LD = import (systemOnly ./LD) args;
       floorp = import (homeOnly ./floorp) args;
-      niri = import ./niri args;
+      niri = import (homeOnly ./niri) args;
       gaming = import ./gaming args;
       theme = import (homeOnly ./theme) args;
-      #i3 = import ./i3 args;
-      #i3MonMemory = import ./i3MonMemory args;
-      #lightdm = import (systemOnly ./lightdm) args;
+      audio = import (systemOnly ./audio) args;
       inherit (shell)
-        zsh
-        bash
         fish
         ;
-      #aliasNetwork = import (systemOnly ./aliasNetwork) args;
-      #old_modules_compat = import ./old_modules_compat args;
     };
 in
 {

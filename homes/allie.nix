@@ -15,12 +15,12 @@ let
 in
 {
   imports = with inputs.self.homeModules; [
-    ../home/modules/general
     volvim
     floorp
     niri
     theme
     gaming
+    fish
   ];
   volbotMods = {
     floorp.enable = true;
@@ -28,6 +28,7 @@ in
       enable = true;
       background = config.stylix.image;
     };
+    fish.enable = true;
     gaming.enable = true;
     theme.enable = true;
     volvim = {

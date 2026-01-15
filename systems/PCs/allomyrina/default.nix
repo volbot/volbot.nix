@@ -2,14 +2,18 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   imports = with inputs.self.nixosModules; [
-  gaming
+    gaming
     ./hardware-configuration.nix
     ../PCs.nix
-    ../../../system/modules/graphical
   ];
 
   volbotMods = {
@@ -36,12 +40,12 @@
     enable = true;
     settings = {
       default_session.command = ''
-        				${pkgs.tuigreet}/bin/tuigreet \
-        				--time \
-        				--asterisks \
-        				--user-menu \
-        				--cmd niri
-        				'';
+        ${pkgs.tuigreet}/bin/tuigreet \
+        --time \
+        --asterisks \
+        --user-menu \
+        --cmd niri
+        '';
     };
   };
 

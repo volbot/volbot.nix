@@ -18,6 +18,8 @@ in
 {
   imports = with inputs.self.nixosModules; [
     volvim
+    fish
+    audio
   ];
 
   volbotMods = {
@@ -25,6 +27,8 @@ in
       enable = true;
       packageNames = [ "volvim" ];
     };
+    fish.enable = true;
+    audio.enable = true;
   };
 
 

@@ -4,11 +4,6 @@
   ...
 }:
 {
-  home.packages = with pkgs; [
-    starship
-  ];
-
-  programs.starship = {
     enable = true;
     enableInteractive = true;
     enableTransience = true;
@@ -31,5 +26,4 @@
         (readTOML ./tokyo-night.toml)
         { opa.format = "'(via [$symbol($version )]($style))'"; } # fix a typo in no-empty-icons
       ];
-  };
 }
