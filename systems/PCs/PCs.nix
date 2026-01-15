@@ -31,7 +31,6 @@ in
     audio.enable = true;
   };
 
-
   environment.pathsToLink = [
     "/share/applications"
     "/share/xdg-desktop-portal"
@@ -263,6 +262,8 @@ in
       # dislocker
       man-pages
       man-pages-posix
+
+      file
 
       gnumake
       gcc

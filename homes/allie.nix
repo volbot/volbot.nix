@@ -129,6 +129,9 @@ in
   };
 
   xdg.enable = true;
+  xdg.mime.enable = true;
+  xdg.mime.mimeApps.enable = true;
+
   xdg.userDirs = {
     enable = true;
     desktop = "${config.home.homeDirectory}/Desktop";
@@ -167,29 +170,24 @@ in
   home.packages = with pkgs; [
     inputs.font-flake.packages.x86_64-linux.greybeard
 
+    #CLI PROGRAMS
     lf
-    zip
-    unzip
+    yazi
     lazygit
-    vesktop
     fastfetch
-    libsixel
-    file
+    jq
 
+    #NETWORK STUFF
     speedtest-cli
-
     gof5
     wireguard-tools
 
-    yazi
+    #LINUX COMPAT STUFF
     ripdrag
-
-    pnpm
-    nodejs_24
-
-    font-manager
-
-    jq
+    gnome-tweaks
+    libsixel
+    slurp
+    grim
 
     #GAMING PACKAGES
     prismlauncher
@@ -200,13 +198,12 @@ in
     imagemagick
     pandoc
     pastel
-
     gpick
 
     gimp3
     inkscape
     krita
-    #aseprite
+    aseprite
     #libresprite
 
     (pkgs.wrapOBS {
@@ -218,9 +215,6 @@ in
       ];
     })
 
-    mesa-demos
-    vulkan-tools
-
     vlc
     audacity
     reaper
@@ -229,6 +223,39 @@ in
     unityhub
 
     libreoffice
+
+    #DEV STUFF
+    pnpm
+    nodejs_24
+
+    #GENERAL PURPOSE GRAPHICAL PROGRAMS
+    firefox
+    chromium
+    ladybird
+
+    spotify
+
+    zoom-us
+
+    vesktop
+
+    #FONTS
+    font-manager
+
+    font-manager
+    cooper
+    besley
+
+    noto-fonts
+    noto-fonts-color-emoji
+
+    liberation_ttf
+    aileron
+    montserrat
+
+    nerd-fonts.mononoki
+    nerd-fonts.fantasque-sans-mono
+
   ];
 
   programs.home-manager.enable = true;

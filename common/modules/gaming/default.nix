@@ -42,6 +42,8 @@ in
           protonup-qt
           gamescope-wsi
           protontricks
+          mesa-demos
+          vulkan-tools
         ];
 
         programs.steam = {

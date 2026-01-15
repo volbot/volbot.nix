@@ -25,6 +25,11 @@ in
   config = lib.mkIf cfg.enable (
     if homeManager then
       {
+        home.packages = with pkgs; [
+          qpwgraph
+          helvum
+          pavucontrol
+        ];
       }
     else
       {
