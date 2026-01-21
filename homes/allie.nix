@@ -21,6 +21,7 @@ in
     theme
     gaming
     fish
+    audio
   ];
   volbotMods = {
     floorp.enable = true;
@@ -28,6 +29,7 @@ in
       enable = true;
       background = config.stylix.image;
     };
+    audio.enable=true;
     fish.enable = true;
     gaming.enable = true;
     theme.enable = true;

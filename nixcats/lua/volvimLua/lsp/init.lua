@@ -97,7 +97,10 @@ return {
 	{ "tailwindcss", lsp = {} },
 	{ "html", lsp = {} },
 	{ "cssls", lsp = {} },
-	{ "svelte", lsp = {} },
+	{
+		"svelte",
+		lsp = {},
+	},
 	{ "ts_ls", lsp = {} },
 	{ "taplo", lsp = {} },
 	{
@@ -115,8 +118,8 @@ return {
 	},
 	{
 		"rust-analyzer",
+		enabled = nixCats("rust") or false,
 		lsp = {
-			enabled = nixCats("rust") or false,
 			filetypes = { "rust" },
 			settings = {
 				["rust-analyzer"] = {
@@ -221,9 +224,9 @@ return {
 	{
 		"jdtls",
 		enabled = nixCats("java") or false,
-                lsp = {
-                        filetypes = { 'java', },
-                }
+		lsp = {
+			filetypes = { "java" },
+		},
 	},
 }
 
@@ -309,7 +312,8 @@ vim.api.nvim_create_autocmd("FileType", {
 							},
 						},
 					},
-					]] --[[
+					]]
+--[[
 				},
 			},
 			init_options = {
@@ -319,7 +323,8 @@ vim.api.nvim_create_autocmd("FileType", {
 					"/home/indi/Development/Java/vscode-java-decompiler/server/dg.jdt.ls.decompiler.common-0.0.3.jar",
 					"/home/indi/Development/Java/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-0.53.2.jar",
 				},
-				]] --[[
+				]]
+--[[
 				extendedClientCapabilities = jdtls.extendedClientCapabilities,
 			},
 			on_attach = require("volvimLua.lsp.on_attach"),

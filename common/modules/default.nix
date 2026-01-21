@@ -22,7 +22,7 @@ let
       niri = import (homeOnly ./niri) args;
       gaming = import ./gaming args;
       theme = import (homeOnly ./theme) args;
-      audio = import (systemOnly ./audio) args;
+      audio = import ./audio args;
       inherit (shell)
         fish
         ;
