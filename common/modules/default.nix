@@ -17,6 +17,7 @@ let
       shell = import ./shell args;
     in
     {
+      LD = import (systemOnly ./LD) args;
       volvim = import ./volvim args;
       floorp = import (homeOnly ./floorp) args;
       niri = import (homeOnly ./niri) args;

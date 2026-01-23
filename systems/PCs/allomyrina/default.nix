@@ -45,7 +45,7 @@
         --asterisks \
         --user-menu \
         --cmd niri
-        '';
+      '';
     };
   };
 

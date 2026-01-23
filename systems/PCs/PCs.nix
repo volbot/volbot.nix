@@ -20,6 +20,7 @@ in
     volvim
     fish
     audio
+    LD
   ];
 
   volbotMods = {
@@ -29,6 +30,7 @@ in
     };
     fish.enable = true;
     audio.enable = true;
+    LD.enable = true;
   };
 
   environment.pathsToLink = [
