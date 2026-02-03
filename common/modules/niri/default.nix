@@ -69,7 +69,8 @@ in
 
           home.packages = niriPackages;
         }
-      else {}
+      else
+        { }
       # TODO: implement this
       # more: https://github.com/sodiboo/niri-flake/issues/278
       /*
@@ -85,7 +86,7 @@ in
 
           environment.systemPackages = niriPackages;
         }
-        */
+      */
     )
   );
 }

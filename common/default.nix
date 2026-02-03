@@ -8,11 +8,11 @@ in
   imports = [
     inputs.flake-parts.flakeModules.flakeModules
     #flakeModules.wrapper
-    #flakeModules.overlay
+    flakeModules.overlay
     flakeModules.misc
     flakeModules.configsPerSystem
     #./disko
-    #(lib.modules.importApply ./overlays { inherit inputs util; })
+    (lib.modules.importApply ./overlays { inherit inputs util; })
     (lib.modules.importApply ./modules { inherit inputs util; })
   ];
   #flake.wrapperModules = import ./wrappers { inherit inputs util; };

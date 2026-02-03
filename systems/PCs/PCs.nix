@@ -257,6 +257,7 @@ in
       tree
       zip
       _7zz
+      p7zip
       unzip
       xclip
       xsel

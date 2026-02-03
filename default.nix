@@ -1,6 +1,7 @@
 {
   self,
   nixpkgs,
+  xwayland-satellite-pin,
   home-manager,
   nix-appimage,
   flake-parts,
@@ -33,7 +34,8 @@ in
 flake-parts.lib.mkFlake { inherit inputs; } (
   { config, ... }:
   let
-    #overlayList = config.flake.overlist;
+    overlayList = config.flake.overlist;
+
     userdata = pkgs: {
       allie = {
         name = "allie";
@@ -51,9 +53,10 @@ flake-parts.lib.mkFlake { inherit inputs; } (
     };
   in
   {
+
     systems = nixpkgs.lib.platforms.all;
     imports = [
-      # inputs.flake-parts.flakeModules.easyOverlay
+      #inputs.flake-parts.flakeModules.easyOverlay
       # inputs.devenv.flakeModule
       # e.g. treefmt-nix.flakeModule
       (nixpkgs.lib.modules.importApply ./common inputs)
@@ -69,13 +72,13 @@ flake-parts.lib.mkFlake { inherit inputs; } (
         lib,
         pkgs,
         system,
-        # final, # Only with easyOverlay imported
+        #final, # Only with easyOverlay imported
         ...
       }:
       {
         _module.args.pkgs = import inputs.nixpkgs {
           inherit system;
-          #overlays = overlayList;
+          overlays = overlayList;
           config = {
             allowUnfree = true;
           };
@@ -83,19 +86,27 @@ flake-parts.lib.mkFlake { inherit inputs; } (
 
         # overlayAttrs = { outname = config.packages.packagename; }; # Only with easyOverlay imported
 
+        #overlayAttrs = {xwayland-satellite-pinned = final.xwayland-satellite-pinned;};
+
         # Make sure the exported wrapper module packages
         # don't get a pkgs with the items already imported
         # This is because we also added our wrapper modules
         # into our overlayList
         /*
-        wrapperPkgs = import inputs.nixpkgs {
-          inherit system;
-          config = {
-            allowUnfree = true;
+          wrapperPkgs = import inputs.nixpkgs {
+            inherit system;
+            config = {
+              allowUnfree = true;
+            };
           };
-        };
         */
         packages = {
+          /*
+            xwayland-satellite-pinned = pkgs.xwayland-satellite.overrideAttrs (_: {
+              src = inputs'.xwayland-satellite-pin.packages.xwayland-satellite.src;
+              version = inputs'.xwayland-satellite-pin.packages.xwayland-satellite.version;
+            });
+          */
           /*
             inherit (pkgs) dep-tree minesweeper nops manix antifennel gac libvma;
             wezshterm = config.packages.wezterm.wrap {
@@ -165,7 +176,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                   monitorCFG = ./homes/monitors_by_hostname/allomyrina;
                 };
               */
-              #module.nixpkgs.overlays = overlayList;
+              module.nixpkgs.overlays = overlayList;
               modules = [
                 ./systems/PCs/allomyrina
                 (HMmain (import ./homes/allie.nix))
@@ -176,7 +187,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
               nixpkgs = inputs.nixpkgs;
               #disko.diskoModule = flakeCfg.diskoConfigurations.sda_swap;
               specialArgs = defaultSpecialArgs;
-              #module.nixpkgs.overlays = overlayList;
+              module.nixpkgs.overlays = overlayList;
               modules = [
                 ./systems/PCs/allomyrina
               ];

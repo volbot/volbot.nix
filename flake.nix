@@ -12,6 +12,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     flake-utils.url = "github:numtide/flake-utils";
+
+    xwayland-satellite-pin.url = "github:NixOS/nixpkgs/2fad6eac6077f03fe109c4d4eb171cf96791faa4";
+
     flake-parts.url = "github:hercules-ci/flake-parts";
     nix-appimage.url = "github:ralismark/nix-appimage";
 

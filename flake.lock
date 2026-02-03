@@ -997,7 +997,8 @@
         "textfox": "textfox",
         "voltrix": "voltrix",
         "volvim": "volvim",
-        "wrappers": "wrappers"
+        "wrappers": "wrappers",
+        "xwayland-satellite-pin": "xwayland-satellite-pin"
       }
     },
     "rust-analyzer-src": {
@@ -1308,6 +1309,22 @@
       "original": {
         "owner": "BirdeeHub",
         "repo": "nix-wrapper-modules",
+        "type": "github"
+      }
+    },
+    "xwayland-satellite-pin": {
+      "locked": {
+        "lastModified": 1764242076,
+        "narHash": "sha256-sKoIWfnijJ0+9e4wRvIgm/HgE27bzwQxcEmo2J/gNpI=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "2fad6eac6077f03fe109c4d4eb171cf96791faa4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "2fad6eac6077f03fe109c4d4eb171cf96791faa4",
         "type": "github"
       }
     },
