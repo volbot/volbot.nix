@@ -29,7 +29,7 @@ in
       enable = true;
       background = config.stylix.image;
     };
-    audio.enable=true;
+    audio.enable = true;
     fish.enable = true;
     gaming.enable = true;
     theme.enable = true;
@@ -98,6 +98,7 @@ in
 
   programs.yazi = {
     enable = true;
+    shellWrapperName = "y";
     keymap = {
       mgr.prepend_keymap = [
         # ripdrag (drag-n-drop) capabilities
@@ -191,7 +192,7 @@ in
     slurp
     grim
 
-thunar
+    thunar
 
     #GAMING PACKAGES
     prismlauncher

@@ -61,6 +61,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
       # e.g. treefmt-nix.flakeModule
       (nixpkgs.lib.modules.importApply ./common inputs)
     ];
+                                
     perSystem =
       let
         flakeCfg = config.flake;
@@ -79,9 +80,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
         _module.args.pkgs = import inputs.nixpkgs {
           inherit system;
           overlays = overlayList;
-          config = {
-            allowUnfree = true;
-          };
+          config.allowUnfree = true;
         };
 
         # overlayAttrs = { outname = config.packages.packagename; }; # Only with easyOverlay imported

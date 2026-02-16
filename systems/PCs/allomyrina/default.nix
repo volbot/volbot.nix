@@ -20,9 +20,13 @@
     gaming.enable = true;
   };
 
+  hardware.enableRedistributableFirmware = true;
+
   security.polkit.enable = true;
 
   programs.dconf.enable = true;
+
+  # networking.hostName = "allomyrina";
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 

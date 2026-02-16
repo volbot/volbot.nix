@@ -52,7 +52,7 @@
       position.x = 0;
       position.y = 0;
     };
-    "DP-3" = {
+    "DP-1" = {
       mode.width = 1920;
       mode.height = 1080;
       mode.refresh = 60.0;
@@ -61,20 +61,22 @@
       position.x = 1920;
       position.y = 0;
     };
-    "DP-1" = {
+    "DP-3" = {
       mode.width = 1920;
       mode.height = 1080;
       mode.refresh = 60.0;
       position.x = 3840;
       position.y = 0;
     };
-    "DP-2" = {
+                /*
+    "DP-2" = { // TV
       mode.width = 1280;
       mode.height = 720;
       mode.refresh = 60.0;
       position.x = 5760;
       position.y = 0;
     };
+                */
   };
   binds = {
     "Mod+Shift+Slash".action.show-hotkey-overlay = { };
