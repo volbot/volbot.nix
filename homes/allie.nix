@@ -245,6 +245,8 @@ in
     vesktop
 
     #FONTS
+                freetype
+                
     font-manager
 
     font-manager
