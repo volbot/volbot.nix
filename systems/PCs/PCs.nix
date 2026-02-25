@@ -182,7 +182,7 @@ in
   # services.xserver.synaptics.palmDetect = true;
   fonts.packages = with pkgs; [
     fira-code
-    openmoji-color
+                #openmoji-color
     noto-fonts-color-emoji
     nerd-fonts.fira-mono
     nerd-fonts.go-mono

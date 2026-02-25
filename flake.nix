@@ -5,7 +5,10 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
 
-    home-manager.url = "github:nix-community/home-manager";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     stylix = {
       url = "github:nix-community/stylix";
@@ -15,7 +18,10 @@
 
     xwayland-satellite-pin.url = "github:NixOS/nixpkgs/2fad6eac6077f03fe109c4d4eb171cf96791faa4";
 
-    flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
     nix-appimage.url = "github:ralismark/nix-appimage";
 
     fenix = {
@@ -61,7 +67,11 @@
     textfox.url = "github:adriankarlen/textfox";
 
     font-flake.url = "path:./fonts";
-    volvim.url = "path:./nixcats";
+    volvim = {
+      url = "path:./nixcats";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixCats.follows = "nixCats";
+    };
 
     wrappers.url = "github:BirdeeHub/nix-wrapper-modules";
     wrappers.inputs.nixpkgs.follows = "nixpkgs";

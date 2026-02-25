@@ -207,7 +207,7 @@ in
 
     gimp3
     inkscape
-    krita
+                #krita
     aseprite
     #libresprite
 
