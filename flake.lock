@@ -1077,14 +1077,17 @@
         "nixpkgs": "nixpkgs_7"
       },
       "locked": {
-        "lastModified": 1772056666,
-        "narHash": "sha256-E+ljlzKtwAiS11EOHM1fsDRK/vXpxQ6utAkPrkpz1iY=",
-        "path": "/home/allie/Programs/textfox",
-        "type": "path"
+        "lastModified": 1772056854,
+        "narHash": "sha256-LmY5XP9xUeiOrUCxe088Q4zY0jTPzB/HmpL/Hy+fLEE=",
+        "owner": "volbot",
+        "repo": "textfox",
+        "rev": "033781d9d5316ee511702a5392b13f7c3095fbd1",
+        "type": "github"
       },
       "original": {
-        "path": "/home/allie/Programs/textfox",
-        "type": "path"
+        "owner": "volbot",
+        "repo": "textfox",
+        "type": "github"
       }
     },
     "tinted-foot": {
