@@ -109,6 +109,8 @@ other = true;
       nixExtras.nixpkgs = ''import ${pkgs.path} {}'';
       nixdExtras = {
         nixpkgs = "import ${builtins.path { path = pkgs.path; }} {}";
+        nixos_options = ''(builtins.getFlake "path:${builtins.toString inputs.self.outPath}").nixosConfigurations.configname.options'';
+        home_manager.options = ''(builtins.getFlake "path:${builtins.toString inputs.self.outPath}").homeConfigurations.configname.options'';
         get_configs = utils.n2l.types.function-unsafe.mk {
           args = [
             "type"

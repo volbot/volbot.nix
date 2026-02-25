@@ -64,7 +64,8 @@
       flake = false;
     };
 
-    textfox.url = "github:adriankarlen/textfox";
+    #textfox.url = "github:adriankarlen/textfox";
+    textfox.url = "github:volbot/textfox";
 
     font-flake.url = "path:./fonts";
     volvim = {
