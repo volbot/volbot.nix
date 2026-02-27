@@ -17,12 +17,12 @@ in
   imports = (
     if homeManager then
       [
-        inputs.niri.homeModules.niri
-        inputs.niri.homeModules.stylix
+        inputs.niri-flake.homeModules.niri
+                                #inputs.niri-flake.homeModules.stylix
       ]
     else
       [
-        inputs.niri.nixosModules.niri
+        inputs.niri-flake.nixosModules.niri
       ]
   );
   options = {

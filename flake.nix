@@ -33,7 +33,10 @@
       flake = false;
     };
 
-    niri.url = "github:sodiboo/niri-flake";
+    niri-flake = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
 
