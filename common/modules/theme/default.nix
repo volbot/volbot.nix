@@ -15,7 +15,11 @@ let
 in
 {
 
-  imports = [ inputs.stylix.homeModules.stylix ];
+  imports = [
+    inputs.stylix.homeModules.stylix
+
+    inputs.noctalia.homeModules.default
+  ];
   _file = ./default.nix;
   options = {
     ${moduleNamespace}.theme = with lib.types; {
@@ -60,9 +64,30 @@ in
         waybar.enable = true;
       };
 
+      programs.noctalia-shell = {
+        enable = true;
+        settings = {
+          settingsVersion = 1;
+          wallpaper = {
+            enabled = true;
+            directory = "/home/allie/Imagenes/Wallpapers";
+            overviewEnabled = true;
+          };
+          location = {
+            name = "Detroit";
+          };
+        };
+      };
+
+      home.file.".cache/noctalia/wallpapers.json" = {
+        text = builtins.toJSON {
+          defaultWallpaper = "/home/allie/Imagenes/Wallpapers/animegirl_wallpaper_blue.jpg";
+        };
+      };
+
       stylix = {
         enable = true;
-        image = animegirl_wallpaper;
+                                #image = animegirl_wallpaper;
         cursor = {
           name = "miku-cursor-linux";
           size = 32;

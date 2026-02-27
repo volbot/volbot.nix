@@ -12,7 +12,14 @@
   };
   spawn-at-startup = [
     { command = [ "${"${pkgs.xwayland-satellite}/bin/xwayland-satellite"}" ]; }
-    { command = [ "${"${pkgs.waybar}/bin/waybar"}" ]; }
+    #{ command = [ "${"${pkgs.waybar}/bin/waybar"}" ]; }
+    {
+      command = [
+        "noctalia-shell"
+        "--no-duplicate"
+      ];
+    }
+                /*
     {
       command = [
         "${"${pkgs.swaybg}/bin/swaybg"}"
@@ -22,6 +29,7 @@
         "${cfg.background}"
       ];
     }
+*/
   ];
   cursor.hide-when-typing = true;
   window-rules = [
@@ -39,6 +47,19 @@
       clip-to-geometry = true;
     }
   ];
+  layer-rules = [
+    {
+      matches = [
+        {
+          namespace = "^noctalia-overview*";
+        }
+      ];
+      place-within-backdrop = true;
+    }
+  ];
+  debug = {
+    honor-xdg-activation-with-invalid-serial = [ ];
+  };
   input = {
     mod-key = "Super";
     mod-key-nested = "Alt";
@@ -68,21 +89,21 @@
       position.x = 3840;
       position.y = 0;
     };
-                /*
-    "DP-2" = { // TV
-      mode.width = 1280;
-      mode.height = 720;
-      mode.refresh = 60.0;
-      position.x = 5760;
-      position.y = 0;
-    };
-                */
+    /*
+      "DP-2" = { // TV
+        mode.width = 1280;
+        mode.height = 720;
+        mode.refresh = 60.0;
+        position.x = 5760;
+        position.y = 0;
+      };
+    */
   };
   binds = {
     "Mod+Shift+Slash".action.show-hotkey-overlay = { };
 
     "Mod+T".action.spawn = "foot";
-    "Mod+D".action.spawn = "fuzzel";
+    "Mod+D".action.spawn = ["noctalia-shell" "ipc" "call" "launcher" "toggle"];
     "Super+Alt+L".action.spawn = "swaylock";
 
     "XF86AudioRaiseVolume" = {

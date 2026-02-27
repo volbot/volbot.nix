@@ -21,7 +21,16 @@ in
 
     textfox = {
       enable = true;
-      profiles = ["allomyrina"];
+      profiles = [ "allomyrina" ];
+      config = {
+        displayNavButtons = true;
+        bookmarks = {
+          alignment = "left";
+        };
+        tabs = {
+          vertical.enable = true;
+        };
+      };
     };
     /*
       home.packages = [

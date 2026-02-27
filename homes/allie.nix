@@ -207,7 +207,7 @@ in
 
     gimp3
     inkscape
-                #krita
+    #krita
     aseprite
     #libresprite
 
@@ -245,8 +245,8 @@ in
     vesktop
 
     #FONTS
-                freetype
-                
+    freetype
+
     font-manager
 
     font-manager
