@@ -82,7 +82,7 @@ in
 
       home.file.".cache/noctalia/wallpapers.json" = {
         text = builtins.toJSON {
-          defaultWallpaper = "/home/allie/Imagenes/Wallpapers/animegirl_wallpaper_blue.jpg";
+          defaultWallpaper = "/home/allie/Imagenes/Wallpapers/nightcore-blue-headphones.jpg";
         };
       };
 
