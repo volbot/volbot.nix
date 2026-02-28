@@ -21,7 +21,7 @@ in
 {
   overlays = {
     pinnedVersions = import ./pinnedVersions.nix inputs;
-    # pythonFix fixes https://github.com/nixos/nixpkgs/issues/493679. remove once that's fixed in upstream nixpkgs-unstable
+    niri = inputs.niri-flake.overlays.niri;
     pythonFix = (
       final: prev: {
         pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [

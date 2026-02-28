@@ -63,10 +63,14 @@ in
         {
           programs.fuzzel.enable = true;
 
-          programs.niri.enable = true;
+          programs.niri = {
+            enable = true;
+            package = pkgs.niri-unstable;
+            #settings = niriSettings;
+            config = builtins.readFile ./config_temp.kdl;
+
+          };
           #programs.niri.settings = niriSettings;
-          programs.niri.config = builtins.readFile ./config_temp.kdl;
-          programs.waybar = waybarSettings;
 
           home.packages = niriPackages;
         }

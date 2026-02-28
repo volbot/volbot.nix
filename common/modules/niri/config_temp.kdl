@@ -172,11 +172,18 @@ window-rule {
     clip-to-geometry true
 }
 window-rule {
-        match app-id="^foot$"
-
-        background-effect {
-                blur true
-        }
+    match app-id="^foot$"
+ 
+    background-effect {
+        blur true
+    }
+}
+blur { 
+        //off
+        passes 3
+        offset 3
+        noise 0.02
+        saturation 1.5
 }
 layer-rule {
     match namespace="^noctalia-overview*"
