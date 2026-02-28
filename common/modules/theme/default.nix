@@ -75,6 +75,7 @@ in
           };
           location = {
             name = "Detroit";
+            use12hourFormat = true;
           };
         };
       };
@@ -87,7 +88,7 @@ in
 
       stylix = {
         enable = true;
-                                #image = animegirl_wallpaper;
+        #image = animegirl_wallpaper;
         cursor = {
           name = "miku-cursor-linux";
           size = 32;
@@ -102,8 +103,9 @@ in
         };
         fonts = {
           sansSerif = {
-            package = pkgs.aileron;
-            name = "Aileron";
+                                                #package = pkgs.aileron;
+                                                #name = "Aileron";
+                                                name = "Aquavit";
           };
           serif = config.stylix.fonts.sansSerif;
           monospace = {

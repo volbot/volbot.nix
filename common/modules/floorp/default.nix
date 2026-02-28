@@ -19,24 +19,24 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    textfox = {
-      enable = true;
-      profiles = [ "allomyrina" ];
-      config = {
-        displayNavButtons = true;
-        bookmarks = {
-          alignment = "left";
-        };
-        tabs = {
-          vertical.enable = true;
+    /*
+      textfox = {
+        enable = true;
+        profiles = [ "allomyrina" ];
+        config = {
+          displayNavButtons = true;
+          bookmarks = {
+            alignment = "left";
+          };
+          tabs = {
+            vertical.enable = true;
+          };
         };
       };
-    };
-    /*
-      home.packages = [
-        (inputs.textfox.packages.wrapTextfox pkgs.floorp-bin)
-      ];
     */
+    home.packages = with pkgs; [
+      pywalfox-native
+    ];
 
     programs.floorp =
       let
@@ -46,7 +46,8 @@ in
 
         enable = true;
 
-        package = wrapTextfox pkgs.floorp-bin-unwrapped { pname = "floorp"; };
+        #package = wrapTextfox pkgs.floorp-bin-unwrapped { pname = "floorp"; };
+        package = pkgs.floorp-bin;
 
         profiles = {
           allomyrina = {
@@ -58,6 +59,7 @@ in
                 sidebery
                 vimium
                 tabliss
+                pywalfox
               ];
             };
 

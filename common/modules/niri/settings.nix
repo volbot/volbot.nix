@@ -19,17 +19,17 @@
         "--no-duplicate"
       ];
     }
-                /*
-    {
-      command = [
-        "${"${pkgs.swaybg}/bin/swaybg"}"
-        "-m"
-        "fill"
-        "-i"
-        "${cfg.background}"
-      ];
-    }
-*/
+    /*
+      {
+        command = [
+          "${"${pkgs.swaybg}/bin/swaybg"}"
+          "-m"
+          "fill"
+          "-i"
+          "${cfg.background}"
+        ];
+      }
+    */
   ];
   cursor.hide-when-typing = true;
   window-rules = [
@@ -45,6 +45,11 @@
           bottom-right = r;
         };
       clip-to-geometry = true;
+                        /*
+      background-effect = {
+        blur = true;
+      };
+*/
     }
   ];
   layer-rules = [
@@ -103,7 +108,13 @@
     "Mod+Shift+Slash".action.show-hotkey-overlay = { };
 
     "Mod+T".action.spawn = "foot";
-    "Mod+D".action.spawn = ["noctalia-shell" "ipc" "call" "launcher" "toggle"];
+    "Mod+D".action.spawn = [
+      "noctalia-shell"
+      "ipc"
+      "call"
+      "launcher"
+      "toggle"
+    ];
     "Super+Alt+L".action.spawn = "swaylock";
 
     "XF86AudioRaiseVolume" = {

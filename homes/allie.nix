@@ -244,6 +244,8 @@ in
 
     vesktop
 
+                nicotine-plus
+
     #FONTS
     freetype
 

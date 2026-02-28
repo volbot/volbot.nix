@@ -18,7 +18,7 @@ in
     if homeManager then
       [
         inputs.niri-flake.homeModules.niri
-                                #inputs.niri-flake.homeModules.stylix
+        #inputs.niri-flake.homeModules.stylix
       ]
     else
       [
@@ -64,7 +64,8 @@ in
           programs.fuzzel.enable = true;
 
           programs.niri.enable = true;
-          programs.niri.settings = niriSettings;
+          #programs.niri.settings = niriSettings;
+          programs.niri.config = builtins.readFile ./config_temp.kdl;
           programs.waybar = waybarSettings;
 
           home.packages = niriPackages;
