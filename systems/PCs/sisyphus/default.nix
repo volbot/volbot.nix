@@ -11,13 +11,20 @@
 
 {
   imports = with inputs.self.nixosModules; [
-    gaming
-    ./hardware-configuration.nix
     ../PCs.nix
   ];
 
+/*
   volbotMods = {
-    gaming.enable = true;
+
+  };
+  */
+
+  wsl = {
+    enable = true;
+    defaultUser = "allie";
+    useWindowsDriver = true;
+    interop.register = true;
   };
 
   hardware.enableRedistributableFirmware = true;
@@ -52,27 +59,4 @@
       '';
     };
   };
-
-  #NVIDIA STUFF
-  hardware.graphics = {
-    enable = true;
-  };
-
-  services.xserver.videoDrivers = [ "nvidia" ];
-
-  hardware.nvidia = {
-    modesetting.enable = true;
-
-    powerManagement = {
-      enable = false;
-      finegrained = false;
-    };
-
-    open = true;
-
-    nvidiaSettings = true;
-
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-  };
-
 }
