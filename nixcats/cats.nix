@@ -170,7 +170,7 @@ in
       llvmPackages.bintools
       lldb
     ];
-    json = with pkgs; [ nodePackages_latest.vscode-json-languageserver ];
+    #json = with pkgs; [ nodePackages_latest.vscode-json-languageserver ];
   };
 
   startupPlugins = with pkgs.vimPlugins; {
