@@ -99,7 +99,10 @@ inputs:
     data = null;
     extraPackages = with pkgs; [
       nixd
-      nixfmt
+      #alejandra
+      nixfmt-rfc-style
+      statix
+      nix-doc
     ];
   };
   # You can use the before and after fields to run them before or after other specs or spec of lists of specs
@@ -112,6 +115,54 @@ inputs:
     extraPackages = with pkgs; [
       lua-language-server
       stylua
+    ];
+  };
+
+  config.specs.c = {
+    after = [ "general" ];
+    lazy = true;
+    data = with pkgs; [
+      clang-tools
+    ];
+  };
+
+  config.specs.cs = {
+    after = [ "general" ];
+    lazy = true;
+    data = with pkgs; [
+      omnisharp-roslyn
+      csharpier
+    ];
+  };
+
+  config.specs.html = {
+    after = [ "general" ];
+    lazy = true;
+    data = with pkgs; [
+      htmlhint
+      rubyPackages_3_4.htmlbeautifier
+      htmx-lsp
+      vscode-langservers-extracted
+      svelte-language-server
+    ];
+  };
+
+  config.specs.toml = {
+    after = [ "general" ];
+    lazy = true;
+    data = with pkgs; [
+      taplo
+    ];
+  };
+
+  config.specs.rust = {
+    after = [ "general" ];
+    lazy = true;
+    data = with pkgs; [
+      inputs.fenix.packages.${stdenv.hostPlatform.system}.latest.toolchain
+      rustup
+      llvmPackages.bintools
+      lldb
     ];
   };
 
