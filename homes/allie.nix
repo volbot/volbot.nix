@@ -32,6 +32,7 @@ in
 		audio.enable = true;
 		gaming.enable = true;
 		theme.enable = true;
+                /*
 		volvim.base16colors = {
 			name = "stylix";
 			translucent = config.stylix.targets.neovim.transparentBackground.main;
@@ -39,6 +40,7 @@ in
 					k: v: builtins.match "base0[0-9A-F]" k!= null
 					) config.lib.stylix.colors.withHashtag;
 		};
+                */
 
 	};
 
