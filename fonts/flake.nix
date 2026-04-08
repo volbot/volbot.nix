@@ -32,6 +32,7 @@
             stripRoot = false;
           };
           installPhase = ''
+	  echo "$src"
             mkdir -p $out/share/fonts
             ls $src
             cp -R $src $out/share/fonts/truetype/

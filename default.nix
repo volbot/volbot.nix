@@ -197,7 +197,7 @@ flake-parts.lib.mkFlake { inherit inputs; } (
 				specialArgs = defaultSpecialArgs;
 				module.nixpkgs.overlays = overlayList;
 				modules = [
-					./systems/PCs/allomyrina
+					./systems/PCs/sisyphus
 						(HMmain (import ./homes/allie_minimal.nix))
 						HMasModule
 				];

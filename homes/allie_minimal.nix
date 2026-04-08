@@ -178,6 +178,9 @@ in
     pnpm
     nodejs_24
 
+    nerd-fonts.mononoki
+    nerd-fonts.fantasque-sans-mono
+
   ];
 
   programs.home-manager.enable = true;

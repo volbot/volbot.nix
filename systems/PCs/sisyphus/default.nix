@@ -11,7 +11,8 @@
 
 {
   imports = with inputs.self.nixosModules; [
-    ../PCs.nix
+        inputs.nixos-wsl.nixosModules.wsl
+	../WSL.nix
   ];
 
 /*
@@ -45,18 +46,5 @@
       PasswordAuthentication = false;
     };
     openFirewall = true;
-  };
-
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session.command = ''
-        ${pkgs.tuigreet}/bin/tuigreet \
-        --time \
-        --asterisks \
-        --user-menu \
-        --cmd niri
-      '';
-    };
   };
 }

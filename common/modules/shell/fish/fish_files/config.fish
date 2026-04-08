@@ -5,13 +5,10 @@ if status is-interactive
     export MANPAGER="less -R --use-color -Dd+r -Du+b"
     export MANROFFOPT="-P -c"
 
+    set -gx EDITOR nvim
+
     fish_vi_key_bindings
 
     # enable ssh agent
     fish_ssh_agent
-    # set alias for config repo management
-    alias config='/usr/bin/git --git-dir=/home/alli/.cfg/ --work-tree=/home/alli'
-    alias demucs='/home/alli/.local/bin/demucs --shifts=4 -o /neptune/audiostuff/samples/stems/demucs'
-    # source local path
-    export PATH="$PATH:/home/alli/.local/bin"
 end

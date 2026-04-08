@@ -21,7 +21,7 @@ in
 			theme
 			gaming
 			audio
-			#volvim
+			volvim
 	];
 	volbotMods = {
 		floorp.enable = true;
@@ -32,7 +32,6 @@ in
 		audio.enable = true;
 		gaming.enable = true;
 		theme.enable = true;
-		/*
 		volvim.base16colors = {
 			name = "stylix";
 			translucent = config.stylix.targets.neovim.transparentBackground.main;
@@ -40,7 +39,6 @@ in
 					k: v: builtins.match "base0[0-9A-F]" k!= null
 					) config.lib.stylix.colors.withHashtag;
 		};
-		*/
 
 	};
 
@@ -111,9 +109,6 @@ in
 		liberation_ttf
 		aileron
 		montserrat
-
-		nerd-fonts.mononoki
-		nerd-fonts.fantasque-sans-mono
 
 		];
 }
