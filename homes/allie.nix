@@ -21,7 +21,7 @@ in
 			theme
 			gaming
 			audio
-			volvim
+                #volvim
 	];
 	volbotMods = {
 		floorp.enable = true;

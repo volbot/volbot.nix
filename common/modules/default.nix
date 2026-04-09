@@ -24,6 +24,7 @@ let
       gaming = import ./gaming args;
       theme = import (homeOnly ./theme) args;
       audio = import ./audio args;
+      homelab = import ./homelab args;
       inherit (shell)
         fish
         ;
