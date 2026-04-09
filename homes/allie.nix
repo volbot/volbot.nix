@@ -46,6 +46,16 @@ in
 
 	programs.foot.enable = true;
 
+  xdg.mimeApps.defaultApplications = {
+    "application/pdf" = [
+      "floorp.desktop"
+      "gimp.desktop"
+    ];
+    "image/png" = "gimp.desktop";
+    "image/jpeg" = "gimp.desktop";
+    "image/webp" = "gimp.desktop";
+  };
+
 	home.packages = with pkgs; [
 
 		thunar

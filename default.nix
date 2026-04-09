@@ -210,6 +210,17 @@ flake-parts.lib.mkFlake { inherit inputs; } (
                 ./systems/PCs/sisyphus
               ];
             };
+            "allie@atlas" = {
+              nixpkgs = inputs.nixpkgs;
+              inherit home-manager;
+              specialArgs = defaultSpecialArgs;
+              module.nixpkgs.overlays = overlayList;
+              modules = [
+                ./systems/PCs/atlas
+                (HMmain (import ./homes/allie_minimal.nix))
+                HMasModule
+              ];
+            };
             "atlas" = {
               specialArgs = defaultSpecialArgs;
               module.nixpkgs.overlays = overlayList;

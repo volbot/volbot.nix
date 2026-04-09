@@ -98,7 +98,7 @@ in
     settings = {
       user = {
         name = "allomyrina volbot";
-        email = "volbot.tech@gmail.com";
+        email = "tech@volbot.org";
       };
       init.defaultBranch = "main";
     };
@@ -129,13 +129,6 @@ in
   };
   xdg.mimeApps.defaultApplications = {
     "inode/directory" = [ "yazi.desktop" ];
-    "application/pdf" = [
-      "floorp.desktop"
-      "gimp.desktop"
-    ];
-    "image/png" = "gimp.desktop";
-    "image/jpeg" = "gimp.desktop";
-    "image/webp" = "gimp.desktop";
   };
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
