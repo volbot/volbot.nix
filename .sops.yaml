@@ -1,0 +1,9 @@
+keys:
+  - &admin_atlas age1kevatctlk4nhhr5vjv8yz8qsynszhx4g92tjhh9v8fnhc5gj347qksaew3
+  - &server_atlas age1c5r7xpvwxurf098l0ds3ztyntzq22gj8lf8tc3padhr0pynjndvsqq0g85
+creation_rules:
+  - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
+    key_groups:
+    - age:
+      - *admin_atlas
+      - *server_atlas

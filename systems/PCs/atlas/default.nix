@@ -48,7 +48,7 @@
         --time \
         --asterisks \
         --user-menu \
-        --cmd niri
+        --cmd fish
       '';
     };
   };
