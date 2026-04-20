@@ -35,24 +35,39 @@ in
       {
       }
     else
+      let
+        qbt_port = 58080;
+        sonarr_port = 8989;
+        radarr_port = 7878;
+        prowlarr_port = 9696;
+        bazarr_port = 6767;
+        navidrome_port = 4533;
+        slskd_port = 5030;
+        lidarr_port = 8686;
+        seerr_port = 5055;
+        jellyfin_port = 8096;
+      in
       {
-        sops.secrets."wireguard_config" = {
-          sopsFile = ../../../secrets/wg-qbt.yaml;
-          owner = "root";
-          group = "root";
-          mode = "0400";
-        };
-        sops.secrets."slskd_env" = {
-          sopsFile = ../../../secrets/slskd.yaml;
-          owner = "root";
-          group = "root";
-          mode = "0400";
-        };
-        sops.secrets."tunnel_cred" = {
-          sopsFile = ../../../secrets/tunnel.yaml;
-          owner = "root";
-          group = "root";
-          mode = "0400";
+        sops.secrets = {
+
+          "wireguard_config" = {
+            sopsFile = ../../../secrets/wg-qbt.yaml;
+            owner = "root";
+            group = "root";
+            mode = "0400";
+          };
+          "slskd_env" = {
+            sopsFile = ../../../secrets/slskd.yaml;
+            owner = "root";
+            group = "root";
+            mode = "0400";
+          };
+          "tunnel_cred" = {
+            sopsFile = ../../../secrets/tunnel.yaml;
+            owner = "root";
+            group = "root";
+            mode = "0400";
+          };
         };
         vpnNamespaces."wg-qbt" = {
           enable = true;
@@ -71,7 +86,6 @@ in
           ];
         };
 
-        security.acme.acceptTerms = true;
         environment.systemPackages = with pkgs; [
           jellyfin
           jellyfin-ffmpeg
@@ -91,15 +105,41 @@ in
           5030
         ];
 
+        security.acme.acceptTerms = true;
         services.nginx = {
           enable = true;
           recommendedProxySettings = true;
           recommendedTlsSettings = true;
           virtualHosts."atlas.volbot.org" = {
-            #enableACME = true;
-            #forceSSL = true;
+            enableACME = true;
+            forceSSL = true;
+            locations."/" = {
+              return = ''
+                                                                200
+                '<html>
+                <body>
+                <h1>welcome to Atlas</h1>
+                <h2>main links</h2>
+                <h3><a href="./stream">stream</a></h2>
+                <h3><a href="http://request.volbot.org">seerr</a></h2>
+                <h3><a href="./music">music</a></h2>
+                <h3><a href="./soulseek">soulseek</a></h2>
+                <h2>advanced</h2>
+                <h3><a href="http://qbt.volbot.org">qbittorrent</a></h2>
+                <h3><a href="./sonarr">sonarr</a></h2>
+                <h3><a href="./radarr">radarr</a></h2>
+                <h3><a href="./lidarr">lidarr</a></h2>
+                <h3><a href="./prowlarr">prowlarr</a></h2>
+                <h3><a href="./bazarr">bazarr</a></h2>
+                </body>
+                </html>'
+              '';
+              extraConfig = ''
+                default_type text/html;
+              '';
+            };
             locations."/stream" = {
-              proxyPass = "http://localhost:8096";
+              proxyPass = "http://localhost:${toString jellyfin_port}";
               proxyWebsockets = true;
               /*
                 extraConfig =
@@ -110,32 +150,67 @@ in
                     "proxy_pass_header Authorization;";
               */
             };
+            locations."/seerr" = {
+              proxyPass = "http://localhost:${toString seerr_port}";
+              proxyWebsockets = true;
+              extraConfig = ''
+                set $app 'seerr';
+
+                # Remove /seerr path to pass to the app
+                rewrite ^/seerr/?(.*)$ /$1 break;
+
+                # Redirect location headers
+                proxy_redirect ^ /$app;
+                proxy_redirect /setup /$app/setup;
+                proxy_redirect /login /$app/login;
+
+                # Sub filters to replace hardcoded paths
+                proxy_set_header Accept-Encoding "";
+                sub_filter_once off;
+                sub_filter_types *;
+                sub_filter 'href="/"' 'href="/$app"';
+                sub_filter 'href="/login"' 'href="/$app/login"';
+                sub_filter 'href:"/"' 'href:"/$app"';
+                sub_filter '\/_next' '\/$app\/_next';
+                sub_filter '/_next' '/$app/_next';
+                sub_filter '/api/v1' '/$app/api/v1';
+                sub_filter '/login/plex/loading' '/$app/login/plex/loading';
+                sub_filter '/images/' '/$app/images/';
+                sub_filter '/imageproxy/' '/$app/imageproxy/';
+                sub_filter '/avatarproxy/' '/$app/avatarproxy/';
+                sub_filter '/android-' '/$app/android-';
+                sub_filter '/apple-' '/$app/apple-';
+                sub_filter '/favicon' '/$app/favicon';
+                sub_filter '/logo_' '/$app/logo_';
+                sub_filter '/site.webmanifest' '/$app/site.webmanifest';
+              '';
+            };
             locations."/music" = {
-              proxyPass = "http://localhost:4533";
+              proxyPass = "http://localhost:${toString navidrome_port}";
               proxyWebsockets = true;
             };
             locations."/soulseek" = {
-              proxyPass = "http://localhost:5030";
+              proxyPass = "http://localhost:${toString slskd_port}";
               proxyWebsockets = true;
             };
             locations."/sonarr" = {
-              proxyPass = "http://localhost:8989";
+              proxyPass = "http://localhost:${toString sonarr_port}";
               proxyWebsockets = true;
             };
             locations."/radarr" = {
-              proxyPass = "http://localhost:7878";
+              proxyPass = "http://localhost:${toString radarr_port}";
               proxyWebsockets = true;
             };
             locations."/prowlarr" = {
-              proxyPass = "http://localhost:9696";
+              proxyPass = "http://localhost:${toString prowlarr_port}";
               proxyWebsockets = true;
             };
             locations."/bazarr" = {
-              proxyPass = "http://localhost:6767";
+              proxyPass = "http://localhost:${toString bazarr_port}";
               proxyWebsockets = true;
             };
             locations."/lidarr" = {
-              proxyPass = "http://localhost:8686";
+              proxyPass = "http://localhost:${toString lidarr_port}";
               proxyWebsockets = true;
             };
           };
@@ -149,17 +224,22 @@ in
               originRequest.noTLSVerify = true;
               ingress = {
                 "atlas.volbot.org" = {
-                  service = "http://localhost";
+                  service = "https://localhost";
                 };
                 "qbt.volbot.org" = {
-                  service = "http://${config.vpnNamespaces.wg-qbt.namespaceAddress}:58080";
+                  service = "https://${config.vpnNamespaces.wg-qbt.namespaceAddress}:${toString qbt_port}";
                 };
                 "request.volbot.org" = {
-                  service = "http://10.0.0.225:5055";
+                  service = "http://10.0.0.225:${toString seerr_port}";
                 };
                 "ssh.volbot.org" = {
                   service = "ssh://10.0.0.225:22";
                 };
+                /*
+                  "smb.volbot.org" = {
+                    service = "smb://10.0.0.225";
+                  };
+                */
               };
               default = "http_status:404";
             };
@@ -181,7 +261,7 @@ in
           settings = {
             BaseURL = "/music";
             Address = "0.0.0.0";
-            Port = 4533;
+            Port = navidrome_port;
             MusicFolder = "/mnt/media/music";
             EnableSharing = true;
             CoverJpegQuality = 100;
@@ -210,6 +290,9 @@ in
             web.authentication.disabled = false;
             web.url_base = "/soulseek";
             remote_access = true;
+            shares.directories = [
+              "/mnt/media/music/"
+            ];
           };
         };
 
@@ -221,8 +304,7 @@ in
         services.qbittorrent = {
           enable = true;
           openFirewall = false;
-          webuiPort = 58080;
-          #torrentingPort = 55577;
+          webuiPort = qbt_port;
         };
 
         services.jellyfin = {
@@ -233,16 +315,17 @@ in
         services.sonarr = {
           enable = true;
           openFirewall = true;
+          settings = {
+            server.port = sonarr_port;
+          };
         };
 
         services.radarr = {
           enable = true;
           openFirewall = true;
-          /*
-            settings = {
-              server.port = 8989;
-            };
-          */
+          settings = {
+            server.port = radarr_port;
+          };
         };
 
         services.recyclarr = {
@@ -252,22 +335,69 @@ in
         services.prowlarr = {
           enable = true;
           openFirewall = true;
+          settings = {
+            server.port = prowlarr_port;
+          };
         };
 
         services.seerr = {
           enable = true;
           openFirewall = true;
+          port = seerr_port;
         };
 
         services.bazarr = {
           enable = true;
           openFirewall = true;
+          listenPort = bazarr_port;
         };
 
         services.lidarr = {
           enable = true;
           openFirewall = true;
+          settings = {
+            server.port = lidarr_port;
+          };
         };
+
+        services.samba = {
+          enable = true;
+          securityType = "user";
+          openFirewall = true;
+          settings = {
+            global = {
+              "workgroup" = "WORKGROUP";
+              "server string" = "smbnix";
+              "netbios name" = "smbnix";
+              "security" = "user";
+              #"use sendfile" = "yes";
+              #"max protocol" = "smb2";
+              # note: localhost is the ipv6 localhost ::1
+              "hosts allow" = "10.0.0. 127.0.0.1 localhost";
+              "hosts deny" = "0.0.0.0/0";
+              "guest account" = "nobody";
+              "map to guest" = "bad user";
+            };
+            "public" = {
+              "path" = "/mnt/media/music";
+              "browseable" = "yes";
+              "read only" = "no";
+              "guest ok" = "yes";
+              "create mask" = "0644";
+              "directory mask" = "0755";
+              #"force user" = "username";
+              #"force group" = "groupname";
+            };
+          };
+        };
+
+        services.samba-wsdd = {
+          enable = true;
+          openFirewall = true;
+        };
+
+        networking.firewall.enable = true;
+        networking.firewall.allowPing = true;
       }
   );
 }
