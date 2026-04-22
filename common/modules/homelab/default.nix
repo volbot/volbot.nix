@@ -49,7 +49,6 @@ in
       in
       {
         sops.secrets = {
-
           "wireguard_config" = {
             sopsFile = ../../../secrets/wg-qbt.yaml;
             owner = "root";
@@ -68,7 +67,24 @@ in
             group = "root";
             mode = "0400";
           };
+          "lastfm_api_key" = {
+            sopsFile = ../../../secrets/lastfm.yaml;
+            owner = "navidrome";
+          };
+          "lastfm_secret" = {
+            sopsFile = ../../../secrets/lastfm.yaml;
+            owner = "navidrome";
+          };
         };
+
+        sops.templates."navidrome.env" = {
+          owner = config.services.navidrome.user;
+          content = ''
+            ND_LASTFM_APIKEY=${config.sops.placeholder."lastfm_api_key"}
+            ND_LASTFM_SECRET=${config.sops.placeholder."lastfm_secret"}
+          '';
+        };
+
         vpnNamespaces."wg-qbt" = {
           enable = true;
           wireguardConfigFile = config.sops.secrets."wireguard_config".path;
@@ -115,7 +131,7 @@ in
             forceSSL = true;
             locations."/" = {
               return = ''
-                                                                200
+                200
                 '<html>
                 <body>
                 <h1>welcome to Atlas</h1>
@@ -227,7 +243,7 @@ in
                   service = "https://localhost";
                 };
                 "qbt.volbot.org" = {
-                  service = "https://${config.vpnNamespaces.wg-qbt.namespaceAddress}:${toString qbt_port}";
+                  service = "http://${config.vpnNamespaces.wg-qbt.namespaceAddress}:${toString qbt_port}";
                 };
                 "request.volbot.org" = {
                   service = "http://10.0.0.225:${toString seerr_port}";
@@ -235,11 +251,9 @@ in
                 "ssh.volbot.org" = {
                   service = "ssh://10.0.0.225:22";
                 };
-                /*
-                  "smb.volbot.org" = {
-                    service = "smb://10.0.0.225";
-                  };
-                */
+                "smb.volbot.org" = {
+                  service = "smb://10.0.0.225";
+                };
               };
               default = "http_status:404";
             };
@@ -267,13 +281,10 @@ in
             CoverJpegQuality = 100;
             EnableUserEditing = true;
             ScanExclude = [ "lost+found" ];
-            /*
-              LastFM.Enabled = true;
-              LastFM.ApiKey = "LASTFMKEY";
-              LastFM.Secret = "LASTFM SECRET";
-              LastFM.Language = "en";
-            */
+            LastFM.Enabled = true;
+            LastFM.Language = "en";
           };
+          environmentFile = config.sops.templates."navidrome.env".path;
         };
 
         systemd.services.navidrome.serviceConfig = {
@@ -289,6 +300,11 @@ in
           settings = {
             web.authentication.disabled = false;
             web.url_base = "/soulseek";
+            soulseek = {
+              description = ''
+                electronic dance music
+              '';
+            };
             remote_access = true;
             shares.directories = [
               "/mnt/media/music/"
