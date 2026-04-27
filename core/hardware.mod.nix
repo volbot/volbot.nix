@@ -1,5 +1,6 @@
 {
   nixos-hardware,
+  nixos-wsl,
   ...
 }:
 let
@@ -95,48 +96,35 @@ in
     }
     #nixos-hardware.nixosModules.common-gpu-amd-southern-islands
   ])
-  /*
-    (config "scarab" "x86_64-linux" [
-      (cpu "intel")
-      (fs.ext4 "/" "/dev/disk/by-uuid/5cca29ad-a848-417e-9bd8-31b0f3be0543" null)
-      (fs.vfat "/boot" "/dev/disk/by-uuid/1202-D996" null)
-      (swap "/dev/disk/by-uuid/310e4198-ae8a-44f2-ac58-9da6ea3dbcd7")
-      {
-        boot.loader.systemd-boot.configurationLimit = 20;
-        boot.initrd.availableKernelModules = [
-          "xhci_pci"
-          "nvme"
-          "usbhid"
-          "usb_storage"
-          "sd_mod"
-          "rtsx_usb_sdmmc"
-        ];
-        boot.initrd.kernelModules = [ ];
-        boot.kernelModules = [ "kvm-intel" ];
-        boot.kernelParams = [
-          "iomem=relaxed"
-          "mem_sleep_default=s2idle"
-        ];
-        boot.extraModulePackages = [ ];
-      }
-    ])
+  (config "scarab" "x86_64-linux" [
+    {
+      imports = [
+        nixos-wsl.nixosModules.wsl
+      ];
+      wsl = {
+        enable = true;
+        defaultUser = "allie";
+        useWindowsDriver = true;
+        interop.register = true;
+      };
+    }
+  ])
 
-    # Contabo VPS
-    (config "atlas" "x86_64-linux" [
-      qemu
-      (fs.ext4 "/" "/dev/sda3" null)
-      {
-        boot.tmp.cleanOnBoot = true;
-        zramSwap.enable = true;
-        boot.loader.grub.device = "/dev/sda";
-        boot.initrd.availableKernelModules = [
-          "ata_piix"
-          "uhci_hcd"
-          "xen_blkfront"
-          "vmw_pvscsi"
-        ];
-        boot.initrd.kernelModules = [ "nvme" ];
-      }
-    ])
-  */
+  # Contabo VPS
+  (config "atlas" "x86_64-linux" [
+    #qemu
+    (fs.ext4 "/" "/dev/sda3" null)
+    {
+      boot.tmp.cleanOnBoot = true;
+      zramSwap.enable = true;
+      boot.loader.grub.device = "/dev/sda";
+      boot.initrd.availableKernelModules = [
+        "ata_piix"
+        "uhci_hcd"
+        "xen_blkfront"
+        "vmw_pvscsi"
+      ];
+      boot.initrd.kernelModules = [ "nvme" ];
+    }
+  ])
 ]

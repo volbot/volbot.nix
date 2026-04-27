@@ -8,6 +8,7 @@ inputs: {
         dig
         whois
         libqalculate
+cloudflared
       ];
 
       programs = {

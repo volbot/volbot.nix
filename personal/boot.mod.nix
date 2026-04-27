@@ -5,9 +5,9 @@
       config,
       ...
     }:
-    lib.mkIf (!config.is-virtual-machine) {
+    {
       boot.plymouth.enable = true;
-      stylix.targets.plymouth.enable = false;
+      #stylix.targets.plymouth.enable = false;
       boot.plymouth.theme = "bgrt";
       boot.initrd.verbose = false;
       boot.consoleLogLevel = 0;

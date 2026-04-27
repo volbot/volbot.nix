@@ -13,7 +13,7 @@
       users.defaultUserShell = pkgs.fish;
 
       home-shortcut = {
-        home.persistence."/nix/persist".files = [ ".local/share/fish/fish_history" ];
+        #home.persistence."/nix/persist".files = [ ".local/share/fish/fish_history" ];
 
         programs.fish = {
           enable = true;

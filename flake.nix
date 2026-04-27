@@ -10,6 +10,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
+
     stylix = {
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -32,6 +34,12 @@
       url = "github:mrcjkb/rustaceanvim";
       flake = false;
     };
+
+    nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";
+    nixpkgs-wayland.inputs.nixpkgs.follows = "nixpkgs";
+
+    zen-browser.url = "github:0xc000022070/zen-browser-flake";
+    zen-browser.inputs.nixpkgs.follows = "nixpkgs";
 
     niri-flake = {
       url = "github:sodiboo/niri-flake";
@@ -70,17 +78,25 @@
     #textfox.url = "github:adriankarlen/textfox";
     textfox.url = "github:volbot/textfox";
 
-    font-flake.url = "path:./fonts";
-    volvim = {
-      url = "path:./nixcats";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixCats.follows = "nixCats";
-    };
+    /*
+      font-flake.url = "path:./fonts";
+      volvim = {
+        url = "path:./nixcats";
+        inputs.nixpkgs.follows = "nixpkgs";
+        inputs.nixCats.follows = "nixCats";
+      };
+    */
 
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    vpn-confinement.url = "github:Maroka-chan/VPN-Confinement";
 
     wrappers.url = "github:BirdeeHub/nix-wrapper-modules";
     wrappers.inputs.nixpkgs.follows = "nixpkgs";
@@ -190,10 +206,12 @@
 
       nixosConfigurations = configs;
 
-      apps.x86_64-linux = mapAttrs (name: script: {
-        type = "app";
-        program = "${script}";
-      }) vms;
+      apps.x86_64-linux = mapAttrs (
+        name: script: {
+          type = "app";
+          program = "${script}";
+        }
+      );
 
       # This is useful to rebuild all systems at once, for substitution
       all-systems = nixpkgs.legacyPackages.x86_64-linux.runCommand "all-systems" { } (

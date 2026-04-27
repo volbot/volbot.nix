@@ -27,7 +27,7 @@
 
       programs.floorp =
         let
-          wrapTextfox = pkgs.callPackage "${inputs.textfox}/nix/pkgs/wrapTextfox.nix" { };
+          wrapTextfox = pkgs.callPackage "${textfox}/nix/pkgs/wrapTextfox.nix" { };
         in
         {
 
@@ -90,6 +90,6 @@
           };
         };
 
-      stylix.targets.floorp.profileNames = [ "allomyrina" ];
+      #stylix.targets.floorp.profileNames = [ "allomyrina" ];
     };
 }
