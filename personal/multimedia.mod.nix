@@ -1,0 +1,41 @@
+{
+  personal = {
+    home-shortcut =
+      {
+        pkgs,
+        ...
+      }:
+      {
+        home.packages = with pkgs; [
+
+          ffmpeg-full
+          imagemagick
+          gpick
+
+          gimp3
+          inkscape
+          #krita
+          aseprite
+          #libresprite
+
+          (pkgs.wrapOBS {
+            plugins = with pkgs.obs-studio-plugins; [
+              wlrobs
+              obs-pipewire-audio-capture
+              obs-gstreamer
+              obs-vkcapture
+            ];
+          })
+
+          vlc
+          audacity
+          reaper
+
+          blender
+          unityhub
+
+          libreoffice
+        ];
+      };
+  };
+}
