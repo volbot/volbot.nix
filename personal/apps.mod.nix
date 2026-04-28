@@ -48,7 +48,7 @@ inputs: {
             let
               file-manager = "org.kde.dolphin.desktop";
               web-browser =
-                if nixosConfig.networking.hostName == "sodium" then "floorp.desktop" else "firefox.desktop";
+                if nixosConfig.networking.hostName == "allomyrina" then "floorp.desktop" else "firefox.desktop";
             in
             {
               "inode/directory" = file-manager;

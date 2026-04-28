@@ -57,6 +57,7 @@ in
     {
     };
 }
+# Main PC (untested)
 // builtins.listToAttrs [
   (config "allomyrina" "x86_64-linux" [
     (cpu "intel")
@@ -96,11 +97,13 @@ in
     }
     #nixos-hardware.nixosModules.common-gpu-amd-southern-islands
   ])
+  # WSL for work
   (config "scarab" "x86_64-linux" [
     {
       imports = [
         nixos-wsl.nixosModules.wsl
       ];
+      services.dbus.enable = true;
       wsl = {
         enable = true;
         defaultUser = "allie";
