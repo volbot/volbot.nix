@@ -1,4 +1,10 @@
 inputs: {
+  universal = {
+    programs.zoxide = {
+      enable = true;
+      enableFishIntegration = true;
+    };
+  };
   universal.home-shortcut =
     { pkgs, ... }:
     {
@@ -8,7 +14,8 @@ inputs: {
         dig
         whois
         libqalculate
-cloudflared
+        cloudflared
+        zoxide
       ];
 
       programs = {

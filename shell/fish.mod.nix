@@ -1,19 +1,24 @@
+{ fish-ssh-agent, ... }:
 {
   universal =
     { pkgs, ... }:
     {
       programs.fish = {
         enable = true;
-        interactiveShellInit = ''
-          set fish_greeting
+        interactiveShellInit = builtins.concatStringsSep "\n" [
+          (builtins.readFile "${fish-ssh-agent}/functions/fish_ssh_agent.fish")
+          ''
+            set fish_greeting
 
-          set machines "allomyrina" "scarab" "atlas"
-        '';
+            set machines "allomyrina" "scarab" "atlas"
+
+            fish_ssh_agent
+          ''
+        ];
       };
       users.defaultUserShell = pkgs.fish;
 
       home-shortcut = {
-        #home.persistence."/nix/persist".files = [ ".local/share/fish/fish_history" ];
 
         programs.fish = {
           enable = true;
@@ -23,6 +28,9 @@
               eza = "eza --long --all --icons --time-style long-iso";
               "@" = "kitten ssh";
             */
+          };
+          functions = {
+            cd = "z $argv";
           };
 
           plugins = [
