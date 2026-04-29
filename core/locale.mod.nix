@@ -1,6 +1,6 @@
 let
   settings = {
-    keyboard-layout = "no";
+    keyboard-layout = "us";
     timezone = "America/Detroit";
     language = "en_US.UTF-8";
     formats = "C.UTF-8";

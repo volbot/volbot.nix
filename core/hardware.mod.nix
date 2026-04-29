@@ -80,6 +80,14 @@ in
       boot.extraModulePackages = [ ];
       boot.supportedFilesystems = [ "ntfs" ];
 
+      boot.loader.timeout = 3;
+      boot.loader.systemd-boot = {
+        editor = false;
+        configurationLimit = 50;
+        enable = true;
+      };
+      boot.loader.efi.canTouchEfiVariables = true;
+
       #NVIDIA STUFF
       hardware.graphics.enable = true;
       services.xserver.videoDrivers = [ "nvidia" ];
@@ -113,21 +121,36 @@ in
     }
   ])
 
-  # Contabo VPS
+  # Homelab
   (config "atlas" "x86_64-linux" [
     #qemu
-    (fs.ext4 "/" "/dev/sda3" null)
+    (cpu "amd")
+    (fs.ext4 "/" "/dev/disk/by-uuid/72d728a0-66a5-4c1f-85c8-42044d1179e7" null)
+    (fs.vfat "/boot" "/dev/disk/by-uuid/BCFB-459E" [
+      "fmask=0077"
+      "dmask=0077"
+    ])
+    (swap "/dev/disk/by-uuid/2de52c1f-d853-4d1d-92ef-126274c45f31")
     {
-      boot.tmp.cleanOnBoot = true;
-      zramSwap.enable = true;
-      boot.loader.grub.device = "/dev/sda";
       boot.initrd.availableKernelModules = [
-        "ata_piix"
-        "uhci_hcd"
-        "xen_blkfront"
-        "vmw_pvscsi"
+        "xhci_pci"
+        "ahci"
+        "ohci_pci"
+        "ehci_pci"
+        "usbhid"
+        "usb_storage"
+        "sd_mod"
       ];
-      boot.initrd.kernelModules = [ "nvme" ];
+      boot.initrd.kernelModules = [ ];
+      boot.kernelModules = [ "kvm-amd" ];
+
+      boot.loader.timeout = 3;
+      boot.loader.systemd-boot = {
+        editor = false;
+        configurationLimit = 50;
+        enable = true;
+      };
+      boot.loader.efi.canTouchEfiVariables = true;
     }
   ])
 ]
