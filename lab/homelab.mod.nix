@@ -43,7 +43,7 @@
         namespaceAddress = "192.168.15.1";
         accessibleFrom = [
           "127.0.0.1"
-          "localhost"
+          "::1"
         ];
         portMappings = [
           {
@@ -198,13 +198,13 @@
                 service = "http://${config.vpnNamespaces.wg-qbt.namespaceAddress}:${toString qbt_port}";
               };
               "request.volbot.org" = {
-                service = "http://localhost:${toString seerr_port}";
+                service = "http://127.0.0.1:${toString seerr_port}";
               };
               "ssh.volbot.org" = {
-                service = "ssh://localhost:22";
+                service = "ssh://127.0.0.1:22";
               };
               "smb.volbot.org" = {
-                service = "smb://localhost";
+                service = "smb://127.0.0.1";
               };
             };
             default = "http_status:404";
@@ -212,14 +212,17 @@
         };
       };
 
-      services.openssh.settings.Macs = [
-        # Current defaults:
-        "hmac-sha2-512-etm@openssh.com"
-        "hmac-sha2-256-etm@openssh.com"
-        "umac-128-etm@openssh.com"
-        # Added:
-        "hmac-sha2-256"
-      ];
+      services.openssh = {
+        openFirewall = true;
+        settings.Macs = [
+          # Current defaults:
+          "hmac-sha2-512-etm@openssh.com"
+          "hmac-sha2-256-etm@openssh.com"
+          "umac-128-etm@openssh.com"
+          # Added:
+          "hmac-sha2-256"
+        ];
+      };
 
       services.navidrome = {
         enable = true;
