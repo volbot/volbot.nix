@@ -16,6 +16,7 @@ inputs: {
         libqalculate
         cloudflared
         zoxide
+        tmux
       ];
 
       programs = {

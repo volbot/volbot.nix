@@ -20,6 +20,16 @@
       jellyfin_port = 8096;
     in
     {
+
+      home-shortcut = {
+        programs.beets = {
+          enable = true;
+          settings = {
+            directory = "/mnt/media/music";
+          };
+        };
+      };
+
       imports = [
         sops-nix.nixosModules.sops
         vpn-confinement.nixosModules.default
@@ -64,8 +74,9 @@
         qbittorrent-cli
 
         cloudflared
-      ];
 
+        beets
+      ];
       networking.firewall.allowedTCPPorts = [
         80
         443
