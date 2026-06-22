@@ -19,6 +19,7 @@ inputs: {
         tmux
 	pnpm
 	nodejs
+        unzip
       ];
 
       programs = {
