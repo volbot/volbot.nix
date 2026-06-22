@@ -1,5 +1,6 @@
 {
   universal = {
+  programs.nix-ld.enable = true;
     home-shortcut =
       { pkgs, lib, ... }:
       {
