@@ -17,6 +17,9 @@ inputs: {
         cloudflared
         zoxide
         tmux
+	pnpm
+	nodejs
+        unzip
       ];
 
       programs = {

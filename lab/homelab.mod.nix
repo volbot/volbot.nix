@@ -25,7 +25,7 @@
         programs.beets = {
           enable = true;
           settings = {
-            directory = "/mnt/media/music";
+            directory = "/mnt/media/music/library_main";
           };
         };
       };
@@ -69,6 +69,10 @@
         jellyfin-ffmpeg
         jellyfin-web
         jellyfin-tui
+
+        flac
+        unzip
+        wget
 
         qbittorrent
         qbittorrent-cli
@@ -268,12 +272,15 @@
           web.url_base = "/soulseek";
           soulseek = {
             description = ''
-              						electronic dance music
+              						pc music fiend
               						'';
           };
           remote_access = true;
           shares.directories = [
-            "/mnt/media/music/"
+            "/mnt/media/music/library_main"
+          ];
+          groups.blacklisted.members = [
+            "Splashed2-Coil-Jittery"
           ];
         };
       };
@@ -360,8 +367,28 @@
             "guest account" = "nobody";
             "map to guest" = "bad user";
           };
-          "public" = {
+          "music" = {
             "path" = "/mnt/media/music";
+            "browseable" = "yes";
+            "read only" = "no";
+            "guest ok" = "yes";
+            "create mask" = "0644";
+            "directory mask" = "0755";
+            #"force user" = "username";
+            #"force group" = "groupname";
+          };
+          "music_data" = {
+            "path" = "/mnt/media/music_data";
+            "browseable" = "yes";
+            "read only" = "no";
+            "guest ok" = "yes";
+            "create mask" = "0644";
+            "directory mask" = "0755";
+            #"force user" = "username";
+            #"force group" = "groupname";
+          };
+          "public" = {
+            "path" = "/home/allie/public";
             "browseable" = "yes";
             "read only" = "no";
             "guest ok" = "yes";
