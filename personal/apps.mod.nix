@@ -32,7 +32,7 @@ inputs: {
             bitwarden-cli
             grim
             slurp
-            gsettings-desktop-schemas
+            #gsettings-desktop-schemas
             playerctl
             brightnessctl
             pairdrop
@@ -42,6 +42,7 @@ inputs: {
             wayvnc
             wlvncc
             rnote
+            feishin
           ];
           xdg.mimeApps.enable = true;
           xdg.mimeApps.defaultApplications =

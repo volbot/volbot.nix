@@ -13,7 +13,7 @@
         programs.helix = {
           enable = true;
           settings = {
-            theme = "catppuccin_mocha_transparent";
+            #theme = "catppuccin_mocha_transparent";
             editor = {
               true-color = true;
             };

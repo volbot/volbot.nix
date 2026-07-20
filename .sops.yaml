@@ -3,6 +3,8 @@ keys:
   - &server_atlas age1c5r7xpvwxurf098l0ds3ztyntzq22gj8lf8tc3padhr0pynjndvsqq0g85
   - &admin_scarab age1wx3vvak9qakvz0hsllpg8fv5m8luwet32hd6zqd6azdu7h5j2qrs9vwfw6
   - &server_scarab age12jd0pxj7x0fnkl6h6a6dg0652akl769z0vd9t92s82qcu7uyhyrqw7t2ad
+  - &admin_allomyrina age1av0486alvnvhlzt39rrg0vr75uc00993sz30m6xwa86lahcqvgas6lyq4e
+  - &server_allomyrina age1gj99h74ftdgylpwatlv0l056ghqdp85es8ywchl2xx9lpj5rhftqcy66c9
 creation_rules:
   - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
     key_groups:
@@ -11,3 +13,5 @@ creation_rules:
       - *admin_scarab
       - *server_atlas
       - *server_scarab
+      - *admin_allomyrina
+      - *server_allomyrina

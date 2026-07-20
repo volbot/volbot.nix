@@ -4,7 +4,7 @@
   ...
 }:
 let
-  config = name: system: additional: {
+  configure = name: system: additional: {
     inherit name;
     value = {
       imports = [
@@ -59,7 +59,7 @@ in
 }
 # Main PC (untested)
 // builtins.listToAttrs [
-  (config "allomyrina" "x86_64-linux" [
+  (configure "allomyrina" "x86_64-linux" [
     (cpu "intel")
     (fs.ext4 "/" "/dev/disk/by-uuid/7b48ae56-21cc-4fa2-8a45-b26f945453b3" null)
     (fs.vfat "/boot" "/dev/disk/by-uuid/5BFE-6EFC" [
@@ -68,6 +68,7 @@ in
     ])
     (swap "/dev/disk/by-uuid/9de3a981-268a-44b6-b8b2-71456ff0f825")
     {
+
       boot.initrd.availableKernelModules = [
         "ata_piix"
         "ohci_pci"
@@ -88,6 +89,8 @@ in
       };
       boot.loader.efi.canTouchEfiVariables = true;
 
+      programs.dconf.enable = true;
+
       #NVIDIA STUFF
       hardware.graphics.enable = true;
       services.xserver.videoDrivers = [ "nvidia" ];
@@ -100,13 +103,14 @@ in
         open = true;
         nvidiaSettings = true;
 
-        package = config.boot.kernelPackages.nvidiaPackages.stable;
+        #package = config.boot.kernelPackages.nvidiaPackages.stable;
       };
+
     }
     #nixos-hardware.nixosModules.common-gpu-amd-southern-islands
   ])
   # WSL for work
-  (config "scarab" "x86_64-linux" [
+  (configure "scarab" "x86_64-linux" [
     {
       imports = [
         nixos-wsl.nixosModules.wsl
@@ -122,7 +126,7 @@ in
   ])
 
   # Homelab
-  (config "atlas" "x86_64-linux" [
+  (configure "atlas" "x86_64-linux" [
     #qemu
     (cpu "amd")
     (fs.ext4 "/" "/dev/disk/by-uuid/72d728a0-66a5-4c1f-85c8-42044d1179e7" null)

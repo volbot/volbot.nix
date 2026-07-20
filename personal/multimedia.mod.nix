@@ -15,7 +15,7 @@
           gimp3
           inkscape
           #krita
-          aseprite
+          #aseprite
           #libresprite
 
           (pkgs.wrapOBS {
@@ -31,8 +31,8 @@
           audacity
           reaper
 
-          blender
-          unityhub
+          #blender
+          #unityhub
 
           libreoffice
         ];
