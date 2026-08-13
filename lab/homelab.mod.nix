@@ -39,7 +39,7 @@
       sops.secrets."tunnel_cred" = { };
       sops.secrets."lastfm/api_key" = { };
       sops.secrets."lastfm/secret" = { };
-      sops.templates."navidrome.env" = {
+	sops.templates."navidrome.env" = {
         owner = config.services.navidrome.user;
         content = ''
           ND_LASTFM_APIKEY=${config.sops.placeholder."lastfm/api_key"}
@@ -242,6 +242,11 @@
       services.navidrome = {
         enable = true;
         openFirewall = true;
+	plugins = with pkgs.navidromePlugins; [
+		audiomuseai
+		listenbrainz-daily-playlist
+		apple-music
+	];
         settings = {
           BaseURL = "/music";
           Address = "0.0.0.0";
@@ -279,7 +284,7 @@
           shares.directories = [
             "/mnt/media/music/library_main"
           ];
-          groups.blacklisted.members = [
+          transfers.groups.blacklisted.members = [
             "Splashed2-Coil-Jittery"
           ];
         };
