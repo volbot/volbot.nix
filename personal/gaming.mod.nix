@@ -24,6 +24,7 @@
         protontricks
         mesa-demos
         vulkan-tools
+	prismlauncher
       ];
 
       programs.steam = {

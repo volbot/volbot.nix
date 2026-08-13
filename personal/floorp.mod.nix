@@ -45,7 +45,7 @@
                   ublock-origin
                   sidebery
                   vimium
-                  tabliss
+                  #tabliss
                   pywalfox
                 ];
               };

@@ -79,6 +79,7 @@
       home.packages = with pkgs; [
         qpwgraph
         crosspipe
+	pavucontrol
       ];
     };
 

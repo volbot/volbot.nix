@@ -44,11 +44,13 @@ in
   universal =
     {
       pkgs,
+      config,
       lib,
       ...
     }:
     {
       hardware.enableRedistributableFirmware = true;
+      hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
       networking.useDHCP = lib.mkDefault true;
     };
 
@@ -102,8 +104,6 @@ in
         };
         open = true;
         nvidiaSettings = true;
-
-        #package = config.boot.kernelPackages.nvidiaPackages.stable;
       };
 
     }
