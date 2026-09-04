@@ -155,6 +155,18 @@ in
         enable = true;
       };
       boot.loader.efi.canTouchEfiVariables = true;
+
+      hardware.graphics.enable = true;
+      services.xserver.videoDrivers = [ "nvidia" ];
+      hardware.nvidia = {
+        modesetting.enable = true;
+        powerManagement = {
+          enable = false;
+          finegrained = false;
+        };
+        open = false;
+        nvidiaSettings = true;
+      };
     }
   ])
 ]

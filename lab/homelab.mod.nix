@@ -36,16 +36,16 @@
 		sops.templates."navidrome.env" = {
 			owner = config.services.navidrome.user;
 			content = ''
-ND_LASTFM_APIKEY=${config.sops.placeholder."lastfm/api_key"}
-ND_LASTFM_SECRET=${config.sops.placeholder."lastfm/secret"}
+				ND_LASTFM_APIKEY=${config.sops.placeholder."lastfm/api_key"}
+			ND_LASTFM_SECRET=${config.sops.placeholder."lastfm/secret"}
 			'';
 		};
 		sops.templates."koito.env" = {
 			content = ''
-KOITO_DEFAULT_THEME=catppuccin
-KOITO_LISTEN_PORT=${toString koito_port}
-KOITO_SUBSONIC_URL=http://localhost:${toString navidrome_port}/music
-KOITO_SUBSONIC_PARAMS=${config.sops.placeholder."koito_subsonic_params"}
+				KOITO_DEFAULT_THEME=catppuccin
+				KOITO_LISTEN_PORT=${toString koito_port}
+			KOITO_SUBSONIC_URL=http://localhost:${toString navidrome_port}/music
+				KOITO_SUBSONIC_PARAMS=${config.sops.placeholder."koito_subsonic_params"}
 			'';
 		};
 
@@ -60,444 +60,449 @@ KOITO_SUBSONIC_PARAMS=${config.sops.placeholder."koito_subsonic_params"}
 						"fish" 
 						"duplicates" 
 						"replaygain" 
-						#"lyrics" 
+#"lyrics" 
 						"lastgenre" 
-						];
+#"filetote"
+					];
 
-/*
-					lyrics = {
+					/*
+					   lyrics = {
 # synced works incorrectly, so the order is important (lrclib is the only one that offers synced lyrics)
-						sources = ["lrclib" "genius" "tekstowo" "google"];
-						synced = true;
-						force = true;
-					};
-					*/
+sources = ["lrclib" "genius" "tekstowo" "google"];
+synced = true;
+force = true;
+};
+					 */
 
 					lastgenre = {
 						count = 3;
 					};
 
-					replaygain = {
-						parallel_on_import = true;
-						backend = "ffmpeg";
-						overwrite = true;
-						targetlevel = 89;
-						r128_targetlevel = 84;
-						r128 = ["flac" "mp3"];
-					};
+replaygain = {
+	parallel_on_import = true;
+	backend = "ffmpeg";
+	overwrite = true;
+	targetlevel = 89;
+	r128_targetlevel = 84;
+	r128 = ["flac" "mp3"];
+};
 
-					fetchart = {
-						#sources = "coverart itunes lastfm amazon albumart filesystem";
-						cautious = true;
-						store_source = true;
-						minwidth = 1200;
-						maxwidth = 1200;
-						lastfm_key = config.sops.secrets."lastfm/api_key".path;
-					};
+fetchart = {
+#sources = "coverart itunes lastfm amazon albumart filesystem";
+	cautious = true;
+	store_source = true;
+	minwidth = 1200;
+	maxwidth = 1200;
+	lastfm_key = config.sops.secrets."lastfm/api_key".path;
+};
 
-				};
-			};
+/*
+   filetote = {
+   extensions = [ ".cue" ];
+   };
+ */
+
+};
+};
+};
+
+
+vpnNamespaces."wg-qbt" = {
+	enable = true;
+	wireguardConfigFile = config.sops.secrets."wireguard_config".path;
+	namespaceAddress = "192.168.15.1";
+	accessibleFrom = [
+		"127.0.0.1"
+			"::1"
+	];
+	portMappings = [
+	{
+		from = 58080;
+		to = 58080;
+		protocol = "tcp";
+	}
+	];
+};
+
+environment.systemPackages = with pkgs; [
+	jellyfin
+	jellyfin-ffmpeg
+	jellyfin-web
+	jellyfin-tui
+
+	flac
+	unzip
+	wget
+
+	qbittorrent
+	qbittorrent-cli
+
+	cloudflared
+];
+networking.firewall.allowedTCPPorts = [
+	80
+	443
+	58080
+	5030
+];
+
+security.acme.acceptTerms = true;
+services.nginx = {
+	enable = true;
+	recommendedProxySettings = true;
+	recommendedTlsSettings = true;
+	virtualHosts."atlas.volbot.org" = {
+		enableACME = true;
+		forceSSL = true;
+		locations."/" = {
+			return = ''
+				200
+				'<html>
+				<body>
+				<h1>welcome to Atlas</h1>
+				<h2>main links</h2>
+				<h3><a href="./stream">stream</a></h2>
+				<h3><a href="http://request.volbot.org">seerr</a></h2>
+				<h3><a href="./music">music</a></h2>
+				<h3><a href="./soulseek">soulseek</a></h2>
+				<h3><a href="http://koito.volbot.org">koito</a></h2>
+				<h2>advanced</h2>
+				<h3><a href="http://qbt.volbot.org">qbittorrent</a></h2>
+				<h3><a href="./sonarr">sonarr</a></h2>
+				<h3><a href="./radarr">radarr</a></h2>
+				<h3><a href="./lidarr">lidarr</a></h2>
+				<h3><a href="./prowlarr">prowlarr</a></h2>
+				<h3><a href="./bazarr">bazarr</a></h2>
+				</body>
+				</html>'
+				'';
+			extraConfig = ''
+				default_type text/html;
+			'';
 		};
-
-
-		vpnNamespaces."wg-qbt" = {
-			enable = true;
-			wireguardConfigFile = config.sops.secrets."wireguard_config".path;
-			namespaceAddress = "192.168.15.1";
-			accessibleFrom = [
-				"127.0.0.1"
-					"::1"
-			];
-			portMappings = [
-			{
-				from = 58080;
-				to = 58080;
-				protocol = "tcp";
-			}
-			];
-		};
-
-		environment.systemPackages = with pkgs; [
-			jellyfin
-				jellyfin-ffmpeg
-				jellyfin-web
-				jellyfin-tui
-
-				flac
-				unzip
-				wget
-
-				qbittorrent
-				qbittorrent-cli
-
-				cloudflared
-
-				beets
-		];
-		networking.firewall.allowedTCPPorts = [
-			80
-				443
-				58080
-				5030
-		];
-
-		security.acme.acceptTerms = true;
-		services.nginx = {
-			enable = true;
-			recommendedProxySettings = true;
-			recommendedTlsSettings = true;
-			virtualHosts."atlas.volbot.org" = {
-				enableACME = true;
-				forceSSL = true;
-				locations."/" = {
-					return = ''
-						200
-						'<html>
-						<body>
-						<h1>welcome to Atlas</h1>
-						<h2>main links</h2>
-						<h3><a href="./stream">stream</a></h2>
-						<h3><a href="http://request.volbot.org">seerr</a></h2>
-						<h3><a href="./music">music</a></h2>
-						<h3><a href="./soulseek">soulseek</a></h2>
-						<h3><a href="http://koito.volbot.org">koito</a></h2>
-						<h2>advanced</h2>
-						<h3><a href="http://qbt.volbot.org">qbittorrent</a></h2>
-						<h3><a href="./sonarr">sonarr</a></h2>
-						<h3><a href="./radarr">radarr</a></h2>
-						<h3><a href="./lidarr">lidarr</a></h2>
-						<h3><a href="./prowlarr">prowlarr</a></h2>
-						<h3><a href="./bazarr">bazarr</a></h2>
-						</body>
-						</html>'
-						'';
-					extraConfig = ''
-						default_type text/html;
-					'';
-				};
-				locations."/stream" = {
-					proxyPass = "http://localhost:${toString jellyfin_port}";
-					proxyWebsockets = true;
-					/*
-					   extraConfig =
+		locations."/stream" = {
+			proxyPass = "http://localhost:${toString jellyfin_port}";
+			proxyWebsockets = true;
+			/*
+			   extraConfig =
 # required when the target is also TLS server with multiple hosts
 "proxy_ssl_server_name on;"
 +
 # required when the server wants to use HTTP Authentication
 "proxy_pass_header Authorization;";
-					 */
-				};
-				locations."/seerr" = {
-					proxyPass = "http://localhost:${toString seerr_port}";
-					proxyWebsockets = true;
-					extraConfig = ''
-						set $app 'seerr';
+			 */
+		};
+		locations."/seerr" = {
+			proxyPass = "http://localhost:${toString seerr_port}";
+			proxyWebsockets = true;
+			extraConfig = ''
+				set $app 'seerr';
 
 # Remove /seerr path to pass to the app
-					rewrite ^/seerr/?(.*)$ /$1 break;
+			rewrite ^/seerr/?(.*)$ /$1 break;
 
 # Redirect location headers
-					proxy_redirect ^ /$app;
-					proxy_redirect /setup /$app/setup;
-					proxy_redirect /login /$app/login;
+			proxy_redirect ^ /$app;
+			proxy_redirect /setup /$app/setup;
+			proxy_redirect /login /$app/login;
 
 # Sub filters to replace hardcoded paths
-					proxy_set_header Accept-Encoding "";
-					sub_filter_once off;
-					sub_filter_types *;
-					sub_filter 'href="/"' 'href="/$app"';
-					sub_filter 'href="/login"' 'href="/$app/login"';
-					sub_filter 'href:"/"' 'href:"/$app"';
-					sub_filter '\/_next' '\/$app\/_next';
-					sub_filter '/_next' '/$app/_next';
-					sub_filter '/api/v1' '/$app/api/v1';
-					sub_filter '/login/plex/loading' '/$app/login/plex/loading';
-					sub_filter '/images/' '/$app/images/';
-					sub_filter '/imageproxy/' '/$app/imageproxy/';
-					sub_filter '/avatarproxy/' '/$app/avatarproxy/';
-					sub_filter '/android-' '/$app/android-';
-					sub_filter '/apple-' '/$app/apple-';
-					sub_filter '/favicon' '/$app/favicon';
-					sub_filter '/logo_' '/$app/logo_';
-					sub_filter '/site.webmanifest' '/$app/site.webmanifest';
-					'';
+			proxy_set_header Accept-Encoding "";
+			sub_filter_once off;
+			sub_filter_types *;
+			sub_filter 'href="/"' 'href="/$app"';
+			sub_filter 'href="/login"' 'href="/$app/login"';
+			sub_filter 'href:"/"' 'href:"/$app"';
+			sub_filter '\/_next' '\/$app\/_next';
+			sub_filter '/_next' '/$app/_next';
+			sub_filter '/api/v1' '/$app/api/v1';
+			sub_filter '/login/plex/loading' '/$app/login/plex/loading';
+			sub_filter '/images/' '/$app/images/';
+			sub_filter '/imageproxy/' '/$app/imageproxy/';
+			sub_filter '/avatarproxy/' '/$app/avatarproxy/';
+			sub_filter '/android-' '/$app/android-';
+			sub_filter '/apple-' '/$app/apple-';
+			sub_filter '/favicon' '/$app/favicon';
+			sub_filter '/logo_' '/$app/logo_';
+			sub_filter '/site.webmanifest' '/$app/site.webmanifest';
+			'';
+		};
+		locations."/music" = {
+			proxyPass = "http://localhost:${toString navidrome_port}";
+			proxyWebsockets = true;
+		};
+		locations."/soulseek" = {
+			proxyPass = "http://localhost:${toString slskd_port}";
+			proxyWebsockets = true;
+		};
+		locations."/sonarr" = {
+			proxyPass = "http://localhost:${toString sonarr_port}";
+			proxyWebsockets = true;
+		};
+		locations."/radarr" = {
+			proxyPass = "http://localhost:${toString radarr_port}";
+			proxyWebsockets = true;
+		};
+		locations."/prowlarr" = {
+			proxyPass = "http://localhost:${toString prowlarr_port}";
+			proxyWebsockets = true;
+		};
+		locations."/bazarr" = {
+			proxyPass = "http://localhost:${toString bazarr_port}";
+			proxyWebsockets = true;
+		};
+		locations."/lidarr" = {
+			proxyPass = "http://localhost:${toString lidarr_port}";
+			proxyWebsockets = true;
+		};
+	};
+};
+
+services.cloudflared = {
+	enable = true;
+	tunnels = {
+		"14fc4080-e2b1-4328-b111-55ca2b37cab8" = {
+			credentialsFile = config.sops.secrets."tunnel_cred".path;
+			originRequest.noTLSVerify = true;
+			ingress = {
+				"atlas.volbot.org" = {
+					service = "https://localhost";
 				};
-				locations."/music" = {
-					proxyPass = "http://localhost:${toString navidrome_port}";
-					proxyWebsockets = true;
+				"qbt.volbot.org" = {
+					service = "http://${config.vpnNamespaces.wg-qbt.namespaceAddress}:${toString qbt_port}";
 				};
-				locations."/soulseek" = {
-					proxyPass = "http://localhost:${toString slskd_port}";
-					proxyWebsockets = true;
+				"request.volbot.org" = {
+					service = "http://127.0.0.1:${toString seerr_port}";
 				};
-				locations."/sonarr" = {
-					proxyPass = "http://localhost:${toString sonarr_port}";
-					proxyWebsockets = true;
+				"koito.volbot.org" = {
+					service = "http://127.0.0.1:${toString koito_port}";
 				};
-				locations."/radarr" = {
-					proxyPass = "http://localhost:${toString radarr_port}";
-					proxyWebsockets = true;
+				"ssh.volbot.org" = {
+					service = "ssh://127.0.0.1:22";
 				};
-				locations."/prowlarr" = {
-					proxyPass = "http://localhost:${toString prowlarr_port}";
-					proxyWebsockets = true;
-				};
-				locations."/bazarr" = {
-					proxyPass = "http://localhost:${toString bazarr_port}";
-					proxyWebsockets = true;
-				};
-				locations."/lidarr" = {
-					proxyPass = "http://localhost:${toString lidarr_port}";
-					proxyWebsockets = true;
+				"smb.volbot.org" = {
+					service = "smb://127.0.0.1";
 				};
 			};
+			default = "http_status:404";
 		};
+	};
+};
 
-		services.cloudflared = {
-			enable = true;
-			tunnels = {
-				"14fc4080-e2b1-4328-b111-55ca2b37cab8" = {
-					credentialsFile = config.sops.secrets."tunnel_cred".path;
-					originRequest.noTLSVerify = true;
-					ingress = {
-						"atlas.volbot.org" = {
-							service = "https://localhost";
-						};
-						"qbt.volbot.org" = {
-							service = "http://${config.vpnNamespaces.wg-qbt.namespaceAddress}:${toString qbt_port}";
-						};
-						"request.volbot.org" = {
-							service = "http://127.0.0.1:${toString seerr_port}";
-						};
-						"koito.volbot.org" = {
-							service = "http://127.0.0.1:${toString koito_port}";
-						};
-						"ssh.volbot.org" = {
-							service = "ssh://127.0.0.1:22";
-						};
-						"smb.volbot.org" = {
-							service = "smb://127.0.0.1";
-						};
-					};
-					default = "http_status:404";
-				};
-			};
-		};
-
-		services.openssh = {
-			openFirewall = true;
-			settings.Macs = [
+services.openssh = {
+	openFirewall = true;
+	settings.Macs = [
 # Current defaults:
-				"hmac-sha2-512-etm@openssh.com"
-					"hmac-sha2-256-etm@openssh.com"
-					"umac-128-etm@openssh.com"
+		"hmac-sha2-512-etm@openssh.com"
+			"hmac-sha2-256-etm@openssh.com"
+			"umac-128-etm@openssh.com"
 # Added:
-					"hmac-sha2-256"
-			];
+			"hmac-sha2-256"
+	];
+};
+
+services.navidrome = {
+	enable = true;
+	openFirewall = true;
+	plugins = with pkgs.navidromePlugins; [
+		audiomuseai
+			listenbrainz-daily-playlist
+			apple-music
+	];
+	settings = {
+		BaseURL = "/music";
+		Address = "0.0.0.0";
+		Port = navidrome_port;
+		MusicFolder = "/mnt/media/music";
+		EnableSharing = true;
+		CoverJpegQuality = 100;
+		EnableUserEditing = true;
+		ScanExclude = [ "lost+found" ];
+		DefaultTheme = "Catppuccin Macchiato";
+#Agents = "nd-lyrics,apple-music,audiomuseai,deezer,listenbrainz";
+#LyricsPriority = ".lrc,nd-lyrics,embedded";
+		SaveLyrics = true;
+		LastFM.Enabled = true;
+		LastFM.Language = "en";
+		ListenBrainz.BaseURL = "http://localhost:${toString koito_port}/apis/listenbrainz/1";
+		ListenBrainz.Enabled = true;
+
+	};
+	environmentFile = config.sops.templates."navidrome.env".path;
+};
+
+users.users.navidrome = {
+	isSystemUser = true;
+	group = "navidrome";
+};
+users.groups.navidrome = {};
+
+systemd.services.navidrome.serviceConfig = {
+	/*
+	   User = lib.mkForce "allie";
+	   Group = lib.mkForce "users";
+	 */
+	DynamicUser = lib.mkForce false;
+	ProtectHome = lib.mkForce false;
+};
+
+services.koito = {
+	enable = true;
+	openFirewall = true;
+	environmentFile = config.sops.templates."koito.env".path;
+};
+
+systemd.services.koito = {
+	requires = [ "navidrome.service" ];
+	serviceConfig = {
+		Restart = "always";
+		RestartSec = "30s";
+	};
+};
+
+services.slskd = {
+	enable = true;
+	openFirewall = true;
+	environmentFile = config.sops.secrets."slskd_env".path;
+	settings = {
+		web.authentication.disabled = false;
+		web.url_base = "/soulseek";
+		soulseek = {
+			description = ''
+				pc music fiend
+				'';
 		};
+		remote_access = true;
+		shares.directories = [
+			"/mnt/media/music/library_main"
+		];
+		transfers.groups.blacklisted.members = [
+			"Splashed2-Coil-Jittery"
+		];
+	};
+};
 
-		services.navidrome = {
-			enable = true;
-			openFirewall = true;
-			plugins = with pkgs.navidromePlugins; [
-				audiomuseai
-					listenbrainz-daily-playlist
-					apple-music
-			];
-			settings = {
-				BaseURL = "/music";
-				Address = "0.0.0.0";
-				Port = navidrome_port;
-				MusicFolder = "/mnt/media/music";
-				EnableSharing = true;
-				CoverJpegQuality = 100;
-				EnableUserEditing = true;
-				ScanExclude = [ "lost+found" ];
-				DefaultTheme = "Catppuccin Macchiato";
-				#Agents = "nd-lyrics,apple-music,audiomuseai,deezer,listenbrainz";
-				#LyricsPriority = ".lrc,nd-lyrics,embedded";
-				SaveLyrics = true;
-				LastFM.Enabled = true;
-				LastFM.Language = "en";
-				ListenBrainz.BaseURL = "http://localhost:${toString koito_port}/apis/listenbrainz/1";
-				ListenBrainz.Enabled = true;
+systemd.services.qbittorrent.vpnConfinement = {
+	enable = true;
+	vpnNamespace = "wg-qbt";
+};
 
-			};
-			environmentFile = config.sops.templates."navidrome.env".path;
-		};
+services.qbittorrent = {
+	enable = true;
+	openFirewall = false;
+	webuiPort = qbt_port;
+};
 
-		users.users.navidrome = {
-			isSystemUser = true;
-			group = "navidrome";
-		};
-		users.groups.navidrome = {};
+services.jellyfin = {
+	enable = true;
+	openFirewall = true;
+};
 
-		systemd.services.navidrome.serviceConfig = {
-		/*
-			User = lib.mkForce "allie";
-			Group = lib.mkForce "users";
-			*/
-			DynamicUser = lib.mkForce false;
-			ProtectHome = lib.mkForce false;
-		};
+services.sonarr = {
+	enable = true;
+	openFirewall = true;
+	settings = {
+		server.port = sonarr_port;
+	};
+};
 
-		services.koito = {
-			enable = true;
-			openFirewall = true;
-			environmentFile = config.sops.templates."koito.env".path;
-		};
+services.radarr = {
+	enable = true;
+	openFirewall = true;
+	settings = {
+		server.port = radarr_port;
+	};
+};
 
-		systemd.services.koito = {
-			requires = [ "navidrome.service" ];
-			serviceConfig = {
-				Restart = "always";
-				RestartSec = "30s";
-			};
-		};
+services.recyclarr = {
+	enable = true;
+};
 
-		services.slskd = {
-			enable = true;
-			openFirewall = true;
-			environmentFile = config.sops.secrets."slskd_env".path;
-			settings = {
-				web.authentication.disabled = false;
-				web.url_base = "/soulseek";
-				soulseek = {
-					description = ''
-						pc music fiend
-						'';
-				};
-				remote_access = true;
-				shares.directories = [
-					"/mnt/media/music/library_main"
-				];
-				transfers.groups.blacklisted.members = [
-					"Splashed2-Coil-Jittery"
-				];
-			};
-		};
+services.prowlarr = {
+	enable = true;
+	openFirewall = true;
+	settings = {
+		server.port = prowlarr_port;
+	};
+};
 
-		systemd.services.qbittorrent.vpnConfinement = {
-			enable = true;
-			vpnNamespace = "wg-qbt";
-		};
+services.seerr = {
+	enable = true;
+	openFirewall = true;
+	port = seerr_port;
+};
 
-		services.qbittorrent = {
-			enable = true;
-			openFirewall = false;
-			webuiPort = qbt_port;
-		};
+services.bazarr = {
+	enable = true;
+	openFirewall = true;
+	listenPort = bazarr_port;
+};
 
-		services.jellyfin = {
-			enable = true;
-			openFirewall = true;
-		};
+services.lidarr = {
+	enable = true;
+	openFirewall = true;
+	settings = {
+		server.port = lidarr_port;
+	};
+};
 
-		services.sonarr = {
-			enable = true;
-			openFirewall = true;
-			settings = {
-				server.port = sonarr_port;
-			};
-		};
-
-		services.radarr = {
-			enable = true;
-			openFirewall = true;
-			settings = {
-				server.port = radarr_port;
-			};
-		};
-
-		services.recyclarr = {
-			enable = true;
-		};
-
-		services.prowlarr = {
-			enable = true;
-			openFirewall = true;
-			settings = {
-				server.port = prowlarr_port;
-			};
-		};
-
-		services.seerr = {
-			enable = true;
-			openFirewall = true;
-			port = seerr_port;
-		};
-
-		services.bazarr = {
-			enable = true;
-			openFirewall = true;
-			listenPort = bazarr_port;
-		};
-
-		services.lidarr = {
-			enable = true;
-			openFirewall = true;
-			settings = {
-				server.port = lidarr_port;
-			};
-		};
-
-		services.samba = {
-			enable = true;
-			securityType = "user";
-			openFirewall = true;
-			settings = {
-				global = {
-					"workgroup" = "WORKGROUP";
-					"server string" = "smbnix";
-					"netbios name" = "smbnix";
-					"security" = "user";
+services.samba = {
+	enable = true;
+	securityType = "user";
+	openFirewall = true;
+	settings = {
+		global = {
+			"workgroup" = "WORKGROUP";
+			"server string" = "smbnix";
+			"netbios name" = "smbnix";
+			"security" = "user";
 #"use sendfile" = "yes";
 #"max protocol" = "smb2";
 # note: localhost is the ipv6 localhost ::1
-					"hosts allow" = "10.0.0. 127.0.0.1 localhost";
-					"hosts deny" = "0.0.0.0/0";
-					"guest account" = "nobody";
-					"map to guest" = "bad user";
-				};
-				"music" = {
-					"path" = "/mnt/media/music";
-					"browseable" = "yes";
-					"read only" = "no";
-					"guest ok" = "yes";
-					"create mask" = "0644";
-					"directory mask" = "0755";
-#"force user" = "username";
-#"force group" = "groupname";
-				};
-				"music_data" = {
-					"path" = "/mnt/media/music_data";
-					"browseable" = "yes";
-					"read only" = "no";
-					"guest ok" = "yes";
-					"create mask" = "0644";
-					"directory mask" = "0755";
-#"force user" = "username";
-#"force group" = "groupname";
-				};
-				"public" = {
-					"path" = "/home/allie/public";
-					"browseable" = "yes";
-					"read only" = "no";
-					"guest ok" = "yes";
-					"create mask" = "0644";
-					"directory mask" = "0755";
-#"force user" = "username";
-#"force group" = "groupname";
-				};
-			};
+			"hosts allow" = "10.0.0. 127.0.0.1 localhost";
+			"hosts deny" = "0.0.0.0/0";
+			"guest account" = "nobody";
+			"map to guest" = "bad user";
 		};
-
-		services.samba-wsdd = {
-			enable = true;
-			openFirewall = true;
+		"music" = {
+			"path" = "/mnt/media/music";
+			"browseable" = "yes";
+			"read only" = "no";
+			"guest ok" = "yes";
+			"create mask" = "0644";
+			"directory mask" = "0755";
+#"force user" = "username";
+#"force group" = "groupname";
 		};
-
-		networking.firewall.enable = true;
-		networking.firewall.allowPing = true;
+		"music_data" = {
+			"path" = "/mnt/media/music_data";
+			"browseable" = "yes";
+			"read only" = "no";
+			"guest ok" = "yes";
+			"create mask" = "0644";
+			"directory mask" = "0755";
+#"force user" = "username";
+#"force group" = "groupname";
+		};
+		"public" = {
+			"path" = "/home/allie/public";
+			"browseable" = "yes";
+			"read only" = "no";
+			"guest ok" = "yes";
+			"create mask" = "0644";
+			"directory mask" = "0755";
+#"force user" = "username";
+#"force group" = "groupname";
+		};
 	};
+};
+
+services.samba-wsdd = {
+	enable = true;
+	openFirewall = true;
+};
+
+networking.firewall.enable = true;
+networking.firewall.allowPing = true;
+};
 }
